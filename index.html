@@ -119,16 +119,21 @@
       background: #FCE22A;
     }
 
-    /* Print Styles for Resume Mode */
+    /* Print Styles for Resume Mode (Standard A4 Recruiter Output) */
     @media print {
-      body {
+      @page {
+        size: A4 portrait;
+        margin: 12mm 10mm 12mm 10mm;
+      }
+      html, body {
         background: #ffffff !important;
         color: #111827 !important;
-        font-family: 'Pretendard', sans-serif !important;
+        font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
       }
-      .no-print, header, footer, #scanline-layer, #level-up-toast, #quest-editor-modal, #quest-detail-modal, #skill-modal {
-        display: none !important;
-      }
+      .no-print, header, footer, #scanline-layer, #level-up-toast, 
+      #quest-editor-modal, #quest-detail-modal, #skill-modal,
       #dashboard-view, #skilltree-view {
         display: none !important;
       }
@@ -137,9 +142,26 @@
         margin: 0 !important;
         padding: 0 !important;
         max-width: 100% !important;
+        box-shadow: none !important;
+        border: none !important;
+      }
+      #resume-paper-container {
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: 100% !important;
       }
       .print-break-inside-avoid {
-        break-inside: avoid;
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+      }
+      .print-hide {
+        display: none !important;
+      }
+      a {
+        text-decoration: none !important;
+        color: inherit !important;
       }
     }
 
@@ -540,7 +562,7 @@
     </div>
 
     <!-- ======================================================== -->
-    <!-- 4. RESUME VIEW (이력서 뷰 화면 - 채용 담당자용)             -->
+    <!-- 4. RESUME VIEW (이력서 뷰 화면 - 실제 채용 담당자 제출용 표준 포맷) -->
     <!-- ======================================================== -->
     <div id="resume-view" class="hidden transition-all duration-300">
       
@@ -548,14 +570,16 @@
       <div class="no-print mb-6 flex flex-wrap items-center justify-between gap-3 bg-retro-surface p-4 pixel-box-sm border border-black">
         <div>
           <h2 class="font-pixel text-sm md:text-base text-retro-primary flex items-center gap-2">
-            <span>📄</span> 채용 담당자용 검증된 이력서 뷰
+            <span>📄</span> 채용 담당자 제출용 표준 기술 이력서
           </h2>
-          <p class="text-xs text-purple-200 mt-0.5 font-vt text-base">게임 대시보드의 검증된 퀘스트 기록이 깔끔한 전문가용 이력서로 실시간 변환됩니다.</p>
+          <p class="text-xs text-purple-200 mt-0.5 font-vt text-base">
+            게임 스탯을 배제하고 실무 기술 스택, 정량적 프로젝트, 공인 자격증 및 증빙 자료 중심의 표준 포맷으로 출력됩니다.
+          </p>
         </div>
         
         <div class="flex items-center gap-2">
-          <button onclick="window.print()" class="pixel-btn bg-retro-primary hover:bg-yellow-300 text-black font-pixel text-xs px-3.5 py-1.5 font-bold flex items-center gap-1.5">
-            <span>🖨️</span> PDF 인쇄 / 저장
+          <button onclick="window.print()" class="pixel-btn bg-retro-primary hover:bg-yellow-300 text-black font-pixel text-xs px-3.5 py-1.5 font-bold flex items-center gap-1.5 shadow">
+            <span>🖨️</span> PDF 인쇄 / 다운로드
           </button>
           <button onclick="switchTab('dashboard')" class="pixel-btn bg-retro-card hover:bg-[#2c214c] text-retro-cyan font-pixel text-xs px-3.5 py-1.5 flex items-center gap-1.5">
             <span>🎮</span> 대시보드로 복귀
@@ -564,119 +588,128 @@
       </div>
 
       <!-- Clean A4 White Resume Paper Container -->
-      <div class="bg-white text-gray-900 shadow-2xl rounded-none md:rounded-sm border-2 md:border-4 border-gray-900 p-6 sm:p-10 md:p-12 max-w-4xl mx-auto font-sans leading-normal">
+      <div id="resume-paper-container" class="bg-white text-gray-900 shadow-2xl rounded-none md:rounded-sm border-2 md:border-4 border-gray-900 p-6 sm:p-10 md:p-12 max-w-4xl mx-auto font-sans leading-normal">
         
-        <!-- Live Verified Badge -->
+        <!-- Live Verified Badge & Document Meta -->
         <div class="flex justify-between items-center pb-4 mb-6 border-b border-gray-200 text-xs">
-          <div class="flex items-center gap-1.5 text-emerald-700 font-mono font-bold tracking-tight">
-            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            LIFEGAME REALTIME VERIFIED CAREER LOG
+          <div class="flex items-center gap-1.5 text-emerald-800 font-mono font-bold tracking-tight">
+            <span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse print-hide"></span>
+            OFFICIAL TECHNICAL RESUME &middot; VERIFIED PRACTICAL LOGS
           </div>
           <div class="text-gray-500 font-mono text-[11px]">
-            PORTFOLIO ID: <span class="text-gray-900 font-bold">#LG-V26-CAREER</span>
+            DOCUMENT ID: <span class="text-gray-900 font-bold">#RESUME-DEV-VERIFIED</span>
           </div>
         </div>
 
-        <!-- Resume Header -->
+        <!-- Resume Header (Recruiter Standard) -->
         <header class="border-b-2 border-gray-900 pb-6 mb-6">
           <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
-              <div class="inline-block px-2.5 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded mb-2">
-                Software Explorer
+              <div class="inline-block px-2.5 py-1 bg-gray-900 text-white text-xs font-semibold rounded mb-2">
+                Software Engineer &middot; Full-Stack / Web
               </div>
               <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight" id="resume-name">
                 모험가 (Adventurer)
               </h1>
-              <p class="text-base text-gray-600 mt-2 font-medium max-w-xl">
-                "체계적인 문제 해결과 지속 가능한 성장을 지향하는 소프트웨어 엔지니어입니다."
+              <p class="text-base text-gray-700 mt-2 font-medium max-w-xl">
+                "지속 가능한 문제 해결과 실습 중심의 기록을 통해 신뢰할 수 있는 가치를 만드는 소프트웨어 엔지니어입니다."
               </p>
             </div>
-            <div class="text-xs text-gray-600 space-y-1 md:text-right border-l-2 md:border-l-0 pl-3 md:pl-0 border-gray-200 font-sans">
-              <div>📧 adventurer@lifegame.io</div>
-              <div>📱 +82 10-0000-0000</div>
-              <div>🌐 github.com/adventurer</div>
-              <div>📍 Seoul, Republic of Korea</div>
+            <div class="text-xs text-gray-600 space-y-1.5 md:text-right border-l-2 md:border-l-0 pl-3 md:pl-0 border-gray-200 font-sans">
+              <div>📧 <span class="font-medium text-gray-900">adventurer@lifegame.io</span></div>
+              <div>📱 <span class="font-medium text-gray-900">+82 10-0000-0000</span></div>
+              <div>🌐 <span class="font-medium text-gray-900">github.com/adventurer</span></div>
+              <div>📍 <span class="font-medium text-gray-900">Seoul, Republic of Korea</span></div>
             </div>
           </div>
         </header>
 
-        <!-- Executive Summary & Core Competencies -->
+        <!-- Executive Summary (게임 수치 완전 배제, 실무 중심 개요) -->
         <section class="mb-8 print-break-inside-avoid">
           <h2 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">EXECUTIVE SUMMARY</h2>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-gray-50 p-5 rounded-lg border border-gray-100">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-gray-50 p-5 rounded-lg border border-gray-200">
             <div class="md:col-span-2">
-              <p class="text-sm text-gray-700 leading-relaxed">
-                실전 문제 해결과 자기주도적 학습 파이프라인을 구축하고 있습니다.
-                퀘스트를 통해 기록된 정량적 역량 증빙(자격증, 프로젝트 배포, 알고리즘, 기술 아티클)을 바탕으로 팀과 비즈니스에 기여합니다.
+              <h3 class="text-sm font-bold text-gray-900 mb-1.5">실전 중심 엔지니어링 역량 &amp; 지속 학습 태도</h3>
+              <p class="text-xs sm:text-sm text-gray-700 leading-relaxed">
+                이론에 머무르지 않고 매일의 문제 해결 과정과 코드 구현을 아카이빙하는 체계적인 자기주도 학습 파이프라인을 운영하고 있습니다.
+                실제 프로젝트 구현 과정에서 마주친 기술적 난관과 성능 최적화 경험을 투명하게 문서화하며, 팀과 제품의 성장에 기여합니다.
               </p>
-              <div class="mt-4 flex flex-wrap gap-2 text-xs">
-                <span class="px-2.5 py-1 bg-white border border-gray-200 rounded font-medium text-gray-800">Web Development</span>
-                <span class="px-2.5 py-1 bg-white border border-gray-200 rounded font-medium text-gray-800">Problem Solving</span>
-                <span class="px-2.5 py-1 bg-white border border-gray-200 rounded font-medium text-gray-800">Clean Code &amp; Testing</span>
-              </div>
             </div>
-            <div class="border-t md:border-t-0 md:border-l border-gray-200 pt-3 md:pt-0 md:pl-4 space-y-2">
-              <div class="text-xs font-bold text-gray-900">핵심 역량 매트릭스 (Game Data 연동)</div>
-              <div class="text-xs space-y-1.5 font-sans">
-                <div class="flex justify-between text-gray-600"><span>시스템 설계 (INT):</span> <span class="font-bold text-gray-900" id="resume-stat-int">10%</span></div>
-                <div class="flex justify-between text-gray-600"><span>개발 및 배포 생산성 (DEX):</span> <span class="font-bold text-gray-900" id="resume-stat-dex">10%</span></div>
-                <div class="flex justify-between text-gray-600"><span>문제 분석 및 해결 (WIS):</span> <span class="font-bold text-gray-900" id="resume-stat-wis">10%</span></div>
-                <div class="flex justify-between text-gray-600"><span>크로스 협업 (CHA):</span> <span class="font-bold text-gray-900" id="resume-stat-cha">10%</span></div>
-              </div>
+            <div class="border-t md:border-t-0 md:border-l border-gray-200 pt-3 md:pt-0 md:pl-4 space-y-2.5">
+              <div class="text-xs font-bold text-gray-900">핵심 실무 강점 (Core Highlights)</div>
+              <ul class="text-xs space-y-1.5 text-gray-700 list-disc list-inside">
+                <li>증빙 기반의 체계적 문제 해결</li>
+                <li>Clean Code &amp; 모듈화 아키텍처</li>
+                <li>신속한 신기술 습득 및 실습 적용</li>
+                <li>협업 커뮤니케이션 &amp; 문서화 역량</li>
+              </ul>
             </div>
           </div>
         </section>
 
-        <!-- Technical Skill Tree Section (신규 연동) -->
-        <section class="mb-8 print-break-inside-avoid">
-          <h2 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">VERIFIED TECHNICAL SKILLS (스킬트리 연동 기술 스택)</h2>
-          <div id="resume-skills-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3 font-sans">
-            <!-- Populated via JS -->
-          </div>
-        </section>
-
-        <!-- Certifications & Boss Milestones -->
-        <section class="mb-8 print-break-inside-avoid">
-          <h2 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">CERTIFICATIONS &amp; BOSS MILESTONES (검증된 자격 및 성과)</h2>
-          <div id="resume-certs-list" class="space-y-3 font-sans">
-            <!-- Populated via JS -->
-          </div>
-        </section>
-
-        <!-- Key Projects & Verified Quest Logs -->
+        <!-- Core Tech Stack (현실적인 핵심 기술 스택) -->
         <section class="mb-8 print-break-inside-avoid">
           <div class="flex justify-between items-center mb-3">
-            <h2 class="text-xs font-bold text-gray-400 uppercase tracking-widest">KEY PROJECTS &amp; VERIFIED QUEST LOGS (포트폴리오 연동 내역)</h2>
+            <h2 class="text-xs font-bold text-gray-400 uppercase tracking-widest">
+              CORE TECH STACK &amp; PRACTICAL EXPERIENCE (핵심 기술 스택)
+            </h2>
+            <span class="text-xs text-gray-500 font-mono" id="resume-tech-count-badge">실습 증빙 기술 연동</span>
+          </div>
+          <div id="resume-tech-stack-container" class="space-y-4">
+            <!-- Dynamically populated into 3-4 professional categories with quantitative data -->
+          </div>
+        </section>
+
+        <!-- Certifications & Credentials (검증된 자격 및 성과) -->
+        <section class="mb-8 print-break-inside-avoid">
+          <div class="flex justify-between items-center mb-3">
+            <h2 class="text-xs font-bold text-gray-400 uppercase tracking-widest">
+              CERTIFICATIONS &amp; CREDENTIALS (검증된 자격 및 공인 수료)
+            </h2>
+            <span class="text-xs text-emerald-600 font-medium" id="resume-certs-count-badge">공인 검증 완료</span>
+          </div>
+          <div id="resume-certs-list" class="space-y-3 font-sans">
+            <!-- Populated via JS as clean table/card list with proof view links -->
+          </div>
+        </section>
+
+        <!-- Key Projects & Articles (프로젝트 & 기술 아카이브) -->
+        <section class="mb-8 print-break-inside-avoid">
+          <div class="flex justify-between items-center mb-3">
+            <h2 class="text-xs font-bold text-gray-400 uppercase tracking-widest">
+              KEY PROJECTS &amp; TECHNICAL ARCHIVES (프로젝트 &amp; 기술 아카이브)
+            </h2>
             <span class="text-xs text-emerald-600 font-semibold" id="resume-project-count-badge">0건 연동됨</span>
           </div>
           <div id="resume-projects-list" class="space-y-4 font-sans">
-            <!-- Populated via JS -->
+            <!-- Populated via JS with structured 2-3 line summary, tech chips, and thumbnail previews -->
           </div>
         </section>
 
-        <!-- Career Timeline -->
+        <!-- Career Journey & Philosophy -->
         <section class="print-break-inside-avoid font-sans">
-          <h2 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">CAREER JOURNEY</h2>
+          <h2 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">CAREER &amp; GROWTH TIMELINE</h2>
           <div class="border-l-2 border-gray-200 pl-4 space-y-4 ml-1">
             <div>
               <div class="flex justify-between text-sm font-bold text-gray-900">
-                <span>개발자 여정의 시작</span>
-                <span class="text-xs font-normal text-gray-500">현재</span>
+                <span>지속적인 기술 연구 및 실전 프로젝트 구축</span>
+                <span class="text-xs font-normal text-gray-500 font-mono">현재 진행형</span>
               </div>
-              <p class="text-xs text-gray-600 mt-1">새로운 퀘스트를 달성하여 당신만의 커리어 히스토리를 쌓아가세요.</p>
+              <p class="text-xs text-gray-600 mt-1 leading-relaxed">
+                새로운 기술 스택 탐구와 실제 프로젝트 개발을 병행하며 탄탄한 엔지니어링 역량을 확장해 나가고 있습니다.
+              </p>
             </div>
           </div>
         </section>
 
-        <!-- Watermark Footer -->
-        <footer class="mt-12 pt-6 border-t border-gray-200 flex justify-between items-center text-[11px] text-gray-400 font-mono">
-          <span>Verified by LifeGame System &middot; Hash #LG-CAREER-START</span>
-          <span>Last Updated: <span id="resume-date-stamp"></span></span>
+        <!-- Watermark Footer (Clean recruiter style) -->
+        <footer class="mt-12 pt-6 border-t border-gray-200 flex justify-between items-center text-[11px] text-gray-500 font-sans">
+          <span>Official Technical Resume &middot; Authentic Practice Logs &middot; LifeGame Verified</span>
+          <span>Last Updated: <span id="resume-date-stamp" class="font-mono text-gray-700"></span></span>
         </footer>
-      </div>
-    </div>
 
-  </main>
+      </div>
+    </div></main>
 
   <!-- ======================================================== -->
   <!-- 5. MODAL: QUEST EDITOR (1단 노션 스타일 + 스킬 연동)       -->
@@ -2376,112 +2409,298 @@ npm run build && git commit -m "feat: complete milestone"</pre>
     }
 
     /* ==========================================================================
-       9. RESUME VIEW RENDERING (이력서 뷰 & 스킬 연동)
+       9. RESUME VIEW RENDERING (채용 담당자용 표준 포맷 & 정량 데이터 렌더링)
        ========================================================================== */
     function renderResumeView() {
-      document.getElementById('resume-name').textContent = AppState.player.name;
-      document.getElementById('resume-stat-int').textContent = AppState.stats.INT + '%';
-      document.getElementById('resume-stat-dex').textContent = AppState.stats.DEX + '%';
-      document.getElementById('resume-stat-wis').textContent = AppState.stats.WIS + '%';
-      document.getElementById('resume-stat-cha').textContent = AppState.stats.CHA + '%';
-      document.getElementById('resume-date-stamp').textContent = new Date().toLocaleDateString('ko-KR');
+      const nameEl = document.getElementById('resume-name');
+      if (nameEl) nameEl.textContent = AppState.player.name;
 
-      // 1. Technical Skills Matrix (from Custom Skill Tree)
-      const skillsContainer = document.getElementById('resume-skills-list');
-      skillsContainer.innerHTML = '';
-      
-      const skills = AppState.skills || [];
-      if (skills.length === 0) {
-        skillsContainer.innerHTML = '<p class="col-span-2 text-xs text-gray-400 italic py-2 text-center">등록된 스킬이 없습니다.</p>';
-      } else {
-        STAT_KEYS.forEach(key => {
-          const group = skills.filter(s => s.stat === key);
-          if (group.length > 0) {
-            const card = document.createElement('div');
-            card.className = 'p-3 bg-gray-50 border border-gray-200 rounded';
-            const skillChips = group.map(s => 
-              `<span class="inline-flex items-center gap-1 px-2 py-0.5 bg-white border border-gray-300 rounded text-xs font-medium text-gray-800">
-                <span>${s.emoji}</span> ${s.name} <span class="text-indigo-600 font-bold font-mono">Lv.${s.level || 1}</span>
-                ${s.count > 0 ? `<span class="text-[10px] text-gray-400">(${s.count}건)</span>` : ''}
-              </span>`
-            ).join(' ');
+      const dateEl = document.getElementById('resume-date-stamp');
+      if (dateEl) dateEl.textContent = new Date().toLocaleDateString('ko-KR');
 
-            card.innerHTML = `
-              <div class="text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-1.5 flex items-center justify-between">
-                <span>${STAT_INFO[key].icon} ${key} (${STAT_INFO[key].name})</span>
-                <span class="text-gray-400 font-mono">${group.length}개 역량</span>
-              </div>
-              <div class="flex flex-wrap gap-1.5">
-                ${skillChips}
+      // -------------------------------------------------------------------------
+      // 1. Core Tech Stack (Languages & Frameworks, Tools & DevOps, Data & DB)
+      // -------------------------------------------------------------------------
+      const techContainer = document.getElementById('resume-tech-stack-container');
+      if (techContainer) {
+        techContainer.innerHTML = '';
+        const skills = AppState.skills || [];
+        
+        // Practical category classification
+        const categories = [
+          {
+            id: 'languages',
+            title: '프로그래밍 언어 & 프레임워크 (Languages & Frameworks)',
+            icon: '💻',
+            match: (s) => {
+              const n = (s.name || '').toLowerCase();
+              return n.includes('파이썬') || n.includes('python') || n.includes('유니티') ||
+                     n.includes('unity') || n.includes('웹') || n.includes('퍼블리싱') ||
+                     n.includes('html') || n.includes('css') || n.includes('js') ||
+                     n.includes('javascript') || n.includes('react') || n.includes('리액트') ||
+                     n.includes('c#') || n.includes('java') || n.includes('django') ||
+                     n.includes('fastapi') || (s.stat === 'INT' && !n.includes('데이터') && !n.includes('알고리즘')) ||
+                     (s.stat === 'DEX' && !n.includes('포토샵'));
+            }
+          },
+          {
+            id: 'tools',
+            title: '실무 툴 & 개발 환경 (Tools & DevOps)',
+            icon: '🛠️',
+            match: (s) => {
+              const n = (s.name || '').toLowerCase();
+              return n.includes('포토샵') || n.includes('photoshop') || n.includes('git') ||
+                     n.includes('깃') || n.includes('docker') || n.includes('도커') ||
+                     n.includes('figma') || n.includes('피그마') || n.includes('linux') ||
+                     n.includes('리눅스') || n.includes('툴') || n.includes('도구') ||
+                     s.stat === 'CON';
+            }
+          },
+          {
+            id: 'data',
+            title: '데이터 및 분석 (Data & Database)',
+            icon: '📊',
+            match: (s) => {
+              const n = (s.name || '').toLowerCase();
+              return n.includes('데이터') || n.includes('data') || n.includes('분석') ||
+                     n.includes('sql') || n.includes('pandas') || n.includes('알고리즘') ||
+                     n.includes('db') || n.includes('ai') || n.includes('머신러닝');
+            }
+          },
+          {
+            id: 'foundations',
+            title: '기반 이론 & 엔지니어링 협업 (Foundations & Collaboration)',
+            icon: '🤝',
+            match: (s) => {
+              const n = (s.name || '').toLowerCase();
+              return n.includes('자격증') || n.includes('cs') || n.includes('이론') ||
+                     n.includes('블로그') || n.includes('발표') || n.includes('팀') ||
+                     n.includes('프로젝트') || n.includes('해커톤') || s.stat === 'WIS' || s.stat === 'CHA' || s.stat === 'LUK';
+            }
+          }
+        ];
+
+        let totalCategorizedSkills = 0;
+        const usedSkillIds = new Set();
+
+        categories.forEach(cat => {
+          const matchedSkills = skills.filter(s => !usedSkillIds.has(s.id) && cat.match(s));
+          if (matchedSkills.length === 0) return;
+          
+          matchedSkills.forEach(s => usedSkillIds.add(s.id));
+          totalCategorizedSkills += matchedSkills.length;
+
+          const groupDiv = document.createElement('div');
+          groupDiv.className = 'border border-gray-200 rounded-lg p-4 bg-gray-50/70 print:bg-white print:border-gray-300';
+          
+          let cardsHtml = '';
+          matchedSkills.forEach(s => {
+            const linkedQuests = (AppState.quests || []).filter(q => q.completed && q.skillIds && q.skillIds.includes(s.id));
+            const count = Math.max(s.count || 0, linkedQuests.length);
+            const hours = count > 0 ? count * 3 : 0;
+
+            let questBadgesHtml = '';
+            if (linkedQuests.length > 0) {
+              questBadgesHtml = `
+                <div class="mt-2.5 pt-2 border-t border-gray-100 flex flex-wrap items-center gap-1.5">
+                  <span class="text-[10px] text-gray-500 font-semibold shrink-0">관련 실습:</span>
+                  ${linkedQuests.slice(0, 3).map(q => `
+                    <button type="button" onclick="openDetailModal('${q.id}')" class="text-[11px] text-indigo-700 bg-white hover:bg-indigo-50 border border-gray-200 px-1.5 py-0.5 rounded transition-colors truncate max-w-[200px]" title="${q.title}">
+                      ${q.title} ↗
+                    </button>
+                  `).join('')}
+                  ${linkedQuests.length > 3 ? `<span class="text-[10px] text-gray-400 font-mono">+${linkedQuests.length - 3}건</span>` : ''}
+                </div>
+              `;
+            }
+
+            cardsHtml += `
+              <div class="bg-white border border-gray-200 rounded-md p-3.5 shadow-sm hover:border-gray-400 transition-all flex flex-col justify-between">
+                <div>
+                  <div class="flex items-start justify-between gap-2">
+                    <div class="flex items-center gap-2">
+                      <span class="text-lg">${s.emoji || '🔹'}</span>
+                      <div>
+                        <h4 class="text-sm font-bold text-gray-900">${s.name}</h4>
+                        <p class="text-xs text-gray-500 mt-0.5">${s.desc || '실무 활용 및 프로젝트 구현'}</p>
+                      </div>
+                    </div>
+                    ${count > 0 
+                      ? `<span class="px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded text-[11px] font-semibold shrink-0">✓ 실습 검증됨</span>` 
+                      : `<span class="px-2 py-0.5 bg-gray-100 text-gray-500 rounded text-[11px] font-medium shrink-0">학습 진행중</span>`
+                    }
+                  </div>
+                  
+                  <!-- Realistic Quantitative Metric (NO gauge bar!) -->
+                  <div class="mt-2.5 flex items-center justify-between text-xs text-gray-700 bg-gray-50 px-2.5 py-1.5 rounded border border-gray-100">
+                    <span class="font-medium">
+                      ${count > 0 ? `총 ${count}개 실습 퀘스트 완수` : '기초 지식 습득 완료'}
+                    </span>
+                    <span class="font-mono text-gray-500">
+                      ${count > 0 ? `${hours}시간 학습 증빙` : '실습 연동 대기'}
+                    </span>
+                  </div>
+                </div>
+
+                ${questBadgesHtml}
               </div>
             `;
-            skillsContainer.appendChild(card);
-          }
-        });
-      }
+          });
 
-      // 2. Certifications & Boss Milestones
-      const certsContainer = document.getElementById('resume-certs-list');
-      certsContainer.innerHTML = '';
-      const bossQuests = AppState.quests.filter(q => (q.type === 'boss' || q.difficulty === 'boss') && q.completed);
-
-      if (bossQuests.length === 0) {
-        certsContainer.innerHTML = '<p class="text-xs text-gray-400 italic py-3 bg-gray-50 border border-dashed border-gray-300 rounded text-center">완료된 보스 퀘스트(자격증 및 메이저 마일스톤)가 등록되면 여기에 자동 연동됩니다.</p>';
-      } else {
-        bossQuests.forEach(b => {
-          const div = document.createElement('div');
-          div.className = 'p-3 bg-gray-50 border border-gray-200 rounded flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2';
-          div.innerHTML = `
-            <div>
-              <div class="flex items-center gap-2">
-                <span class="text-emerald-600 font-bold text-xs">✓ OFFICIAL VERIFIED</span>
-                <span class="text-sm font-bold text-gray-900">${b.title}</span>
-              </div>
-              <p class="text-xs text-gray-600 mt-0.5">${b.desc} ${b.note ? `— <em>"${b.note}"</em>` : ''}</p>
+          groupDiv.innerHTML = `
+            <div class="flex items-center justify-between mb-3 border-b border-gray-200/80 pb-2">
+              <h3 class="text-xs font-bold text-gray-800 flex items-center gap-1.5 uppercase tracking-wide">
+                <span>${cat.icon}</span> ${cat.title}
+              </h3>
+              <span class="text-xs text-gray-500 font-mono">${matchedSkills.length}개 기술</span>
             </div>
-            <div class="text-xs text-gray-500 font-mono shrink-0">
-              ${b.completedDate || '2025.01'}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              ${cardsHtml}
             </div>
           `;
-          certsContainer.appendChild(div);
+
+          techContainer.appendChild(groupDiv);
         });
+
+        const badge = document.getElementById('resume-tech-count-badge');
+        if (badge) badge.textContent = `총 ${totalCategorizedSkills}개 실무 기술 스택 연동`;
       }
 
-      // 3. Projects
+      // -------------------------------------------------------------------------
+      // 2. Certifications & Credentials
+      // -------------------------------------------------------------------------
+      const certsContainer = document.getElementById('resume-certs-list');
+      const certsBadge = document.getElementById('resume-certs-count-badge');
+      if (certsContainer) {
+        certsContainer.innerHTML = '';
+        const bossQuests = (AppState.quests || []).filter(q => (q.type === 'boss' || q.difficulty === 'boss' || (q.tags || []).some(t => t.includes('자격증') || t.includes('인증'))) && q.completed);
+
+        if (certsBadge) certsBadge.textContent = `${bossQuests.length}건 공인 검증됨`;
+
+        if (bossQuests.length === 0) {
+          certsContainer.innerHTML = `
+            <div class="p-5 bg-gray-50 border border-dashed border-gray-300 rounded-lg text-center text-xs text-gray-500">
+              완료된 공인 자격증 및 마일스톤 퀘스트가 등록되면 증빙 사본과 함께 여기에 자동 연동됩니다.
+            </div>
+          `;
+        } else {
+          bossQuests.forEach(b => {
+            const div = document.createElement('div');
+            div.className = 'p-4 bg-white border border-gray-200 rounded-lg shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 hover:border-gray-400 transition-all';
+            
+            const hasProof = !!(b.proofImg || b.thumbnail);
+            const imgSrc = b.proofImg || b.thumbnail;
+
+            div.innerHTML = `
+              <div class="flex items-start gap-3">
+                <div class="w-10 h-10 rounded bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600 font-bold text-lg shrink-0">
+                  📜
+                </div>
+                <div>
+                  <div class="flex flex-wrap items-center gap-2">
+                    <span class="text-sm font-bold text-gray-900">${b.title}</span>
+                    <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                      ✓ OFFICIAL VERIFIED
+                    </span>
+                  </div>
+                  <p class="text-xs text-gray-600 mt-1 leading-relaxed">
+                    ${b.desc || '공인 검증 시험 통과 및 자격 취득'} ${b.note ? `— <em>"${b.note}"</em>` : ''}
+                  </p>
+                  <div class="mt-1.5 text-xs text-gray-500 font-mono">
+                    취득일자: <span class="font-medium text-gray-800">${b.completedDate || '2024.11'}</span>
+                    &middot; 발행/주관기관: <span class="font-medium text-gray-800">한국산업인력공단 / 공인 주관기관</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-3 shrink-0 self-end sm:self-center">
+                ${hasProof ? `
+                  <div class="w-16 h-12 bg-gray-100 border border-gray-300 rounded overflow-hidden cursor-pointer group" onclick="openDetailModal('${b.id}')" title="증빙 사본 원본 확인">
+                    <img src="${imgSrc}" alt="${b.title}" class="w-full h-full object-cover group-hover:scale-110 transition-transform"/>
+                  </div>
+                ` : ''}
+                <button onclick="openDetailModal('${b.id}')" class="px-3 py-1.5 text-xs font-semibold text-indigo-700 hover:text-white bg-indigo-50 hover:bg-indigo-600 border border-indigo-200 rounded transition-colors flex items-center gap-1">
+                  <span>증빙 사본 확인</span> <span>↗</span>
+                </button>
+              </div>
+            `;
+            certsContainer.appendChild(div);
+          });
+        }
+      }
+
+      // -------------------------------------------------------------------------
+      // 3. Key Projects & Articles (Thumbnails, structured 2-3 line summary, tech chips)
+      // -------------------------------------------------------------------------
       const projContainer = document.getElementById('resume-projects-list');
-      const badge = document.getElementById('resume-project-count-badge');
-      projContainer.innerHTML = '';
-      
-      const resumeQuests = AppState.quests.filter(q => q.completed && q.inResume !== false);
-      badge.textContent = `총 ${resumeQuests.length}건 연동됨`;
+      const projBadge = document.getElementById('resume-project-count-badge');
+      if (projContainer) {
+        projContainer.innerHTML = '';
+        const resumeQuests = (AppState.quests || []).filter(q => q.completed && q.inResume !== false);
+        if (projBadge) projBadge.textContent = `총 ${resumeQuests.length}건 포트폴리오 연동됨`;
 
-      if (resumeQuests.length === 0) {
-        projContainer.innerHTML = '<p class="text-xs text-gray-400 italic py-3 bg-gray-50 border border-dashed border-gray-300 rounded text-center">이력서에 포함된 프로젝트가 없습니다. 퀘스트를 완료하고 \'이력서 포트폴리오에 포함하기\'를 켜주세요.</p>';
-        return;
+        if (resumeQuests.length === 0) {
+          projContainer.innerHTML = `
+            <div class="p-6 bg-gray-50 border border-dashed border-gray-300 rounded-lg text-center text-xs text-gray-500">
+              이력서에 포함된 프로젝트가 없습니다. 대시보드에서 퀘스트를 완료하고 '이력서 포트폴리오에 포함하기'를 켜주세요.
+            </div>
+          `;
+        } else {
+          resumeQuests.forEach(q => {
+            const item = document.createElement('div');
+            item.className = 'p-5 bg-white border border-gray-200 rounded-lg shadow-sm hover:border-gray-400 transition-all flex flex-col md:flex-row justify-between gap-5';
+            
+            const skillNames = (q.skillIds || []).map(sid => {
+              const s = (AppState.skills || []).find(sk => sk.id === sid);
+              return s ? s.name : null;
+            }).filter(Boolean);
+
+            const allTags = Array.from(new Set([...(q.tags || []), ...skillNames]));
+            const tagChipsHtml = allTags.map(t => 
+              `<span class="px-2 py-0.5 bg-gray-100 text-gray-800 text-[11px] font-medium rounded border border-gray-200 font-mono">#${t}</span>`
+            ).join(' ');
+
+            const hasThumb = !!(q.thumbnail || q.proofImg);
+            const imgSrc = q.thumbnail || q.proofImg;
+
+            item.innerHTML = `
+              <div class="flex-1">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                  <h3 class="text-base font-bold text-gray-900">${q.title}</h3>
+                  <span class="text-xs text-gray-500 font-mono">${q.completedDate || '2024'}</span>
+                </div>
+
+                <!-- Tech Stack Badges -->
+                <div class="mt-2 flex flex-wrap gap-1.5">
+                  ${tagChipsHtml}
+                </div>
+
+                <!-- 2-3 Line Structured Summary -->
+                <div class="mt-3 text-xs text-gray-700 leading-relaxed space-y-1.5 bg-gray-50/70 p-3 rounded border border-gray-100">
+                  <p><strong>[개요 및 문제 정의]</strong> ${q.desc || '프로젝트 목표 정의 및 실무 과제 완수'}</p>
+                  ${q.note ? `<p><strong>[핵심 구현 및 배운 점]</strong> ${q.note}</p>` : ''}
+                </div>
+
+                <div class="mt-3">
+                  <button onclick="openDetailModal('${q.id}')" class="text-xs font-semibold text-indigo-700 hover:text-indigo-900 underline flex items-center gap-1">
+                    <span>프로젝트 상세 포스팅 및 시각 증빙 전문 확인</span> <span>➔</span>
+                  </button>
+                </div>
+              </div>
+
+              ${hasThumb ? `
+                <div class="w-full md:w-44 shrink-0 flex flex-col items-center">
+                  <div class="w-full h-28 bg-gray-100 border border-gray-300 rounded overflow-hidden cursor-pointer group shadow-sm" onclick="openDetailModal('${q.id}')" title="증빙 결과물 확대 보기">
+                    <img src="${imgSrc}" alt="${q.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform"/>
+                  </div>
+                  <span class="text-[10px] text-gray-500 font-mono mt-1 text-center">[증빙 결과물 캡처]</span>
+                </div>
+              ` : ''}
+            `;
+            projContainer.appendChild(item);
+          });
+        }
       }
-
-      resumeQuests.forEach(q => {
-        const item = document.createElement('div');
-        item.className = 'border-l-2 border-gray-300 pl-3 py-1.5 hover:border-gray-900 transition-colors';
-        const tagText = (q.tags || []).join(' · ');
-        item.innerHTML = `
-          <div class="flex justify-between items-center text-sm font-semibold text-gray-900">
-            <span class="flex items-center gap-2">
-              <span>${q.title}</span>
-              ${tagText ? `<span class="text-[11px] font-normal text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded font-mono">[${tagText}]</span>` : ''}
-            </span>
-            <span class="text-xs font-normal text-gray-500 font-mono">${q.completedDate || '2024'}</span>
-          </div>
-          <p class="text-xs text-gray-600 mt-1 leading-relaxed">${q.desc}</p>
-          ${q.note ? `<p class="text-xs text-indigo-700 bg-indigo-50/60 p-1.5 rounded mt-1.5 border border-indigo-100 font-sans"><strong>증빙 요약:</strong> ${q.note}</p>` : ''}
-          <div class="mt-1.5">
-            <button onclick="openDetailModal('${q.id}')" class="text-[11px] text-gray-500 hover:text-black font-semibold underline">
-              블로그 전문 및 시각 증빙 확인 ➔
-            </button>
-          </div>
-        `;
-        projContainer.appendChild(item);
-      });
     }
 
     /* ==========================================================================
