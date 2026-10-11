@@ -7,7 +7,7 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>">
 
   <!-- Open Graph / SEO Meta Tags -->
-  <meta name="description" content="LifeGame (인생게임) - 퀘스트와 블로그형 학습 기록을 실시간 RPG 스탯으로 전환하고 채용 담당자를 위한 이력서로 변환하는 레트로 2D 픽셀 아트 포트폴리오 웹사이트">
+  <meta name="description" content="LifeGame (인생게임) - 퀘스트와 학습 기록을 실시간 RPG 스탯으로 전환하고 채용 담당자를 위한 이력서로 변환하는 레트로 2D 픽셀 아트 포트폴리오 웹사이트">
   <meta property="og:title" content="LifeGame (인생게임) - 16-Bit 레트로 RPG 라이프 &amp; 이력서 빌더">
   <meta property="og:description" content="블로그형 퀘스트 작성기, 6축 실시간 레이더 스탯, 채용 담당자용 PDF 이력서 실시간 연동">
   <meta property="og:type" content="website">
@@ -55,7 +55,7 @@
   </script>
 
   <style>
-    /* Clean Pixel Box Styling (No overbearing neon, clean retro chunky shadows) */
+    /* Clean Pixel Box Styling */
     .pixel-box {
       border: 3px solid #000;
       box-shadow: 4px 4px 0px 0px #000;
@@ -143,7 +143,7 @@
       }
     }
 
-    /* Contenteditable editor styling (Notion style) */
+    /* Contenteditable editor styling */
     #editor-canvas:empty:before {
       content: attr(placeholder);
       color: #6B7280;
@@ -198,12 +198,12 @@
   <div id="scanline-layer" class="fixed inset-0 scanlines z-40 opacity-30 pointer-events-none transition-opacity"></div>
 
   <!-- ======================================================== -->
-  <!-- 1. CLEAN TOP HEADER (TAB SEPARATION)                     -->
+  <!-- 1. CLEAN TOP HEADER                                      -->
   <!-- ======================================================== -->
   <header class="fixed top-0 left-0 w-full z-50 bg-retro-surface/95 backdrop-blur-sm border-b-2 border-black shadow-md">
     <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
       
-      <!-- Brand Logo -->
+      <!-- Brand Logo & Tabs -->
       <div class="flex items-center gap-6">
         <div class="flex items-center gap-2.5 cursor-pointer" onclick="switchTab('dashboard')">
           <div class="w-9 h-9 bg-retro-primary pixel-btn flex items-center justify-center text-lg">
@@ -215,7 +215,7 @@
           </div>
         </div>
 
-        <!-- [화면 탭 분리]: [대시보드] vs [이력서 뷰] -->
+        <!-- Navigation Tabs: [대시보드] vs [이력서 뷰] -->
         <nav class="flex items-center gap-1.5 bg-black/50 p-1 border border-black pixel-box-sm">
           <button id="tab-btn-dashboard" onclick="switchTab('dashboard')" class="px-3.5 py-1.5 font-pixel text-xs bg-retro-primary text-black font-bold transition-all flex items-center gap-1.5">
             🎮 <span>대시보드</span>
@@ -226,15 +226,15 @@
         </nav>
       </div>
 
-      <!-- Right Header Actions (Clean & Compact) -->
+      <!-- Right Header Actions -->
       <div class="flex items-center gap-3">
         <!-- Live Player Mini Status -->
         <div class="hidden sm:flex items-center gap-3 bg-black/40 px-3 py-1 border border-black pixel-box-sm text-xs font-pixel">
-          <span class="text-retro-cyan">LV.<span id="header-level">12</span></span>
+          <span class="text-retro-cyan">LV.<span id="header-level">1</span></span>
           <div class="w-20 bg-gray-800 h-2 border border-black overflow-hidden">
-            <div id="header-exp-bar" class="h-full bg-gradient-to-r from-emerald-500 to-retro-accent transition-all duration-300" style="width: 65%;"></div>
+            <div id="header-exp-bar" class="h-full bg-gradient-to-r from-emerald-500 to-retro-accent transition-all duration-300" style="width: 0%;"></div>
           </div>
-          <span class="text-retro-gold">🪙 <span id="header-gold">2,450</span>G</span>
+          <span class="text-retro-gold">🪙 <span id="header-gold">0</span>G</span>
         </div>
 
         <!-- Audio FX Toggle -->
@@ -243,8 +243,8 @@
           <span class="hidden md:inline text-[10px]">FX</span>
         </button>
 
-        <!-- Reset Sample Data -->
-        <button onclick="resetDataPrompt()" class="pixel-btn bg-red-950 hover:bg-red-900 text-red-200 px-2 py-1 text-xs font-pixel" title="초기 데이터 복원">
+        <!-- Reset Data -->
+        <button onclick="resetDataPrompt()" class="pixel-btn bg-red-950 hover:bg-red-900 text-red-200 px-2 py-1 text-xs font-pixel" title="데이터 초기화">
           🔄
         </button>
       </div>
@@ -281,7 +281,6 @@
           <p class="text-xs text-purple-200 mt-0.5 font-vt text-base">매일의 학습과 커밋을 실시간 스탯으로 레벨업하세요.</p>
         </div>
         
-        <!-- [요구사항 1]: 우측 상단 [+ 새 퀘스트 작성] 버튼 -> 모달 창 오픈 -->
         <button onclick="openEditorModal()" class="pixel-btn bg-retro-primary hover:bg-yellow-300 text-black font-pixel text-xs px-4 py-2 font-bold flex items-center gap-1.5 shadow-md">
           <span>➕</span> 새 퀘스트 작성
         </button>
@@ -293,13 +292,13 @@
         <!-- LEFT COLUMN (5 Cols): Profile + Bouncing Avatar + 6-Axis Radar Chart -->
         <aside class="lg:col-span-5 flex flex-col gap-6">
           
-          <!-- Character Card (HP/MP bar, 마나 버퍼 등 불필요한 장식 요소 제거 완료) -->
+          <!-- Character Card -->
           <div class="bg-retro-surface pixel-box p-5 border border-black relative">
             <div class="flex items-start justify-between">
               <div>
-                <span class="text-[10px] bg-retro-purple px-2 py-0.5 font-pixel border border-black text-yellow-300" id="card-class-badge">FULLSTACK ARCHITECT</span>
-                <h3 class="font-pixel text-base md:text-lg text-retro-cyan mt-1.5" id="player-name">류도현 (Do-Hyeon)</h3>
-                <p class="text-xs text-gray-300 font-vt text-base" id="player-role-sub">LV.<span id="stat-level-text">12</span> 시니어 소프트웨어 탐험가</p>
+                <span class="text-[10px] bg-retro-purple px-2 py-0.5 font-pixel border border-black text-yellow-300" id="card-class-badge">NOVICE EXPLORER</span>
+                <h3 class="font-pixel text-base md:text-lg text-retro-cyan mt-1.5" id="player-name">모험가 (Adventurer)</h3>
+                <p class="text-xs text-gray-300 font-vt text-base" id="player-role-sub">LV.<span id="stat-level-text">1</span> 견습 탐험가</p>
               </div>
               <div class="w-10 h-10 bg-retro-bg border border-black pixel-box-sm flex items-center justify-center text-xl">
                 🧙‍♂️
@@ -339,7 +338,7 @@
                 <div class="w-14 h-1.5 bg-black/60 rounded-full mt-1"></div>
               </div>
               <div class="w-full text-center mt-2 bg-retro-surface border border-black py-1 px-2 font-vt text-sm text-retro-cyan">
-                💬 "<span id="avatar-speech">오늘도 새로운 퀘스트로 스탯을 올리자!</span>"
+                💬 "<span id="avatar-speech">첫 번째 퀘스트를 작성하고 성장을 시작해보세요!</span>"
               </div>
             </div>
 
@@ -347,15 +346,15 @@
             <div class="mt-4">
               <div class="flex justify-between text-xs font-pixel mb-1 text-[11px]">
                 <span class="text-retro-primary">EXP:</span>
-                <span class="text-white"><span id="curr-exp-val">650</span> / <span id="max-exp-val">1000</span> XP (<span id="exp-pct-val">65%</span>)</span>
+                <span class="text-white"><span id="curr-exp-val">0</span> / <span id="max-exp-val">100</span> XP (<span id="exp-pct-val">0%</span>)</span>
               </div>
               <div class="w-full bg-black h-4 border-2 border-black p-0.5 pixel-box-sm">
-                <div id="main-exp-bar" class="h-full bg-gradient-to-r from-emerald-500 via-retro-cyan to-retro-primary transition-all duration-500" style="width: 65%;"></div>
+                <div id="main-exp-bar" class="h-full bg-gradient-to-r from-emerald-500 via-retro-cyan to-retro-primary transition-all duration-500" style="width: 0%;"></div>
               </div>
             </div>
           </div>
 
-          <!-- 6-Axis Radar Stat Matrix (Clean Canvas + Tooltip) -->
+          <!-- 6-Axis Radar Stat Matrix -->
           <div class="bg-retro-surface pixel-box p-5 border border-black flex flex-col items-center">
             <div class="w-full flex items-center justify-between mb-2">
               <h3 class="font-pixel text-xs md:text-sm text-retro-primary flex items-center gap-1.5">
@@ -364,43 +363,41 @@
               <span class="text-[9px] font-pixel text-gray-400 bg-black px-1.5 py-0.5 border border-gray-700">6대 코어 역량</span>
             </div>
 
-            <!-- Canvas Container -->
             <div class="relative bg-retro-bg border-2 border-black p-2 pixel-box-sm w-full flex items-center justify-center my-1">
               <canvas id="radarCanvas" width="340" height="280" class="max-w-full h-auto cursor-crosshair"></canvas>
               <div id="stat-tooltip" class="hidden absolute pointer-events-none bg-black/95 text-retro-cyan border border-retro-cyan px-2 py-1 font-pixel text-[10px] z-20 pixel-box-sm"></div>
             </div>
 
-            <!-- 6 Stat Quick Cards (Compact & Readable) -->
             <div class="w-full grid grid-cols-3 gap-2 mt-3 font-pixel text-[10px]">
               <div class="bg-retro-card border border-black p-2 text-center hover:border-retro-cyan transition-colors">
                 <span class="text-blue-400 block text-[9px]">INT (지능)</span>
-                <span class="text-sm font-bold text-white mt-0.5 block" id="stat-val-int">88</span>
+                <span class="text-sm font-bold text-white mt-0.5 block" id="stat-val-int">10</span>
                 <span class="text-[8px] text-gray-400">코딩 &middot; 설계</span>
               </div>
               <div class="bg-retro-card border border-black p-2 text-center hover:border-retro-cyan transition-colors">
                 <span class="text-emerald-400 block text-[9px]">DEX (민첩)</span>
-                <span class="text-sm font-bold text-white mt-0.5 block" id="stat-val-dex">76</span>
+                <span class="text-sm font-bold text-white mt-0.5 block" id="stat-val-dex">10</span>
                 <span class="text-[8px] text-gray-400">배포 &middot; 구현</span>
               </div>
               <div class="bg-retro-card border border-black p-2 text-center hover:border-retro-cyan transition-colors">
                 <span class="text-purple-400 block text-[9px]">WIS (지혜)</span>
-                <span class="text-sm font-bold text-white mt-0.5 block" id="stat-val-wis">82</span>
+                <span class="text-sm font-bold text-white mt-0.5 block" id="stat-val-wis">10</span>
                 <span class="text-[8px] text-gray-400">분석 &middot; 판단</span>
               </div>
               <div class="bg-retro-card border border-black p-2 text-center hover:border-retro-cyan transition-colors">
                 <span class="text-pink-400 block text-[9px]">CHA (매력)</span>
-                <span class="text-sm font-bold text-white mt-0.5 block" id="stat-val-cha">79</span>
+                <span class="text-sm font-bold text-white mt-0.5 block" id="stat-val-cha">10</span>
                 <span class="text-[8px] text-gray-400">협업 &middot; 리드</span>
               </div>
               <div class="bg-retro-card border border-black p-2 text-center hover:border-retro-cyan transition-colors">
                 <span class="text-yellow-400 block text-[9px]">CON (체력)</span>
-                <span class="text-sm font-bold text-white mt-0.5 block" id="stat-val-con">74</span>
+                <span class="text-sm font-bold text-white mt-0.5 block" id="stat-val-con">10</span>
                 <span class="text-[8px] text-gray-400">집중 &middot; 멘탈</span>
               </div>
               <div class="bg-retro-card border border-black p-2 text-center hover:border-retro-cyan transition-colors">
                 <span class="text-amber-400 block text-[9px]">LUK (행운)</span>
-                <span class="text-sm font-bold text-white mt-0.5 block" id="stat-val-luk">85</span>
-                <span class="text-[8px] text-gray-400">이직 &middot; 버그회피</span>
+                <span class="text-sm font-bold text-white mt-0.5 block" id="stat-val-luk">10</span>
+                <span class="text-[8px] text-gray-400">이직 &middot; 기회</span>
               </div>
             </div>
           </div>
@@ -437,7 +434,7 @@
               <h3 class="font-pixel text-xs md:text-sm text-retro-cyan flex items-center gap-1.5">
                 🛡️ VERIFIED EVIDENCE VAULT (증빙 보관함)
               </h3>
-              <span class="text-[10px] font-pixel text-retro-accent" id="proof-count-badge">3건 완료</span>
+              <span class="text-[10px] font-pixel text-retro-accent" id="proof-count-badge">0건 완료</span>
             </div>
             <p class="text-xs text-gray-400 mb-3">완료된 퀘스트의 증빙 자료는 이력서 모드 포트폴리오에 자동 연동됩니다.</p>
             <div id="proof-gallery" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -451,7 +448,7 @@
     </div>
 
     <!-- ======================================================== -->
-    <!-- 3. RESUME VIEW (이력서 뷰 화면 - 완전 분리)               -->
+    <!-- 3. RESUME VIEW (이력서 뷰 화면)                           -->
     <!-- ======================================================== -->
     <div id="resume-view" class="hidden max-w-4xl mx-auto my-2 transition-all duration-300">
       <div class="bg-white text-gray-900 shadow-2xl rounded-sm border border-gray-200 p-8 md:p-12 print:p-0 print:border-none print:shadow-none">
@@ -477,19 +474,19 @@
           <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <div class="inline-block px-2.5 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded mb-2">
-                Senior Software Engineer &amp; Tech Explorer
+                Software Explorer
               </div>
               <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight" id="resume-name">
-                류도현 (Do-Hyeon Ryu)
+                모험가 (Adventurer)
               </h1>
               <p class="text-base text-gray-600 mt-2 font-medium max-w-xl">
-                "체계적인 문제 해결과 지속 가능한 아키텍처를 지향하는 소프트웨어 엔지니어입니다."
+                "체계적인 문제 해결과 지속 가능한 성장을 지향하는 소프트웨어 엔지니어입니다."
               </p>
             </div>
             <div class="text-xs text-gray-600 space-y-1 md:text-right border-l-2 md:border-l-0 pl-3 md:pl-0 border-gray-200 font-sans">
-              <div>📧 dohyeon.dev@lifegame.io</div>
-              <div>📱 +82 10-8282-1234</div>
-              <div>🌐 github.com/comalab/product-builder-test</div>
+              <div>📧 adventurer@lifegame.io</div>
+              <div>📱 +82 10-0000-0000</div>
+              <div>🌐 github.com/adventurer</div>
               <div>📍 Seoul, Republic of Korea</div>
             </div>
           </div>
@@ -501,23 +498,22 @@
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-gray-50 p-5 rounded-lg border border-gray-100">
             <div class="md:col-span-2">
               <p class="text-sm text-gray-700 leading-relaxed">
-                프론트엔드 및 분산 시스템 전반에 걸쳐 신뢰성 있는 사용자 경험을 구축해왔습니다. 
-                퀘스트 기반의 자기주도적 학습 파이프라인을 통해 정량적 역량 증빙(자격증, 프로젝트 배포, 알고리즘, 심층 블로그)을 지속하며 
-                팀의 비즈니스 목표를 신속하고 정밀하게 달성합니다.
+                실전 문제 해결과 자기주도적 학습 파이프라인을 구축하고 있습니다.
+                퀘스트를 통해 기록된 정량적 역량 증빙(자격증, 프로젝트 배포, 알고리즘, 기술 아티클)을 바탕으로 팀과 비즈니스에 기여합니다.
               </p>
               <div class="mt-4 flex flex-wrap gap-2 text-xs">
-                <span class="px-2.5 py-1 bg-white border border-gray-200 rounded font-medium text-gray-800">TypeScript / React / Next.js</span>
-                <span class="px-2.5 py-1 bg-white border border-gray-200 rounded font-medium text-gray-800">Node.js / Python / Pandas</span>
-                <span class="px-2.5 py-1 bg-white border border-gray-200 rounded font-medium text-gray-800">Docker / AWS / Cloudflare Pages</span>
+                <span class="px-2.5 py-1 bg-white border border-gray-200 rounded font-medium text-gray-800">Web Development</span>
+                <span class="px-2.5 py-1 bg-white border border-gray-200 rounded font-medium text-gray-800">Problem Solving</span>
+                <span class="px-2.5 py-1 bg-white border border-gray-200 rounded font-medium text-gray-800">Clean Code &amp; Testing</span>
               </div>
             </div>
             <div class="border-t md:border-t-0 md:border-l border-gray-200 pt-3 md:pt-0 md:pl-4 space-y-2">
               <div class="text-xs font-bold text-gray-900">핵심 역량 매트릭스 (Game Data 연동)</div>
               <div class="text-xs space-y-1.5 font-sans">
-                <div class="flex justify-between text-gray-600"><span>시스템 설계 (INT):</span> <span class="font-bold text-gray-900" id="resume-stat-int">88%</span></div>
-                <div class="flex justify-between text-gray-600"><span>개발 및 배포 생산성 (DEX):</span> <span class="font-bold text-gray-900" id="resume-stat-dex">76%</span></div>
-                <div class="flex justify-between text-gray-600"><span>문제 분석 및 해결 (WIS):</span> <span class="font-bold text-gray-900" id="resume-stat-wis">82%</span></div>
-                <div class="flex justify-between text-gray-600"><span>크로스 협업 (CHA):</span> <span class="font-bold text-gray-900" id="resume-stat-cha">79%</span></div>
+                <div class="flex justify-between text-gray-600"><span>시스템 설계 (INT):</span> <span class="font-bold text-gray-900" id="resume-stat-int">10%</span></div>
+                <div class="flex justify-between text-gray-600"><span>개발 및 배포 생산성 (DEX):</span> <span class="font-bold text-gray-900" id="resume-stat-dex">10%</span></div>
+                <div class="flex justify-between text-gray-600"><span>문제 분석 및 해결 (WIS):</span> <span class="font-bold text-gray-900" id="resume-stat-wis">10%</span></div>
+                <div class="flex justify-between text-gray-600"><span>크로스 협업 (CHA):</span> <span class="font-bold text-gray-900" id="resume-stat-cha">10%</span></div>
               </div>
             </div>
           </div>
@@ -535,7 +531,7 @@
         <section class="mb-8 print-break-inside-avoid">
           <div class="flex justify-between items-center mb-3">
             <h2 class="text-xs font-bold text-gray-400 uppercase tracking-widest">KEY PROJECTS &amp; VERIFIED QUEST LOGS (포트폴리오 연동 내역)</h2>
-            <span class="text-xs text-emerald-600 font-semibold" id="resume-project-count-badge">실시간 연동</span>
+            <span class="text-xs text-emerald-600 font-semibold" id="resume-project-count-badge">0건 연동됨</span>
           </div>
           <div id="resume-projects-list" class="space-y-4 font-sans">
             <!-- Populated via JS -->
@@ -548,24 +544,17 @@
           <div class="border-l-2 border-gray-200 pl-4 space-y-4 ml-1">
             <div>
               <div class="flex justify-between text-sm font-bold text-gray-900">
-                <span>(주)네오 아카이브 &middot; 프론트엔드 리드</span>
-                <span class="text-xs font-normal text-gray-500">2022.03 ~ 현재</span>
+                <span>개발자 여정의 시작</span>
+                <span class="text-xs font-normal text-gray-500">현재</span>
               </div>
-              <p class="text-xs text-gray-600 mt-1">대규모 엔터프라이즈 SaaS 대시보드 마이그레이션 및 렌더링 성능 40% 개선.</p>
-            </div>
-            <div>
-              <div class="flex justify-between text-sm font-bold text-gray-900">
-                <span>한국대학교 컴퓨터공학과 학사 졸업</span>
-                <span class="text-xs font-normal text-gray-500">2016.03 ~ 2022.02</span>
-              </div>
-              <p class="text-xs text-gray-600 mt-1">소프트웨어 공학 전공, 학부 알고리즘 동아리 회장 역임.</p>
+              <p class="text-xs text-gray-600 mt-1">새로운 퀘스트를 달성하여 당신만의 커리어 히스토리를 쌓아가세요.</p>
             </div>
           </div>
         </section>
 
         <!-- Watermark Footer -->
         <footer class="mt-12 pt-6 border-t border-gray-200 flex justify-between items-center text-[11px] text-gray-400 font-mono">
-          <span>Verified by LifeGame System &middot; Hash #LG-2025-0308-DH</span>
+          <span>Verified by LifeGame System &middot; Hash #LG-CAREER-START</span>
           <span>Last Updated: <span id="resume-date-stamp"></span></span>
         </footer>
       </div>
@@ -574,7 +563,7 @@
   </main>
 
   <!-- ======================================================== -->
-  <!-- 4. MODAL: QUEST EDITOR (1단 노션 스타일 깔끔한 모달)      -->
+  <!-- 4. MODAL: QUEST EDITOR (1단 노션 스타일)                  -->
   <!-- ======================================================== -->
   <div id="quest-editor-modal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-3 md:p-6 overflow-y-auto" onclick="if(event.target===this) closeEditorModal()">
     <div class="bg-retro-surface pixel-box max-w-3xl w-full my-auto border-3 border-black relative max-h-[92vh] flex flex-col shadow-2xl">
@@ -590,10 +579,10 @@
         </button>
       </div>
 
-      <!-- Scrollable Single-Column Body (Notion / Medium Style) -->
+      <!-- Scrollable Single-Column Body -->
       <div class="p-5 md:p-7 overflow-y-auto flex-1 space-y-4 bg-retro-bg">
         
-        <!-- [요구사항 2]: 상단 콤팩트한 스탯 & 메타 칩 바 -->
+        <!-- Compact Stat & Meta Chips Bar -->
         <div class="bg-retro-surface p-3.5 border border-black pixel-box-sm space-y-3">
           
           <!-- Stat Category Chips -->
@@ -621,7 +610,7 @@
             </div>
           </div>
 
-          <!-- Difficulty + Thumbnail + Tags in One Compact Row -->
+          <!-- Difficulty + Thumbnail in One Row -->
           <div class="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-black/60">
             <!-- Difficulty Chips -->
             <div class="flex items-center gap-1.5">
@@ -659,7 +648,7 @@
           
           <!-- Title Input Field -->
           <div>
-            <input id="modal-title-input" class="w-full bg-transparent font-headline text-lg md:text-xl font-bold text-white placeholder:text-gray-600 outline-none border-b border-gray-700 focus:border-retro-primary pb-1 transition-colors" placeholder="퀘스트 제목을 입력하세요 (예: Next.js SSR 최적화 완성)..."/>
+            <input id="modal-title-input" class="w-full bg-transparent font-headline text-lg md:text-xl font-bold text-white placeholder:text-gray-600 outline-none border-b border-gray-700 focus:border-retro-primary pb-1 transition-colors" placeholder="퀘스트 제목을 입력하세요..."/>
           </div>
 
           <!-- Minimal Formatting Toolbar -->
@@ -675,7 +664,7 @@
             <button onclick="formatModalBlock('blockquote')" class="w-7 h-7 bg-retro-card hover:bg-black text-retro-gold text-xs border border-black flex items-center justify-center" title="인용구" type="button">❝</button>
             <div class="w-[1px] h-5 bg-gray-700 mx-0.5"></div>
             
-            <!-- Insert Local Image with Caption into Editor Body -->
+            <!-- Insert Local Image with Caption -->
             <input type="file" id="modal-inline-img-input" accept="image/*" class="hidden" onchange="handleModalInlineImageInsert(event)"/>
             <button onclick="document.getElementById('modal-inline-img-input').click()" class="px-2 h-7 bg-retro-card hover:bg-[#2e224e] text-retro-accent text-xs font-pixel flex items-center gap-1 border border-black" title="본문 중간에 사진 삽입" type="button">
               <span>📷</span> <span>+사진</span>
@@ -695,7 +684,7 @@
 
       </div>
 
-      <!-- Modal Footer (Reward Projection + Publish Button) -->
+      <!-- Modal Footer -->
       <div class="bg-retro-card px-5 py-3 border-t-2 border-black flex flex-wrap items-center justify-between gap-3 shrink-0">
         <div class="text-xs font-pixel text-yellow-300">
           획득 보상: <span id="modal-reward-text" class="text-white">+100 EXP / INT +2 / 🪙 +350G</span>
@@ -743,7 +732,7 @@
           </div>
 
           <h2 id="detail-title" class="font-headline text-lg md:text-xl text-white font-bold leading-snug">
-            파이썬 데이터 시각화 프로젝트 완료
+            퀘스트 제목
           </h2>
 
           <div class="mt-2.5 flex flex-wrap gap-1.5" id="detail-tags-container">
@@ -794,7 +783,7 @@
   <footer class="w-full bg-retro-surface py-3 border-t border-black text-center text-xs font-vt text-gray-400">
     <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
       <span>[LIFEGAME v2.5] 2D Pixel RPG Portfolio Dashboard</span>
-      <span>Cloudflare Pages &middot; LocalStorage Synced</span>
+      <span>Cloudflare Pages &middot; Clean Slate</span>
     </div>
   </footer>
 
@@ -918,128 +907,30 @@
     }
 
     /* ==========================================================================
-       2. APP STATE & LOCALSTORAGE PERSISTENCE
+       2. CLEAN INITIAL DATA (모든 더미데이터 제거 완료)
        ========================================================================== */
-    const STORAGE_KEY = 'LIFEGAME_V25_CLEAN_STORE';
-
-    const SAMPLE_PYTHON_BODY = `<p>판다스(Pandas)와 맷플롯립(Matplotlib)을 활용하여 10만 건의 트랜잭션 텔레메트리 이상치를 감지하고, 다중 시계열 차트로 시각화하는 파이프라인을 완성했습니다.</p>
-<p>NumPy 벡터화 기법을 도입하여 롤링 윈도우 연산 시간을 74% 단축시켰으며, 이를 통해 대규모 트래픽 분석 역량을 확보했습니다.</p>
-<div class="my-3 p-3 bg-black/60 border border-black font-mono text-xs text-retro-cyan">
-  <div class="text-[10px] text-gray-400 mb-1 border-b border-gray-700 pb-1">💻 TELEMETRY_PIPELINE.PY</div>
-  <pre>import numpy as np
-import matplotlib.pyplot as plt
-
-tx_stream = np.random.normal(loc=120.0, scale=18.5, size=100000)
-anomaly_mask = np.abs(tx_stream - np.mean(tx_stream)) > (3 * np.std(tx_stream))
-print(f"이상치 감지 건수: {np.sum(anomaly_mask)}")</pre>
-</div>
-<blockquote>"꾸준한 문제 해결과 정량적 데이터 검증이 엔지니어의 가장 확실한 실력 증명입니다."</blockquote>`;
+    const STORAGE_KEY = 'LIFEGAME_V25_CLEAN_EMPTY_STORE';
 
     const DEFAULT_DATA = {
       player: {
-        name: "류도현 (Do-Hyeon)",
-        title: "Senior Software Architect",
-        classBadge: "FULLSTACK ARCHITECT",
-        level: 12,
-        currentExp: 650,
-        maxExp: 1000,
-        gold: 2450,
-        speech: "오늘도 새로운 퀘스트로 스탯을 올리자!"
+        name: "모험가 (Adventurer)",
+        title: "견습 탐험가",
+        classBadge: "NOVICE EXPLORER",
+        level: 1,
+        currentExp: 0,
+        maxExp: 100,
+        gold: 0,
+        speech: "첫 번째 퀘스트를 작성하고 성장을 시작해보세요!"
       },
       stats: {
-        INT: 88,
-        DEX: 76,
-        WIS: 82,
-        CHA: 79,
-        CON: 74,
-        LUK: 85
+        INT: 10,
+        DEX: 10,
+        WIS: 10,
+        CHA: 10,
+        CON: 10,
+        LUK: 10
       },
-      quests: [
-        {
-          id: "Q-8041",
-          title: "파이썬 데이터 시각화 프로젝트 완료",
-          type: "blog",
-          difficulty: "adept",
-          category: "INT",
-          statKey: "INT",
-          statBonus: 2,
-          expBonus: 100,
-          goldBonus: 350,
-          tags: ["파이썬", "데이터분석", "Matplotlib"],
-          desc: "10만 건의 트랜잭션 텔레메트리 이상치 분석 및 자동 시각화 파이프라인 완성",
-          thumbnail: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='250' viewBox='0 0 400 250'><rect width='400' height='250' fill='%23120E24'/><rect x='15' y='15' width='370' height='220' fill='%231B1438' stroke='%2300F0FF' stroke-width='3'/><text x='200' y='75' font-family='monospace' font-size='20' fill='%23FCE22A' text-anchor='middle'>[DATA TELEMETRY]</text><polyline points='40,160 100,140 160,155 220,90 280,105 340,65' fill='none' stroke='%2300F0FF' stroke-width='4'/><circle cx='220' cy='90' r='5' fill='%23FF007F'/><circle cx='340' cy='65' r='5' fill='%23FCE22A'/><text x='200' y='200' font-family='sans-serif' font-size='14' fill='%23ffffff' text-anchor='middle' font-weight='bold'>Matplotlib 100K Heatmap</text></svg>",
-          contentHtml: SAMPLE_PYTHON_BODY,
-          author: "류도현 (Do-Hyeon)",
-          completed: true,
-          completedDate: "2024-11-04",
-          inResume: true,
-          proofImg: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='250' viewBox='0 0 400 250'><rect width='400' height='250' fill='%23120E24'/><rect x='15' y='15' width='370' height='220' fill='%231B1438' stroke='%2300F0FF' stroke-width='3'/><text x='200' y='75' font-family='monospace' font-size='20' fill='%23FCE22A' text-anchor='middle'>[DATA TELEMETRY]</text><polyline points='40,160 100,140 160,155 220,90 280,105 340,65' fill='none' stroke='%2300F0FF' stroke-width='4'/><circle cx='220' cy='90' r='5' fill='%23FF007F'/><circle cx='340' cy='65' r='5' fill='%23FCE22A'/></svg>",
-          note: "NumPy 벡터화 기법 적용으로 런타임 74% 단축 및 이상치 감지 성공."
-        },
-        {
-          id: "q-101",
-          title: "Next.js 14 App Router 최적화 프로젝트 완성",
-          type: "boss",
-          difficulty: "boss",
-          category: "INT",
-          statKey: "INT",
-          statBonus: 6,
-          expBonus: 250,
-          goldBonus: 500,
-          tags: ["Nextjs", "React", "CoreWebVitals"],
-          desc: "서버 컴포넌트 스트리밍 및 캐싱 레이어 튜닝 후 Core Web Vitals 95점 달성",
-          thumbnail: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='250' viewBox='0 0 400 250'><rect width='400' height='250' fill='%2318122B'/><rect x='20' y='20' width='360' height='210' fill='%23241B3D' stroke='%2300F0FF' stroke-width='4'/><text x='200' y='80' font-family='monospace' font-size='20' fill='%23FCE22A' text-anchor='middle'>[PROVEN MILESTONE]</text><text x='200' y='120' font-family='sans-serif' font-size='16' fill='%23ffffff' text-anchor='middle' font-weight='bold'>Lighthouse Score 99/100</text><rect x='130' y='160' width='140' height='30' fill='%2300F0FF'/><text x='200' y='180' font-family='monospace' font-size='12' fill='%23000' text-anchor='middle' font-weight='bold'>VERIFIED ARCHIVE</text></svg>",
-          contentHtml: "<p>Next.js 14 App Router 기반으로 프로젝트를 전면 리팩터링했습니다. 서버 컴포넌트 스트리밍과 이미지 최적화를 통해 FCP 0.8초 이내, Lighthouse 성능 99점을 기록했습니다.</p>",
-          author: "류도현 (Do-Hyeon)",
-          completed: true,
-          completedDate: "2025-02-28",
-          inResume: true,
-          proofImg: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='250' viewBox='0 0 400 250'><rect width='400' height='250' fill='%2318122B'/><rect x='20' y='20' width='360' height='210' fill='%23241B3D' stroke='%2300F0FF' stroke-width='4'/><text x='200' y='80' font-family='monospace' font-size='20' fill='%23FCE22A' text-anchor='middle'>[PROVEN MILESTONE]</text><text x='200' y='120' font-family='sans-serif' font-size='16' fill='%23ffffff' text-anchor='middle' font-weight='bold'>Lighthouse Score 99/100</text></svg>",
-          note: "Next.js SSR 번들 사이즈를 42% 압축하고 FCP를 0.8초 이내로 단축함."
-        },
-        {
-          id: "q-102",
-          title: "AWS Certified Solutions Architect (SAA) 취득",
-          type: "boss",
-          difficulty: "boss",
-          category: "WIS",
-          statKey: "WIS",
-          statBonus: 8,
-          expBonus: 350,
-          goldBonus: 800,
-          tags: ["AWS", "Cloud", "SAA"],
-          desc: "고가용성 분산 클라우드 아키텍처 설계 역량 공식 인증",
-          thumbnail: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='250' viewBox='0 0 400 250'><rect width='400' height='250' fill='%230B132B'/><rect x='20' y='20' width='360' height='210' fill='%231C2541' stroke='%23FCE22A' stroke-width='4'/><text x='200' y='70' font-family='monospace' font-size='22' fill='%23FF9900' text-anchor='middle'>AWS CERTIFIED</text><text x='200' y='110' font-family='sans-serif' font-size='17' fill='%23ffffff' text-anchor='middle' font-weight='bold'>Solutions Architect - Associate</text><text x='200' y='150' font-family='monospace' font-size='13' fill='%23A0AEC0' text-anchor='middle'>Score: 890 / 1000 (Pass)</text></svg>",
-          contentHtml: "<p>VPC 서브넷 격리, Aurora 다중 가용영역 장애복구, CloudFront 보안 정책 설계를 완료하여 AWS 공인 솔루션 아키텍트 어소시에이트를 취득했습니다.</p>",
-          author: "류도현 (Do-Hyeon)",
-          completed: true,
-          completedDate: "2025-01-15",
-          inResume: true,
-          proofImg: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='250' viewBox='0 0 400 250'><rect width='400' height='250' fill='%230B132B'/><rect x='20' y='20' width='360' height='210' fill='%231C2541' stroke='%23FCE22A' stroke-width='4'/><text x='200' y='70' font-family='monospace' font-size='22' fill='%23FF9900' text-anchor='middle'>AWS CERTIFIED</text><text x='200' y='110' font-family='sans-serif' font-size='17' fill='%23ffffff' text-anchor='middle' font-weight='bold'>Solutions Architect</text></svg>",
-          note: "VPC 서브넷 격리 및 Aurora Serverless 다중 가용영역 장애조치 실전 검증 완료."
-        },
-        {
-          id: "q-103",
-          title: "백준(BOJ) 골드 티어 알고리즘 50제 돌파",
-          type: "daily",
-          difficulty: "adept",
-          category: "INT",
-          statKey: "INT",
-          statBonus: 4,
-          expBonus: 120,
-          goldBonus: 200,
-          tags: ["알고리즘", "DP", "BFS"],
-          desc: "다이나믹 프로그래밍 및 BFS/DFS 그래프 탐색 문제 집중 훈련",
-          thumbnail: null,
-          contentHtml: "<p>다익스트라 알고리즘, 세그먼트 트리, 2차원 DP 점화식 도출 훈련을 통해 골드 티어 50문제를 통과했습니다.</p>",
-          author: "류도현 (Do-Hyeon)",
-          completed: true,
-          completedDate: "2025-03-02",
-          inResume: true,
-          proofImg: null,
-          note: "DP 점화식 도출 속도 향상 및 시간 초과 방지 최적화 노하우 체득."
-        }
-      ]
+      quests: []
     };
 
     let AppState = null;
@@ -1049,7 +940,7 @@ print(f"이상치 감지 건수: {np.sum(anomaly_mask)}")</pre>
     // Editor local state
     let modalSelectedStat = 'INT';
     let modalSelectedDiff = 'adept';
-    let modalTags = ['파이썬', '데이터분석'];
+    let modalTags = [];
     let modalThumbDataUrl = null;
     let modalEditingQuestId = null;
 
@@ -1076,7 +967,7 @@ print(f"이상치 감지 건수: {np.sum(anomaly_mask)}")</pre>
     }
 
     function resetDataPrompt() {
-      if (confirm("초기 기본 샘플 데이터로 복원하시겠습니까?")) {
+      if (confirm("모든 데이터를 초기화하시겠습니까? (깨끗한 초기 상태로 복원됩니다)")) {
         AppState = JSON.parse(JSON.stringify(DEFAULT_DATA));
         saveState();
         renderAll();
@@ -1085,7 +976,7 @@ print(f"이상치 감지 건수: {np.sum(anomaly_mask)}")</pre>
     }
 
     /* ==========================================================================
-       3. SCREEN TAB SWITCHING ([대시보드] vs [이력서 뷰] 완전 분리)
+       3. SCREEN TAB SWITCHING
        ========================================================================== */
     function switchTab(tab) {
       activeTab = tab;
@@ -1196,7 +1087,7 @@ print(f"이상치 감지 건수: {np.sum(anomaly_mask)}")</pre>
       ctx.beginPath();
       for (let i = 0; i < 6; i++) {
         const key = STAT_KEYS[i];
-        const rawVal = AppState.stats[key] || 50;
+        const rawVal = AppState.stats[key] || 10;
         const normalized = Math.min(Math.max(rawVal, 10), 100) / 100;
         const r = radius * normalized;
         const angle = (Math.PI / 3) * i - Math.PI / 2;
@@ -1324,8 +1215,13 @@ print(f"이상치 감지 건수: {np.sum(anomaly_mask)}")</pre>
 
       if (filtered.length === 0) {
         container.innerHTML = `
-          <div class="p-6 text-center bg-black/40 border border-black font-pixel text-xs text-gray-400">
-            퀘스트가 없습니다. 우측 상단의 [+ 새 퀘스트 작성] 버튼으로 추가해보세요!
+          <div class="py-12 px-4 text-center bg-black/40 border border-black font-pixel text-xs text-gray-400 space-y-3">
+            <div class="text-3xl">📜</div>
+            <p class="text-white">등록된 퀘스트가 없습니다.</p>
+            <p class="text-[11px] text-gray-400 font-sans">우측 상단의 [+ 새 퀘스트 작성] 버튼을 클릭해 첫 퀘스트를 시작하세요!</p>
+            <button onclick="openEditorModal()" class="pixel-btn bg-retro-primary text-black px-3.5 py-1.5 text-xs font-bold inline-block mt-2">
+              ➕ 첫 퀘스트 작성하기
+            </button>
           </div>
         `;
         return;
@@ -1402,8 +1298,9 @@ print(f"이상치 감지 건수: {np.sum(anomaly_mask)}")</pre>
 
       if (completedWithProof.length === 0) {
         gallery.innerHTML = `
-          <div class="col-span-3 text-center py-4 text-xs text-gray-400 font-vt text-base">
-            완료된 증빙이 없습니다. 퀘스트를 완료하고 자료를 보관해보세요!
+          <div class="col-span-3 text-center py-6 text-xs text-gray-400 font-pixel">
+            <span class="text-2xl block mb-1">🛡️</span>
+            아직 완료된 퀘스트 증빙이 없습니다.
           </div>
         `;
         return;
@@ -1442,7 +1339,7 @@ print(f"이상치 감지 건수: {np.sum(anomaly_mask)}")</pre>
     }
 
     /* ==========================================================================
-       6. 1-COLUMN COMPACT QUEST EDITOR MODAL (노션 스타일 단일 컬럼)
+       6. 1-COLUMN COMPACT QUEST EDITOR MODAL
        ========================================================================== */
     function openEditorModal(questId = null) {
       modalEditingQuestId = questId;
@@ -1469,7 +1366,7 @@ print(f"이상치 감지 건수: {np.sum(anomaly_mask)}")</pre>
         canvas.innerHTML = '<p><br></p>';
         modalSelectedStat = 'INT';
         modalSelectedDiff = 'adept';
-        modalTags = ['개발기록', '스펙업'];
+        modalTags = [];
         modalThumbDataUrl = null;
       }
 
@@ -1696,7 +1593,7 @@ npm run build && git commit -m "feat: complete milestone"</pre>
       } else {
         AppState.quests.unshift(questObj);
         // Apply rewards
-        AppState.stats[modalSelectedStat] = Math.min(100, (AppState.stats[modalSelectedStat] || 50) + statBonus);
+        AppState.stats[modalSelectedStat] = Math.min(100, (AppState.stats[modalSelectedStat] || 10) + statBonus);
         AppState.player.gold += goldBonus;
         AppState.player.currentExp += expBonus;
 
@@ -1725,7 +1622,7 @@ npm run build && git commit -m "feat: complete milestone"</pre>
 
     /* ==========================================================================
        7. QUEST DETAIL BLOG MODAL & RESUME TOGGLE
-       ========================================================================= */
+       ========================================================================== */
     let currentDetailId = null;
 
     function openDetailModal(questId) {
@@ -1837,13 +1734,13 @@ npm run build && git commit -m "feat: complete milestone"</pre>
       document.getElementById('resume-stat-cha').textContent = AppState.stats.CHA + '%';
       document.getElementById('resume-date-stamp').textContent = new Date().toLocaleDateString('ko-KR');
 
-      // Certifications from completed boss quests
+      // Certifications
       const certsContainer = document.getElementById('resume-certs-list');
       certsContainer.innerHTML = '';
       const bossQuests = AppState.quests.filter(q => (q.type === 'boss' || q.difficulty === 'boss') && q.completed);
 
       if (bossQuests.length === 0) {
-        certsContainer.innerHTML = '<p class="text-xs text-gray-400 italic">완료된 보스 퀘스트가 여기에 자동 연동됩니다.</p>';
+        certsContainer.innerHTML = '<p class="text-xs text-gray-400 italic py-3 bg-gray-50 border border-dashed border-gray-300 rounded text-center">완료된 보스 퀘스트(자격증 및 메이저 마일스톤)가 등록되면 여기에 자동 연동됩니다.</p>';
       } else {
         bossQuests.forEach(b => {
           const div = document.createElement('div');
@@ -1864,7 +1761,7 @@ npm run build && git commit -m "feat: complete milestone"</pre>
         });
       }
 
-      // Projects: Only quests with inResume !== false
+      // Projects
       const projContainer = document.getElementById('resume-projects-list');
       const badge = document.getElementById('resume-project-count-badge');
       projContainer.innerHTML = '';
@@ -1873,7 +1770,7 @@ npm run build && git commit -m "feat: complete milestone"</pre>
       badge.textContent = `총 ${resumeQuests.length}건 연동됨`;
 
       if (resumeQuests.length === 0) {
-        projContainer.innerHTML = '<p class="text-xs text-gray-400 italic">이력서에 포함된 프로젝트가 없습니다. 퀘스트 상세 보기에서 "이력서 포트폴리오에 포함하기"를 켜주세요.</p>';
+        projContainer.innerHTML = '<p class="text-xs text-gray-400 italic py-3 bg-gray-50 border border-dashed border-gray-300 rounded text-center">이력서에 포함된 프로젝트가 없습니다. 퀘스트를 완료하고 \'이력서 포트폴리오에 포함하기\'를 켜주세요.</p>';
         return;
       }
 
@@ -1905,9 +1802,9 @@ npm run build && git commit -m "feat: complete milestone"</pre>
        9. AVATAR & UTILS
        ========================================================================== */
     const SPEECHES = [
+      "첫 번째 퀘스트를 작성하고 레벨업을 시작해보세요!",
       "버그를 잡는 것이 곧 보스를 물리치는 길이다!",
       "오늘 작성한 퀘스트 로그가 내일의 이력서가 된다.",
-      "스탯 100 만렙을 향해 한 걸음 더 전진!",
       "꾸준함은 가장 강력한 패시브 스킬입니다."
     ];
 
