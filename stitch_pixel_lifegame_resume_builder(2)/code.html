@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="ko"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>LifeGame 16-Bit 레트로 RPG - 퀘스트 에디터</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Anybody:wght@700;800;900&amp;family=Courier+Prime:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}.scanlines{background:linear-gradient(rgba(18,16,38,0) 50%,rgba(0,0,0,0.35) 50%),linear-gradient(90deg,rgba(255,0,0,0.03),rgba(0,255,0,0.01),rgba(0,0,255,0.03));background-size:100% 4px,6px 100%;pointer-events:none;}</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-tertiary-container":"#4f3d00","error-container":"#93000a","surface-bright":"#3a364d","inverse-primary":"#bc0b3b","tertiary-fixed":"#ffe08b","secondary-fixed":"#c4e7ff","on-primary":"#67001b","on-surface":"#e5dffb","inverse-on-surface":"#312e43","error":"#ffb4ab","on-primary-fixed":"#40000d","outline-variant":"#5b4041","secondary":"#7bd0ff","on-primary-container":"#5b0017","surface-container-high":"#2b273d","secondary-container":"#00a6e0","tertiary-container":"d0a600","on-tertiary-fixed":"#241a00","surface-container-highest":"#353248","surface-container-lowest":"#0e0b1f","on-secondary-container":"#00374d","on-error":"#690005","surface-container-low":"#1c192d","on-secondary-fixed-variant":"#004c69","on-error-container":"#ffdad6","on-secondary":"#00354a","on-primary-fixed-variant":"#92002a","surface-tint":"#ffb2b7","tertiary-fixed-dim":"#f1c100","primary-fixed":"#ffdadb","on-background":"#e5dffb","surface-container":"#201d32","on-tertiary-fixed-variant":"#584400","inverse-surface":"#e5dffb","secondary-fixed-dim":"#7bd0ff","on-secondary-fixed":"#001e2c","primary":"#ffb2b7","surface-dim":"#141125","primary-container":"#ff516a","background":"#141125","outline":"#aa888a","tertiary":"#f1c100","primary-fixed-dim":"#ffb2b7","on-surface-variant":"#e3bdbf","surface":"#141125","surface-variant":"#353248","on-tertiary":"#3d2f00"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"space-md":"1rem","margin":"1rem","space-sm":"0.5rem","space-xs":"0.25rem","margin-desktop":"2rem","gutter":"1rem","space-xl":"2.5rem","space-lg":"1.5rem","gutter-desktop":"1.5rem"},fontFamily:{"label-md":["Courier Prime"],"headline-xl":["Anybody"],"body-lg":["Courier Prime"],"label-lg":["Courier Prime"],"body-md":["Courier Prime"],"headline-md":["Anybody"],"headline-sm":["Anybody"],"headline-lg-mobile":["Anybody"],"body-sm":["Courier Prime"],"label-sm":["Courier Prime"],"headline-lg":["Anybody"],"headline-xl-mobile":["Anybody"]},fontSize:{"label-md":["0.75rem",{"lineHeight":"1.2","letterSpacing":"0.08em","fontWeight":"700"}],"headline-xl":["3.5rem",{"lineHeight":"1.05","letterSpacing":"-0.04em","fontWeight":"900"}],"body-lg":["1.125rem",{"lineHeight":"1.6","letterSpacing":"0em","fontWeight":"400"}],"label-lg":["0.875rem",{"lineHeight":"1.2","letterSpacing":"0.05em","fontWeight":"700"}],"body-md":["0.9375rem",{"lineHeight":"1.55","letterSpacing":"0em","fontWeight":"400"}],"headline-md":["1.5rem",{"lineHeight":"1.25","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-sm":["1.125rem",{"lineHeight":"1.3","letterSpacing":"0em","fontWeight":"700"}],"headline-lg-mobile":["1.5rem",{"lineHeight":"1.2","letterSpacing":"-0.02em","fontWeight":"800"}],"body-sm":["0.8125rem",{"lineHeight":"1.5","letterSpacing":"0.01em","fontWeight":"400"}],"label-sm":["0.6875rem",{"lineHeight":"1.1","letterSpacing":"0.1em","fontWeight":"700"}],"headline-lg":["2.25rem",{"lineHeight":"1.15","letterSpacing":"-0.03em","fontWeight":"800"}],"headline-xl-mobile":["2rem",{"lineHeight":"1.1","letterSpacing":"-0.03em","fontWeight":"900"}]}}}};</script></head><body class="bg-surface-container-lowest font-body-md text-on-surface min-h-screen relative selection:bg-primary-container selection:text-on-primary"><div class="fixed inset-0 scanlines z-40"></div><header class="fixed top-0 left-0 w-full z-50 bg-surface-container-lowest shadow-[0_4px_0_0_#000000]"><div class="h-20 w-full px-margin-desktop flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-sm"><div class="bg-primary-container px-space-sm py-space-xs shadow-[2px_2px_0_0_#000000]"><span class="font-headline-md text-headline-md uppercase text-on-primary-container tracking-wider">LIFEGAME</span></div><span class="bg-surface-container-high px-space-xs py-0 font-label-sm text-label-sm uppercase text-tertiary shadow-[1px_1px_0_0_#000000]">퀘스트 에디터</span></div><nav class="hidden xl:flex items-center gap-space-xs" data-active-classes="bg-surface-container-high text-tertiary shadow-[2px_2px_0_0_#d0a600]"><a class="px-space-sm py-space-xs font-label-md text-label-md uppercase text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-none" data-path="quest-board" href="#">[ 퀘스트 게시판 ]</a><a aria-current="page" class="px-space-sm py-space-xs font-label-md uppercase transition-none bg-surface-container-high text-tertiary shadow-[2px_2px_0_0_#d0a600]" data-path="quest-editor" href="#">[ 퀘스트 에디터 ]</a><a class="px-space-sm py-space-xs font-label-md text-label-md uppercase text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-none" data-path="stat-matrix" href="#">[ 스탯 매트릭스 ]</a><a class="px-space-sm py-space-xs font-label-md text-label-md uppercase text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-none" data-path="resume-mode" href="#">[ 이력서 모드 ]</a></nav></div><div class="flex items-center gap-space-md"><div class="hidden md:flex items-center gap-space-md bg-surface-container-low px-space-md py-space-xs shadow-[inset_2px_2px_0_0_#000000]"><div class="flex flex-col"><div class="flex items-center justify-between gap-space-sm"><span class="font-label-sm text-label-sm text-secondary uppercase">LV.12 설계자 (ARCHITECT)</span><span class="font-label-sm text-label-sm text-on-surface-variant">경험치 (EXP) 65%</span></div><div class="w-28 h-2 bg-surface-container-lowest mt-space-xs shadow-[inset_1px_1px_0_0_#000000]"><div class="h-full bg-secondary" style="width: 65%;"></div></div></div><div class="h-6 w-0.5 bg-surface-variant"></div><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-tertiary text-[18px] animate-pulse">monetization_on</span><span class="font-label-md text-label-md text-tertiary tracking-wider">2,450 골드 (G)</span></div></div><button class="px-space-sm py-space-xs bg-surface-container hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface shadow-[2px_2px_0_0_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none flex items-center gap-space-xs" type="button"><span class="material-symbols-outlined text-[18px] text-primary">volume_up</span><span class="font-label-sm text-label-sm hidden sm:inline uppercase">효과음 (FX) 켜짐</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shadow-[2px_2px_0_0_#000000]"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-surface-container-lowest min-h-[calc(100vh-3rem)] px-margin-desktop"><div class="flex flex-col w-full pb-space-xl">
+<!-- Sub-header HUD Strip -->
+<div class="w-full mb-space-md bg-surface-container-low px-space-md py-space-xs shadow-[2px_2px_0_0_#000000] flex flex-wrap items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-space-xs text-tertiary">
+<span class="material-symbols-outlined text-[18px]">terminal</span>
+<span class="font-label-md text-label-md uppercase tracking-wider">[ 연대기 터미널 // 작업대 V2.0 ]</span>
+</div>
+<div class="hidden md:flex items-center gap-space-xs font-label-sm text-label-sm text-on-surface-variant">
+<span>세션: #Q-8041-LOG</span>
+<span class="text-secondary">•</span>
+<span class="text-secondary font-label-md">자동 동기화: 유물 보관함</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<div class="bg-surface-container-highest px-space-sm py-0.5 text-secondary font-label-sm text-label-sm flex items-center gap-space-xs shadow-[inset_1px_1px_0_0_#000000]">
+<span class="w-2 h-2 bg-secondary animate-ping"></span>
+<span>마나 버퍼: 98%</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary uppercase">[ 기록 모드: 레트로 로그 ]</span>
+</div>
+</div>
+<!-- 3-Column Workstation Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter-desktop items-start">
+<!-- LEFT COLUMN: Meta Settings & Quest Creation Slate (Columns: 3) -->
+<aside class="lg:col-span-3 flex flex-col gap-space-md">
+<!-- Panel 1: Quest Setup Slate -->
+<div class="bg-surface-container-low p-space-md shadow-[4px_4px_0_0_#000000] relative">
+<!-- Slate Header Strip -->
+<div class="bg-surface-container-high -mx-space-md -mt-space-md px-space-md py-space-xs mb-space-md shadow-[0_2px_0_0_#000000] flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-tertiary text-[18px]">auto_stories</span>
+<span class="font-headline-sm text-headline-sm uppercase text-on-surface tracking-wider">퀘스트 슬롯</span>
+</div>
+<span class="bg-surface-container-lowest text-tertiary font-label-sm text-label-sm px-1.5 py-0.5">슬롯 01</span>
+</div>
+<!-- Quest Label & ID -->
+<div class="mb-space-md">
+<label class="block font-label-sm text-label-sm uppercase text-on-surface-variant mb-space-xs">[ 보관함 인덱스 ]</label>
+<div class="bg-surface-container-lowest px-space-sm py-space-xs shadow-[inset_2px_2px_0_0_#000000] flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-secondary font-label-md">#Q-8041-분석</span>
+<span class="material-symbols-outlined text-on-surface-variant text-[16px]">lock</span>
+</div>
+</div>
+<!-- Quest Category Selector -->
+<div class="mb-space-md">
+<div class="flex items-center justify-between mb-space-xs">
+<label class="font-label-sm text-label-sm uppercase text-on-surface-variant">[ 핵심 속성 선택 ]</label>
+<span class="font-label-sm text-label-sm text-secondary">활성: 지능 (INT)</span>
+</div>
+<div class="flex flex-col gap-1.5">
+<!-- Selected Option: INT -->
+<button class="w-full text-left bg-surface-container-high px-space-sm py-1.5 shadow-[2px_2px_0_0_#00a6e0] flex items-center justify-between group" type="button">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[18px]">bolt</span>
+<span class="font-label-md text-label-md text-secondary uppercase">지능 (INT)</span>
+</div>
+<span class="text-secondary font-label-sm text-label-sm">[+2]</span>
+</button>
+<!-- DEX -->
+<button class="w-full text-left bg-surface-container px-space-sm py-1.5 shadow-[2px_2px_0_0_#000000] hover:bg-surface-container-high hover:text-on-surface flex items-center justify-between group" type="button">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-tertiary text-[18px]">navigation</span>
+<span class="font-label-md text-label-md text-on-surface-variant group-hover:text-on-surface uppercase">민첩 (DEX)</span>
+</div>
+<span class="text-on-surface-variant font-label-sm text-label-sm group-hover:text-tertiary">[--]</span>
+</button>
+<!-- WIS -->
+<button class="w-full text-left bg-surface-container px-space-sm py-1.5 shadow-[2px_2px_0_0_#000000] hover:bg-surface-container-high hover:text-on-surface flex items-center justify-between group" type="button">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-secondary text-[18px]">psychology</span>
+<span class="font-label-md text-label-md text-on-surface-variant group-hover:text-on-surface uppercase">지혜 (WIS)</span>
+</div>
+<span class="text-on-surface-variant font-label-sm text-label-sm group-hover:text-secondary">[+1]</span>
+</button>
+<!-- CON -->
+<button class="w-full text-left bg-surface-container px-space-sm py-1.5 shadow-[2px_2px_0_0_#000000] hover:bg-surface-container-high hover:text-on-surface flex items-center justify-between group" type="button">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary text-[18px]">shield</span>
+<span class="font-label-md text-label-md text-on-surface-variant group-hover:text-on-surface uppercase">체력 (CON)</span>
+</div>
+<span class="text-on-surface-variant font-label-sm text-label-sm group-hover:text-primary">[--]</span>
+</button>
+<!-- CHA -->
+<button class="w-full text-left bg-surface-container px-space-sm py-1.5 shadow-[2px_2px_0_0_#000000] hover:bg-surface-container-high hover:text-on-surface flex items-center justify-between group" type="button">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-tertiary text-[18px]">flare</span>
+<span class="font-label-md text-label-md text-on-surface-variant group-hover:text-on-surface uppercase">매력 (CHA)</span>
+</div>
+<span class="text-on-surface-variant font-label-sm text-label-sm group-hover:text-tertiary">[--]</span>
+</button>
+</div>
+</div>
+<!-- Difficulty Tier Selector -->
+<div class="mb-space-md">
+<label class="block font-label-sm text-label-sm uppercase text-on-surface-variant mb-space-xs">[ 도전 난도 등급 ]</label>
+<div class="grid grid-cols-3 gap-1">
+<button class="py-1 px-1 text-center bg-surface-container text-on-surface-variant font-label-sm text-label-sm uppercase shadow-[1px_1px_0_0_#000000] hover:bg-surface-container-high" type="button">
+              ★ 초급 (NOVICE)
+            </button>
+<button class="py-1 px-1 text-center bg-primary-container text-on-primary-container font-label-sm text-label-sm uppercase shadow-[2px_2px_0_0_#000000] font-bold" type="button">
+              ★★ 숙련 (ADEPT)
+            </button>
+<button class="py-1 px-1 text-center bg-surface-container text-on-surface-variant font-label-sm text-label-sm uppercase shadow-[1px_1px_0_0_#000000] hover:bg-surface-container-high" type="button">
+              ★★★ 보스 (BOSS)
+            </button>
+</div>
+</div>
+<!-- Target Skill Tags -->
+<div class="mb-space-md">
+<label class="block font-label-sm text-label-sm uppercase text-on-surface-variant mb-space-xs">[ 룬 태그 노드 ]</label>
+<div class="flex flex-wrap gap-1.5 bg-surface-container-lowest p-space-sm shadow-[inset_2px_2px_0_0_#000000]">
+<span class="bg-surface-container-high text-secondary px-2 py-0.5 font-label-sm text-label-sm shadow-[1px_1px_0_0_#000000] flex items-center gap-1">
+              #파이썬 <span class="material-symbols-outlined text-[12px] cursor-pointer hover:text-primary">close</span>
+</span>
+<span class="bg-surface-container-high text-secondary px-2 py-0.5 font-label-sm text-label-sm shadow-[1px_1px_0_0_#000000] flex items-center gap-1">
+              #데이터시각화 <span class="material-symbols-outlined text-[12px] cursor-pointer hover:text-primary">close</span>
+</span>
+<span class="bg-surface-container-high text-tertiary px-2 py-0.5 font-label-sm text-label-sm shadow-[1px_1px_0_0_#000000] flex items-center gap-1">
+              #Matplotlib <span class="material-symbols-outlined text-[12px] cursor-pointer hover:text-primary">close</span>
+</span>
+<span class="bg-surface-container-high text-tertiary px-2 py-0.5 font-label-sm text-label-sm shadow-[1px_1px_0_0_#000000] flex items-center gap-1">
+              #데이터분석 <span class="material-symbols-outlined text-[12px] cursor-pointer hover:text-primary">close</span>
+</span>
+<input class="bg-transparent text-on-surface-variant placeholder:text-surface-variant font-label-sm text-label-sm w-20 outline-none uppercase py-0.5" placeholder="+ 태그_추가" type="text"/>
+</div>
+</div>
+<!-- Quest Proof Dropzone -->
+<div class="mb-space-md">
+<label class="block font-label-sm text-label-sm uppercase text-on-surface-variant mb-space-xs">[ 증빙 자료 드롭존 ]</label>
+<div class="bg-surface-container-lowest p-space-sm shadow-[inset_2px_2px_0_0_#000000] text-center cursor-pointer hover:bg-surface-container transition-none">
+<div class="w-10 h-10 mx-auto mb-1 bg-surface-container-high flex items-center justify-center shadow-[2px_2px_0_0_#000000]">
+<span class="material-symbols-outlined text-secondary text-[22px]">photo_camera</span>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface uppercase mb-0.5">퀘스트 증빙 업로드</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant text-[10px]">PNG, JPG 최대 8MB</p>
+</div>
+<!-- Uploaded Item Badge -->
+<div class="mt-1.5 bg-surface-container px-space-sm py-1 shadow-[1px_1px_0_0_#000000] flex items-center justify-between">
+<div class="flex items-center gap-1.5 truncate">
+<span class="material-symbols-outlined text-tertiary text-[14px]">attachment</span>
+<span class="font-label-sm text-label-sm text-on-surface truncate">plot_result_final.png</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary shrink-0">1.2 MB</span>
+</div>
+</div>
+<!-- Quest Privacy Toggle -->
+<div class="pt-space-xs">
+<label class="block font-label-sm text-label-sm uppercase text-on-surface-variant mb-space-xs">[ 연대기 공개 범위 ]</label>
+<div class="grid grid-cols-2 gap-1 bg-surface-container-lowest p-1 shadow-[inset_1px_1px_0_0_#000000]">
+<button class="py-1 px-1 text-center bg-secondary text-on-secondary font-label-sm text-label-sm uppercase shadow-[1px_1px_0_0_#000000]" type="button">
+              공개 전설
+            </button>
+<button class="py-1 px-1 text-center bg-transparent text-on-surface-variant font-label-sm text-label-sm uppercase hover:text-on-surface" type="button">
+              비밀 마도서
+            </button>
+</div>
+</div>
+</div>
+<!-- Quick Tips Box -->
+<div class="bg-surface-container p-space-md shadow-[4px_4px_0_0_#000000]">
+<div class="flex items-center gap-space-xs text-tertiary mb-space-xs">
+<span class="material-symbols-outlined text-[16px]">tips_and_updates</span>
+<span class="font-label-sm text-label-sm uppercase">기록관의 규약</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+          신뢰할 수 있는 코드 흔적과 시각적 렌더링을 첨부하면 최대 +100 EXP 보너스를 획득하고 길드 검토관 인장을 획득할 수 있습니다.
+        </p>
+</div>
+</aside>
+<!-- CENTER COLUMN: Rich Text Quest Log & Blog Editor (Columns: 6) -->
+<main class="lg:col-span-6 flex flex-col gap-space-md">
+<div class="bg-surface-container-low shadow-[4px_4px_0_0_#000000] relative">
+<!-- Retro Pixel Toolbar Header -->
+<div class="bg-surface-container-high px-space-md py-space-xs shadow-[0_2px_0_0_#000000] flex flex-wrap items-center justify-between gap-space-xs">
+<div class="flex items-center gap-1 flex-wrap">
+<button class="w-8 h-8 bg-surface-container hover:bg-surface-bright text-on-surface shadow-[2px_2px_0_0_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none flex items-center justify-center font-headline-sm text-headline-sm" title="굵게 (Bold)" type="button">
+              B
+            </button>
+<button class="w-8 h-8 bg-surface-container hover:bg-surface-bright text-on-surface shadow-[2px_2px_0_0_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none flex items-center justify-center font-headline-sm text-headline-sm italic" title="기울임 (Italic)" type="button">
+              I
+            </button>
+<div class="w-0.5 h-6 bg-surface-variant mx-1"></div>
+<button class="px-2 h-8 bg-surface-container hover:bg-surface-bright text-on-surface shadow-[2px_2px_0_0_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none font-label-md text-label-md uppercase" title="제목 1 (H1)" type="button">
+              H1
+            </button>
+<button class="px-2 h-8 bg-surface-container hover:bg-surface-bright text-on-surface shadow-[2px_2px_0_0_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none font-label-md text-label-md uppercase" title="제목 2 (H2)" type="button">
+              H2
+            </button>
+<div class="w-0.5 h-6 bg-surface-variant mx-1"></div>
+<button class="w-8 h-8 bg-surface-container hover:bg-surface-bright text-on-surface shadow-[2px_2px_0_0_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none flex items-center justify-center" title="글머리 기호 목록" type="button">
+<span class="material-symbols-outlined text-[16px]">format_list_bulleted</span>
+</button>
+<button class="w-8 h-8 bg-surface-container hover:bg-surface-bright text-on-surface shadow-[2px_2px_0_0_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none flex items-center justify-center" title="번호 매기기 목록" type="button">
+<span class="material-symbols-outlined text-[16px]">format_list_numbered</span>
+</button>
+<div class="w-0.5 h-6 bg-surface-variant mx-1"></div>
+<button class="w-8 h-8 bg-surface-container hover:bg-surface-bright text-secondary shadow-[2px_2px_0_0_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none flex items-center justify-center" title="유물 삽입" type="button">
+<span class="material-symbols-outlined text-[16px]">image</span>
+</button>
+<button class="w-8 h-8 bg-secondary-container text-on-secondary-container shadow-[2px_2px_0_0_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none flex items-center justify-center" title="코드 블록" type="button">
+<span class="material-symbols-outlined text-[16px]">code</span>
+</button>
+<button class="w-8 h-8 bg-surface-container hover:bg-surface-bright text-on-surface shadow-[2px_2px_0_0_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none flex items-center justify-center" title="하이퍼링크" type="button">
+<span class="material-symbols-outlined text-[16px]">link</span>
+</button>
+<button class="w-8 h-8 bg-surface-container hover:bg-surface-bright text-on-surface shadow-[2px_2px_0_0_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none flex items-center justify-center" title="인용구" type="button">
+<span class="material-symbols-outlined text-[16px]">format_quote</span>
+</button>
+</div>
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-tertiary">
+<span class="material-symbols-outlined text-[14px]">edit_note</span>
+<span class="uppercase">[ 캔버스: 준비됨 ]</span>
+</div>
+</div>
+<!-- Editor Paper Canvas Well -->
+<div class="p-space-lg bg-surface-container-lowest shadow-[inset_3px_3px_0_0_#000000]">
+<!-- Post Title Input Field & Metadata Strip -->
+<div class="pb-space-md mb-space-lg bg-surface-container-low p-space-md shadow-[2px_2px_0_0_#000000]">
+<div class="flex items-center gap-2 mb-space-xs">
+<span class="bg-primary-container text-on-primary-container px-2 py-0.5 font-label-sm text-label-sm uppercase font-bold">[퀘스트 로그 작성]</span>
+<span class="text-tertiary font-label-sm text-label-sm">기록 시각: 2024.11.04 18:42 UTC</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface uppercase tracking-tight leading-snug">
+              파이썬 데이터 시각화 프로젝트 완료
+            </h1>
+<div class="mt-space-sm pt-space-xs flex flex-wrap items-center gap-x-space-md gap-y-1 font-label-sm text-label-sm text-on-surface-variant bg-surface-container-lowest px-space-sm py-1 shadow-[inset_1px_1px_0_0_#000000]">
+<span class="text-secondary font-label-md">식별코드: #Q-8041</span>
+<span>카테고리: <strong class="text-on-surface uppercase">지능 / 빅데이터</strong></span>
+<span>기록자: <strong class="text-tertiary uppercase">류도현 (Do-Hyeon)</strong></span>
+<span>클리어 타임: <strong class="text-primary font-label-md">4시간 20분</strong></span>
+</div>
+</div>
+<!-- Document Body & Formatted Article Paragraphs -->
+<div class="space-y-space-md font-body-md text-body-md leading-relaxed text-on-surface">
+<!-- Lead Paragraph -->
+<p>
+              오늘의 주요 퀘스트는 판다스(Pandas)를 활용한 데이터 파이프라인 정복과 맷플롯립(Matplotlib), 시본(Seaborn)을 통한 자동 텔레메트리 대시보드 생성이었다. 100,000건의 합성 트랜잭션 레코드를 선명한 밀도 히트맵과 다중 시계열 차트로 완벽히 시각화했다.
+            </p>
+<!-- Embedded Technical Screenshot Proof Section -->
+<div class="my-space-lg bg-surface-container-low p-space-md shadow-[4px_4px_0_0_#000000]">
+<!-- Mockup Chart Frame Header -->
+<div class="flex items-center justify-between mb-space-xs pb-space-xs bg-surface-container px-space-sm py-1 shadow-[inset_1px_1px_0_0_#000000]">
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-secondary">
+<span class="material-symbols-outlined text-[16px]">query_stats</span>
+<span>유물 렌더링: ANOMALY_HEATMAP_100K.PNG</span>
+</div>
+<div class="bg-surface-container-high px-2 py-0.5 text-tertiary font-label-sm text-label-sm shadow-[1px_1px_0_0_#000000]">
+                  ✓ 증빙 검증 완료 [MD5: 8f9b...a3]
+                </div>
+</div>
+<!-- Graphic Chart Visual Presentation -->
+<div class="relative bg-surface-container-lowest p-space-md shadow-[inset_3px_3px_0_0_#000000] overflow-hidden">
+<!-- Retro Pixel Scan / Graph Mockup -->
+<div class="flex items-center justify-between mb-2 font-label-sm text-label-sm text-on-surface-variant">
+<span>트랜잭션 속도 대비 지연 시간 매트릭스</span>
+<span class="text-primary">최고점: 14,290 OPS/초</span>
+</div>
+<!-- SVG Pixel/Line Chart Data Mockup -->
+<div class="w-full h-48 bg-surface-container-low p-space-xs shadow-[inset_2px_2px_0_0_#000000] flex flex-col justify-end relative">
+<!-- Axis Grid Lines -->
+<div class="absolute inset-x-2 top-4 h-[1px] bg-surface-variant opacity-40"></div>
+<div class="absolute inset-x-2 top-16 h-[1px] bg-surface-variant opacity-40"></div>
+<div class="absolute inset-x-2 top-28 h-[1px] bg-surface-variant opacity-40"></div>
+<!-- SVG Chart Line (Cyan Neon & Pink Accent) -->
+<svg class="w-full h-36 overflow-visible" preserveaspectratio="none" viewbox="0 0 500 120">
+<!-- Background Area Fill -->
+<polygon class="text-secondary opacity-15" fill="currentColor" points="0,120 0,90 40,85 80,95 120,60 160,65 200,40 240,48 280,25 320,35 360,15 400,28 440,12 480,22 500,10 500,120"></polygon>
+<!-- Neon Cyan Main Line -->
+<polyline class="text-secondary" fill="none" points="0,90 40,85 80,95 120,60 160,65 200,40 240,48 280,25 320,35 360,15 400,28 440,12 480,22 500,10" stroke="currentColor" stroke-width="3"></polyline>
+<!-- Anomaly Marker Peaks -->
+<circle class="text-primary-container" cx="280" cy="25" fill="currentColor" r="4"></circle>
+<circle class="text-tertiary" cx="360" cy="15" fill="currentColor" r="4"></circle>
+<circle class="text-primary-container" cx="440" cy="12" fill="currentColor" r="4"></circle>
+</svg>
+<!-- Heatmap Bar Slices Bottom Strip -->
+<div class="grid grid-cols-10 gap-1 mt-2 pt-1">
+<div class="h-2 bg-secondary opacity-30"></div>
+<div class="h-2 bg-secondary opacity-40"></div>
+<div class="h-2 bg-secondary opacity-60"></div>
+<div class="h-2 bg-secondary opacity-75"></div>
+<div class="h-2 bg-tertiary opacity-80"></div>
+<div class="h-2 bg-primary-container"></div>
+<div class="h-2 bg-tertiary opacity-90"></div>
+<div class="h-2 bg-primary-container"></div>
+<div class="h-2 bg-secondary opacity-80"></div>
+<div class="h-2 bg-secondary opacity-50"></div>
+</div>
+</div>
+<!-- Proof Caption -->
+<div class="mt-space-sm flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-on-surface-variant uppercase">차트 1. 맷플롯립 플롯 결과 // 10만 건 트랜잭션 밀도 및 이상치 분포</span>
+<span class="text-secondary font-label-md">도면참조: #ANM-99</span>
+</div>
+</div>
+</div>
+<!-- Second Paragraph -->
+<p>
+              롤링 윈도우 연산 중 심각한 메모리 병목 현상이 발생했으나, 넘파이(NumPy) 벡터화 기법을 적용하여 런타임을 74% 단축시켰다. 이로써 파이썬 코어 분석 인증 아크를 완료한다.
+            </p>
+<!-- Syntax-Highlighted Retro Code Block -->
+<div class="bg-surface-container-high p-space-md shadow-[3px_3px_0_0_#000000]">
+<div class="flex items-center justify-between mb-space-xs pb-space-xs">
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-tertiary">
+<span class="material-symbols-outlined text-[16px]">terminal</span>
+<span class="uppercase">텔레메트리 파이프라인 스크립트 TELEMETRY_PIPELINE.PY</span>
+</div>
+<div class="flex items-center gap-1 font-label-sm text-label-sm text-on-surface-variant">
+<span>PYTHON 3.11</span>
+<span>•</span>
+<span>UTF-8</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-space-md font-body-sm text-body-sm shadow-[inset_2px_2px_0_0_#000000] overflow-x-auto text-on-surface">
+<div class="leading-relaxed">
+<span class="text-on-surface-variant opacity-60">01 //</span> <span class="text-primary-container font-bold">import</span> <span class="text-secondary">numpy</span> <span class="text-primary-container font-bold">as</span> <span class="text-on-surface">np</span><br/>
+<span class="text-on-surface-variant opacity-60">02 //</span> <span class="text-primary-container font-bold">import</span> <span class="text-secondary">matplotlib.pyplot</span> <span class="text-primary-container font-bold">as</span> <span class="text-on-surface">plt</span><br/>
+<span class="text-on-surface-variant opacity-60">03 //</span> <span class="text-tertiary"># 10만 개 합성 데이터 벡터화 연산</span><br/>
+<span class="text-on-surface-variant opacity-60">04 //</span> <span class="text-secondary">tx_stream</span> = np.random.normal(loc=120.0, scale=18.5, size=100000)<br/>
+<span class="text-on-surface-variant opacity-60">05 //</span> <span class="text-secondary">anomaly_mask</span> = np.abs(tx_stream - np.mean(tx_stream)) &gt; (3 * np.std(tx_stream))<br/>
+<span class="text-on-surface-variant opacity-60">06 //</span> plt.style.use(<span class="text-tertiary">'dark_background'</span>)<br/>
+<span class="text-on-surface-variant opacity-60">07 //</span> fig, ax = plt.subplots(figsize=(10, 4), dpi=150)<br/>
+<span class="text-on-surface-variant opacity-60">08 //</span> ax.plot(tx_stream[:500], color=<span class="text-secondary">'#00a6e0'</span>, lw=1.2, label=<span class="text-tertiary">'Stream Ops'</span>)<br/>
+<span class="text-on-surface-variant opacity-60">09 //</span> ax.scatter(np.where(anomaly_mask[:500])[0], tx_stream[:500][anomaly_mask[:500]], color=<span class="text-primary">'#ff516a'</span>, marker=<span class="text-tertiary">'X'</span>)<br/>
+<span class="text-on-surface-variant opacity-60">10 //</span> plt.savefig(<span class="text-tertiary">'plot_result_final.png'</span>, bbox_inches=<span class="text-tertiary">'tight'</span>)
+                </div>
+</div>
+</div>
+<!-- Conclusion Note -->
+<p class="font-body-md text-body-md text-on-surface-variant italic">
+              "영지의 텔레메트리 기록이 이제 막힘없이 유려하게 흐른다. 데이터 마법사 길드에 자격 증명을 제출할 준비가 완료되었다."
+            </p>
+</div>
+</div>
+<!-- Editor Bottom Status Bar -->
+<div class="bg-surface-container px-space-md py-space-xs shadow-[0_-2px_0_0_#000000] flex flex-wrap items-center justify-between gap-space-sm font-label-sm text-label-sm text-on-surface-variant">
+<div class="flex items-center gap-space-md">
+<span>글자수: 1,842</span>
+<span>줄 수: 48</span>
+<span class="text-secondary">커서: 32행 14열</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 bg-tertiary"></span>
+<span class="text-tertiary uppercase">마크다운 해석기: 활성</span>
+</div>
+</div>
+</div>
+</main>
+<!-- RIGHT COLUMN: Quest Reward Preview & Publishing Hub (Columns: 3) -->
+<aside class="lg:col-span-3 flex flex-col gap-space-md">
+<!-- Mini Quest Reward Preview Box (Loot Chest Container) -->
+<div class="bg-surface-container-low p-space-md shadow-[4px_4px_0_0_#000000] relative">
+<!-- Chest Header -->
+<div class="bg-surface-container-high -mx-space-md -mt-space-md px-space-md py-space-xs mb-space-md shadow-[0_2px_0_0_#000000] flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-tertiary text-[18px]">inventory_2</span>
+<span class="font-headline-sm text-headline-sm uppercase text-on-surface tracking-wider">현상금 보상</span>
+</div>
+<span class="bg-primary-container text-on-primary-container font-label-sm text-label-sm px-1.5 py-0.5 font-bold uppercase">레벨 12</span>
+</div>
+<!-- Loot Item Visual Showcase -->
+<div class="bg-surface-container-lowest p-space-md shadow-[inset_2px_2px_0_0_#000000] mb-space-md flex items-center gap-space-md">
+<!-- Animated Pixel Glowing Potion Vessel -->
+<div class="w-14 h-14 bg-surface-container-high shadow-[2px_2px_0_0_#000000] flex items-center justify-center relative shrink-0">
+<span class="material-symbols-outlined text-secondary text-[32px] animate-bounce">science</span>
+<!-- Sparkling pixel stars -->
+<span class="absolute -top-1 -right-1 material-symbols-outlined text-tertiary text-[14px]">arrow_back_ios_new</span>
+<span class="absolute -bottom-1 -left-1 material-symbols-outlined text-primary text-[12px]">grade</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-secondary uppercase font-bold">마나 서지 플라스크</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">종류: 희귀 소모품</span>
+<span class="font-label-sm text-label-sm text-tertiary font-bold mt-0.5">+50 집중도 회복</span>
+</div>
+</div>
+<!-- Stat Gains Grid -->
+<div class="space-y-space-xs mb-space-md">
+<div class="flex items-center justify-between bg-surface-container px-space-sm py-1.5 shadow-[1px_1px_0_0_#000000]">
+<div class="flex items-center gap-space-xs font-label-md text-label-md text-secondary">
+<span class="material-symbols-outlined text-[16px]">bolt</span>
+<span>능력치 부스트</span>
+</div>
+<div class="flex items-center gap-2 font-label-md text-label-md">
+<span class="text-secondary font-bold">+2 지능 (INT)</span>
+<span class="text-on-surface-variant">•</span>
+<span class="text-tertiary font-bold">+1 지혜 (WIS)</span>
+</div>
+</div>
+<div class="flex items-center justify-between bg-surface-container px-space-sm py-1.5 shadow-[1px_1px_0_0_#000000]">
+<div class="flex items-center gap-space-xs font-label-md text-label-md text-tertiary">
+<span class="material-symbols-outlined text-[16px]">monetization_on</span>
+<span>골드 보상</span>
+</div>
+<span class="font-label-md text-label-md text-tertiary font-bold">+350 골드</span>
+</div>
+</div>
+<!-- Experience Gain Gauge & Meter -->
+<div class="bg-surface-container-lowest p-space-sm shadow-[inset_2px_2px_0_0_#000000] mb-space-md">
+<div class="flex items-center justify-between mb-space-xs font-label-sm text-label-sm">
+<span class="text-on-surface font-label-md uppercase">EXP 획득: +100 EXP</span>
+<span class="text-secondary font-bold">65% ➔ 75%</span>
+</div>
+<!-- Segmented Boss/XP Meter Frame -->
+<div class="w-full h-3 bg-surface-container-high shadow-[inset_1px_1px_0_0_#000000] flex">
+<div class="h-full bg-secondary" style="width: 65%;"></div>
+<div class="h-full bg-tertiary animate-pulse" style="width: 10%;"></div>
+</div>
+<div class="flex justify-between mt-1 text-[10px] font-label-sm text-on-surface-variant">
+<span>이전: 650/1000</span>
+<span class="text-tertiary">다음 레벨까지 250 EXP</span>
+</div>
+</div>
+<!-- Quest Completion Verification Checklist -->
+<div class="mb-space-md">
+<label class="block font-label-sm text-label-sm uppercase text-on-surface-variant mb-space-xs">[ 완료 조건 검증 ]</label>
+<div class="space-y-1">
+<div class="flex items-center gap-2 bg-surface-container px-space-sm py-1 shadow-[1px_1px_0_0_#000000]">
+<span class="material-symbols-outlined text-secondary text-[16px]">check_box</span>
+<span class="font-label-sm text-label-sm text-on-surface uppercase">증빙 이미지 업로드 완료</span>
+</div>
+<div class="flex items-center gap-2 bg-surface-container px-space-sm py-1 shadow-[1px_1px_0_0_#000000]">
+<span class="material-symbols-outlined text-secondary text-[16px]">check_box</span>
+<span class="font-label-sm text-label-sm text-on-surface uppercase">코드 트레이스 검증 완료</span>
+</div>
+<div class="flex items-center gap-2 bg-surface-container px-space-sm py-1 shadow-[1px_1px_0_0_#000000]">
+<span class="material-symbols-outlined text-secondary text-[16px]">check_box</span>
+<span class="font-label-sm text-label-sm text-on-surface uppercase">요약 연대기 작성 완료</span>
+</div>
+</div>
+</div>
+<!-- Primary Action: Big Chunky Pixelated Gold Action Button -->
+<button class="w-full py-space-sm px-space-md bg-tertiary hover:bg-tertiary-fixed text-on-tertiary shadow-[4px_4px_0_0_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0_0_#000000] font-headline-sm text-headline-sm uppercase tracking-wider flex items-center justify-center gap-space-xs mb-space-sm" type="button">
+<span class="material-symbols-outlined text-[20px]">sports_martial_arts</span>
+<span>[ ⚔️ 퀘스트 완료 / 발행하기 ]</span>
+</button>
+<!-- Secondary Action: Save Draft Scroll -->
+<button class="w-full py-2 px-space-md bg-surface-container hover:bg-surface-container-high text-secondary shadow-[2px_2px_0_0_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none font-label-md text-label-md uppercase tracking-wider flex items-center justify-center gap-space-xs" type="button">
+<span class="material-symbols-outlined text-[16px]">save</span>
+<span>[ 💾 두루마리 임시 저장 ]</span>
+</button>
+</div>
+<!-- Article Metric Card -->
+<div class="bg-surface-container-high p-space-md shadow-[4px_4px_0_0_#000000]">
+<div class="flex items-center justify-between mb-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">[ 두루마리 통계 ]</span>
+<span class="material-symbols-outlined text-tertiary text-[16px]">hourglass_bottom</span>
+</div>
+<div class="bg-surface-container-lowest p-space-sm shadow-[inset_2px_2px_0_0_#000000] font-label-md text-label-md text-on-surface flex items-center justify-between">
+<span class="text-secondary font-bold">482 단어</span>
+<span class="text-on-surface-variant">•</span>
+<span class="text-tertiary">3분 소요</span>
+<span class="text-on-surface-variant">•</span>
+<span class="text-primary font-bold">증빙: 1</span>
+</div>
+</div>
+<!-- Guild Notice Box -->
+<div class="bg-surface-container-lowest p-space-md shadow-[inset_2px_2px_0_0_#000000] text-center">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-widest">[ 길드 감사 공지 ]</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+          한 번 발행된 퀘스트 로그는 불변의 영구 장부에 기록됩니다. 수정 시 마나 25가 소모됩니다.
+        </p>
+</div>
+</aside>
+</div>
+</div></main><footer class="w-full bg-surface-container-lowest py-space-sm shadow-[0_-2px_0_0_#000000]"><div class="w-full px-margin-desktop flex flex-col sm:flex-row items-center justify-between gap-space-xs text-on-surface-variant font-label-sm text-label-sm uppercase"><div class="flex items-center gap-space-md"><span>[시스템] 라이프게임 코어 V2.4.0</span><span class="text-secondary">상태: 정상 접속 // 던전 섹터 08</span></div><div class="flex items-center gap-space-sm"><span>© 1994-2024 니블퀘스트 랩스</span><span class="text-primary">저장하려면 아무 키나 누르세요</span></div></div></footer></body></html>
