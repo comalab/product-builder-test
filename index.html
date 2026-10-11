@@ -213,6 +213,7 @@
       #quest-editor-modal,
       #quest-detail-modal,
       #skill-modal,
+      #profile-edit-modal,
       #dashboard-view,
       #skilltree-view {
         display: none !important;
@@ -431,16 +432,27 @@
 
           <!-- Character Card -->
           <div class="bg-retro-surface pixel-box p-5 border border-black relative">
-            <div class="flex items-start justify-between">
-              <div>
-                <span class="text-[10px] bg-retro-purple px-2 py-0.5 font-pixel border border-black text-yellow-300 cursor-pointer hover:bg-purple-800 transition-colors inline-flex items-center gap-1 shadow-sm"
-                  id="card-class-badge" onclick="openProfileEditModal()" title="클릭하여 모험가 칭호/클래스 변경">BUILDER &amp; MAKER</span>
-                <h3 class="font-pixel text-base md:text-lg text-retro-cyan mt-1.5" id="player-name">류도현 (Do-Hyeon Ryu)
-                </h3>
-                <p class="text-xs text-purple-200 font-vt text-base" id="player-job-title">프로페셔널 모험가 (Professional
-                  Explorer)</p>
+            <div class="flex items-start justify-between gap-3">
+              <!-- Left: Sub Profile Photo Badge + Class & Name (도트캐릭터가 메인이고 프로필 사진은 서브) -->
+              <div class="flex items-center gap-3 min-w-0">
+                <!-- Sub Profile Photo Badge (Compact Headshot / Sub Avatar) -->
+                <div id="dashboard-photo-badge" onclick="openProfileEditModal('photo')"
+                  class="w-12 h-12 rounded-lg bg-black/60 border-2 border-black flex-shrink-0 overflow-hidden cursor-pointer hover:border-retro-primary hover:scale-105 transition-all shadow-[2px_2px_0px_#000] relative group flex items-center justify-center"
+                  title="클릭하여 프로필 / 증명사진 설정 열기">
+                  <!-- Dynamically rendered via renderHUD() -->
+                </div>
+                <div class="min-w-0">
+                  <span class="text-[10px] bg-retro-purple px-2 py-0.5 font-pixel border border-black text-yellow-300 cursor-pointer hover:bg-purple-800 transition-colors inline-flex items-center gap-1 shadow-sm"
+                    id="card-class-badge" onclick="openProfileEditModal()" title="클릭하여 모험가 칭호/클래스 변경">BUILDER &amp; MAKER</span>
+                  <h3 class="font-pixel text-base md:text-lg text-retro-cyan mt-1 truncate" id="player-name">류도현 (Do-Hyeon Ryu)
+                  </h3>
+                  <p class="text-xs text-purple-200 font-vt text-base truncate" id="player-job-title">프로페셔널 모험가 (Professional
+                    Explorer)</p>
+                </div>
               </div>
-              <div class="text-right flex flex-col items-end gap-1.5">
+
+              <!-- Right: Settings button & Level -->
+              <div class="text-right flex flex-col items-end gap-1.5 shrink-0">
                 <button onclick="openProfileEditModal()"
                   class="pixel-btn bg-retro-primary hover:bg-yellow-300 text-black text-[10px] font-pixel px-2.5 py-1 flex items-center gap-1 font-bold shadow">
                   <span>✏️</span> 프로필 설정
@@ -716,28 +728,28 @@
 
         <!-- Resume Header (Recruiter Standard) -->
         <header class="border-b-2 border-gray-900 pb-6 mb-6">
-          <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
-            <div class="flex items-start gap-4">
-              <!-- Pixel Avatar Badge (Toggleable) -->
-              <div id="resume-avatar-badge"
-                class="hidden w-16 h-16 bg-gray-50 border-2 border-gray-900 rounded p-1 flex items-center justify-center shrink-0">
-                <!-- Mini Avatar SVG -->
+          <div class="flex flex-col md:flex-row md:items-end justify-between gap-5">
+            <div class="flex items-start gap-4 sm:gap-5">
+              <!-- Official 3:4 ID Photo Frame (Standard Korean/International Resume Headshot) -->
+              <div id="resume-photo-box"
+                class="w-24 h-32 sm:w-28 sm:h-36 bg-gray-50 border-2 border-gray-900 rounded-sm overflow-hidden flex items-center justify-center shrink-0 shadow-sm print:border-gray-800">
+                <!-- Dynamically populated via renderResumeView(): 3:4 Headshot Photo, Pixel Avatar, or Recruiter Placeholder -->
               </div>
-              <div>
+              <div class="min-w-0">
                 <div class="inline-block px-2.5 py-1 bg-gray-900 text-white text-xs font-semibold rounded mb-2"
                   id="resume-job-title">
                   프로페셔널 모험가 (Professional Explorer)
                 </div>
-                <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight" id="resume-name">
+                <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight" id="resume-name">
                   류도현 (Do-Hyeon Ryu)
                 </h1>
-                <p class="text-base text-gray-700 mt-2 font-medium max-w-xl italic" id="resume-headline">
+                <p class="text-sm sm:text-base text-gray-700 mt-2 font-medium max-w-xl italic leading-snug" id="resume-headline">
                   "매일 작은 퀘스트로 견고한 시스템을 설계하는 실천형 엔지니어입니다."
                 </p>
               </div>
             </div>
             <div
-              class="text-xs text-gray-600 space-y-1.5 md:text-right border-l-2 md:border-l-0 pl-3 md:pl-0 border-gray-200 font-sans">
+              class="text-xs text-gray-600 space-y-1.5 md:text-right border-l-2 md:border-l-0 pl-3 md:pl-0 border-gray-200 font-sans shrink-0">
               <div>📧 <span class="font-medium text-gray-900" id="resume-email">dohyeon.ryu@lifegame.io</span></div>
               <div>📱 <span class="font-medium text-gray-900" id="resume-phone">+82 10-1234-5678</span></div>
               <div>🌐 <span class="font-medium text-gray-900" id="resume-github">github.com/dohyeon-ryu</span></div>
@@ -1436,15 +1448,89 @@
             placeholder="이론에 머무르지 않고 직접 손으로 코드를 작성하며..."></textarea>
         </div>
 
-        <!-- SECTION 5: RESUME DISPLAY OPTIONS -->
-        <div class="bg-retro-surface p-3.5 border border-black pixel-box-sm">
-          <label class="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" id="profile-input-show-avatar"
-              class="w-4 h-4 text-retro-primary bg-black border border-white rounded focus:ring-0 cursor-pointer" />
-            <span class="font-pixel text-xs text-white">
-              이력서 상단에 선택한 도트 캐릭터 아바타 뱃지 함께 표시하기
-            </span>
-          </label>
+        <!-- SECTION 5: ID PHOTO & RESUME DISPLAY OPTIONS (증명사진 & 이력서 사진 설정) -->
+        <div class="bg-retro-surface p-4 border border-black pixel-box-sm space-y-4" id="profile-modal-photo-section">
+          <div class="flex items-center justify-between">
+            <label class="block text-[10px] font-pixel text-retro-cyan uppercase">
+              [ 5. 실제 증명사진(프로필 사진) 등록 &amp; 이력서 표시 옵션 ]
+            </label>
+            <span class="text-[10px] text-gray-400 font-mono">3:4 표준 증명사진 규격</span>
+          </div>
+
+          <!-- Photo Upload & 3:4 Preview Box -->
+          <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4 bg-black/60 p-3.5 border border-black pixel-box-sm">
+            <!-- 3:4 Aspect Ratio Photo Preview (96px x 128px) -->
+            <div class="flex flex-col items-center shrink-0">
+              <div id="modal-photo-preview-box"
+                class="w-24 h-32 bg-retro-bg border-2 border-retro-primary pixel-box-sm flex items-center justify-center overflow-hidden relative shadow-md">
+                <!-- Dynamically updated via updateModalPhotoPreview() -->
+              </div>
+              <span class="text-[9px] font-pixel text-yellow-300 mt-1">3:4 증명사진 규격</span>
+            </div>
+
+            <!-- Upload Controls & Action Buttons -->
+            <div class="flex-1 space-y-2.5 w-full">
+              <input type="file" id="profile-photo-file-input" accept="image/*" class="hidden" onchange="handleProfilePhotoUpload(event)" />
+
+              <div class="flex flex-wrap gap-2">
+                <button type="button" onclick="document.getElementById('profile-photo-file-input').click()"
+                  class="pixel-btn bg-retro-primary hover:bg-yellow-300 text-black px-3 py-1.5 text-xs font-pixel font-bold flex items-center gap-1.5 shadow">
+                  <span>📷</span> 사진 파일 업로드
+                </button>
+                <button type="button" onclick="applySampleProfilePhoto()"
+                  class="pixel-btn bg-retro-card hover:bg-purple-900 text-yellow-300 px-2.5 py-1.5 text-xs font-pixel flex items-center gap-1 border border-retro-purple" title="단정한 포트폴리오용 샘플 증명사진 즉시 적용">
+                  <span>🖼️</span> 샘플 사진 적용
+                </button>
+                <button type="button" id="modal-delete-photo-btn" onclick="handleDeleteProfilePhoto()"
+                  class="pixel-btn bg-red-950 hover:bg-red-900 text-red-200 px-2.5 py-1.5 text-xs font-pixel flex items-center gap-1 border border-red-800">
+                  <span>🗑️</span> 사진 삭제
+                </button>
+              </div>
+
+              <p class="text-[11px] text-gray-300 leading-relaxed font-sans">
+                💡 <span class="text-retro-accent font-semibold">증명사진 등록 안내:</span> PC나 모바일에 저장된 본인 사진(JPG, PNG)을 선택하시면, 3:4 규격으로 자동 최적화 및 압축되어 브라우저 로컬 저장소에 안전하게 보관됩니다.
+              </p>
+            </div>
+          </div>
+
+          <!-- Resume Photo Display Choice (Radio Options) -->
+          <div class="space-y-2 pt-1 border-t border-gray-800">
+            <div class="text-[11px] font-pixel text-yellow-300">
+              📄 채용 이력서(PDF) 상단 사진 표시 방식:
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <label class="flex items-center gap-2 p-2.5 bg-black/50 border border-gray-700 hover:border-retro-primary rounded cursor-pointer transition-colors" id="label-photo-type-photo">
+                <input type="radio" name="resume-photo-type" value="photo" id="radio-photo-type-photo"
+                  class="text-retro-primary focus:ring-0 bg-black border-gray-500 cursor-pointer" onchange="onPhotoTypeChange('photo')" />
+                <div class="text-left">
+                  <div class="font-pixel text-xs text-white">📸 실제 증명사진</div>
+                  <div class="text-[9px] text-gray-400 mt-0.5 font-sans leading-tight">공식 채용 제출용 (표준 3:4 규격)</div>
+                </div>
+              </label>
+
+              <label class="flex items-center gap-2 p-2.5 bg-black/50 border border-gray-700 hover:border-retro-primary rounded cursor-pointer transition-colors" id="label-photo-type-avatar">
+                <input type="radio" name="resume-photo-type" value="avatar" id="radio-photo-type-avatar"
+                  class="text-retro-primary focus:ring-0 bg-black border-gray-500 cursor-pointer" onchange="onPhotoTypeChange('avatar')" />
+                <div class="text-left">
+                  <div class="font-pixel text-xs text-white">👾 도트 캐릭터</div>
+                  <div class="text-[9px] text-gray-400 mt-0.5 font-sans leading-tight">2D 픽셀 게임 감성 아바타</div>
+                </div>
+              </label>
+
+              <label class="flex items-center gap-2 p-2.5 bg-black/50 border border-gray-700 hover:border-retro-primary rounded cursor-pointer transition-colors" id="label-photo-type-none">
+                <input type="radio" name="resume-photo-type" value="none" id="radio-photo-type-none"
+                  class="text-retro-primary focus:ring-0 bg-black border-gray-500 cursor-pointer" onchange="onPhotoTypeChange('none')" />
+                <div class="text-left">
+                  <div class="font-pixel text-xs text-white">🚫 사진 미표시</div>
+                  <div class="text-[9px] text-gray-400 mt-0.5 font-sans leading-tight">사진 없는 텍스트 중심 이력서</div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div class="text-[10px] text-gray-400 font-mono flex items-center gap-1.5 bg-black/30 p-2 rounded">
+            <span>ℹ️</span> <span>메인 대시보드에서는 도트 캐릭터가 메인으로 크게 표시되고, 등록하신 프로필 사진은 이름 옆에 아담한 서브 뱃지로 표시됩니다.</span>
+          </div>
         </div>
 
       </div>
@@ -1837,6 +1923,8 @@
         blog: "velog.io/@dohyeon",
         location: "Seoul, Republic of Korea",
         avatarTheme: "warrior",
+        photo: null,
+        resumePhotoType: "photo",
         showAvatarInResume: true,
         speech: "오늘 작성한 퀘스트 로그가 내일의 이력서가 된다."
       },
@@ -1893,6 +1981,10 @@
       // Ensure player profile fields are populated
       if (!AppState.player) AppState.player = JSON.parse(JSON.stringify(DEFAULT_DATA.player));
       if (!AppState.player.avatarTheme) AppState.player.avatarTheme = 'warrior';
+      if (AppState.player.photo === undefined) AppState.player.photo = null;
+      if (!AppState.player.resumePhotoType) {
+        AppState.player.resumePhotoType = AppState.player.photo ? 'photo' : (AppState.player.showAvatarInResume === false ? 'none' : 'photo');
+      }
       if (!AppState.player.classBadge) AppState.player.classBadge = 'BUILDER & MAKER';
       if (!AppState.player.jobTitle) AppState.player.jobTitle = '프로페셔널 모험가 (Professional Explorer)';
       if (!AppState.player.headline) AppState.player.headline = '매일 작은 퀘스트로 꾸준히 실천하며 성장하는 인재입니다.';
@@ -2143,7 +2235,25 @@
       document.getElementById('main-exp-bar').style.width = pct + '%';
       document.getElementById('avatar-speech').textContent = AppState.player.speech;
 
-      // Render Dynamic Avatar in Dashboard
+      // Render Sub Profile Photo Badge (도트캐릭터가 메인, 사진은 서브)
+      const photoBadge = document.getElementById('dashboard-photo-badge');
+      if (photoBadge) {
+        if (AppState.player.photo) {
+          photoBadge.innerHTML = `
+            <img src="${AppState.player.photo}" alt="프로필 사진" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center text-[10px] text-yellow-300 font-pixel transition-opacity">✏️</div>
+          `;
+        } else {
+          photoBadge.innerHTML = `
+            <div class="w-full h-full flex flex-col items-center justify-center bg-black/40 group-hover:bg-purple-950/60 transition-colors text-gray-400 group-hover:text-retro-primary">
+              <span class="text-sm">📷</span>
+              <span class="text-[8px] font-pixel text-gray-400 group-hover:text-yellow-300">사진+</span>
+            </div>
+          `;
+        }
+      }
+
+      // Render Dynamic Avatar in Dashboard (MAIN VISUAL: w-24 h-24 with bouncing animation)
       const avatarCont = document.getElementById('dashboard-avatar-container');
       if (avatarCont) {
         avatarCont.innerHTML = renderAvatarSvg(AppState.player.avatarTheme || 'warrior', 'w-24 h-24');
@@ -2306,13 +2416,19 @@
 
 
     /* ==========================================================================
-       6-2. PROFILE & CHARACTER EDIT MODAL CONTROLLERS
+       6-2. PROFILE, AVATAR & ID HEADSHOT PHOTO CONTROLLERS
        ========================================================================== */
-    let editSelectedAvatarTheme = 'warrior';
+    const SAMPLE_PROFILE_PHOTO = 'data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20300%20400%22%20width%3D%22300%22%20height%3D%22400%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22bgGrad%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23cbd5e1%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%2250%25%22%20stop-color%3D%22%2394a3b8%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%2364748b%22%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22suitGrad%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%220%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%231e293b%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%230f172a%22%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22skinGrad%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%220%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23fed7aa%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23fdba74%22%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22tieGrad%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%220%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%232563eb%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%231d4ed8%22%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%3C%2Fdefs%3E%0A%20%20%3C!--%20Background%20Studio%20Backdrop%20--%3E%0A%20%20%3Crect%20width%3D%22300%22%20height%3D%22400%22%20fill%3D%22url(%23bgGrad)%22%2F%3E%0A%20%20%0A%20%20%3C!--%20Subtle%20Lighting%20Vignette%20--%3E%0A%20%20%3Ccircle%20cx%3D%22150%22%20cy%3D%22150%22%20r%3D%22130%22%20fill%3D%22%23f8fafc%22%20opacity%3D%220.15%22%2F%3E%0A%0A%20%20%3C!--%20Body%20%2F%20Suit%20--%3E%0A%20%20%3C!--%20White%20Dress%20Shirt%20Collar%20--%3E%0A%20%20%3Cpolygon%20points%3D%22120%2C200%20150%2C265%20180%2C200%20165%2C190%20135%2C190%22%20fill%3D%22%23ffffff%22%2F%3E%0A%20%20%0A%20%20%3C!--%20Tie%20--%3E%0A%20%20%3Cpolygon%20points%3D%22144%2C215%20156%2C215%20158%2C310%20150%2C330%20142%2C310%22%20fill%3D%22url(%23tieGrad)%22%2F%3E%0A%20%20%3Cpolygon%20points%3D%22142%2C210%20158%2C210%20154%2C222%20146%2C222%22%20fill%3D%22%231e40af%22%2F%3E%0A%0A%20%20%3C!--%20Dark%20Navy%20Suit%20Jacket%20--%3E%0A%20%20%3Cpath%20d%3D%22M40%20400%20C40%20270%2085%20220%20125%20210%20L150%20255%20L175%20210%20C215%20220%20260%20270%20260%20400%20Z%22%20fill%3D%22url(%23suitGrad)%22%2F%3E%0A%20%20%3C!--%20Suit%20Lapels%20--%3E%0A%20%20%3Cpath%20d%3D%22M95%20240%20L135%20320%20L120%20320%20L80%20255%20Z%22%20fill%3D%22%23334155%22%2F%3E%0A%20%20%3Cpath%20d%3D%22M205%20240%20L165%20320%20L180%20320%20L220%20255%20Z%22%20fill%3D%22%23334155%22%2F%3E%0A%0A%20%20%3C!--%20Neck%20--%3E%0A%20%20%3Crect%20x%3D%22132%22%20y%3D%22170%22%20width%3D%2236%22%20height%3D%2240%22%20fill%3D%22url(%23skinGrad)%22%20rx%3D%224%22%2F%3E%0A%0A%20%20%3C!--%20Head%20%2F%20Face%20--%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22140%22%20rx%3D%2246%22%20ry%3D%2254%22%20fill%3D%22url(%23skinGrad)%22%2F%3E%0A%0A%20%20%3C!--%20Hair%20--%3E%0A%20%20%3Cpath%20d%3D%22M102%20135%20C100%2085%20130%2065%20155%2065%20C185%2065%20200%2085%20198%20135%20C192%20120%20185%20105%20170%20102%20C150%2098%20130%20105%20106%20130%20Z%22%20fill%3D%22%231e293b%22%2F%3E%0A%20%20%3C!--%20Sideburns%20%26%20Ears%20--%3E%0A%20%20%3Cellipse%20cx%3D%22103%22%20cy%3D%22142%22%20rx%3D%227%22%20ry%3D%2212%22%20fill%3D%22url(%23skinGrad)%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22197%22%20cy%3D%22142%22%20rx%3D%227%22%20ry%3D%2212%22%20fill%3D%22url(%23skinGrad)%22%2F%3E%0A%0A%20%20%3C!--%20Eyebrows%20--%3E%0A%20%20%3Cpath%20d%3D%22M118%20122%20Q130%20117%20140%20121%22%20stroke%3D%22%231e293b%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%20fill%3D%22none%22%2F%3E%0A%20%20%3Cpath%20d%3D%22M160%20121%20Q170%20117%20182%20122%22%20stroke%3D%22%231e293b%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%20fill%3D%22none%22%2F%3E%0A%0A%20%20%3C!--%20Eyes%20--%3E%0A%20%20%3Cellipse%20cx%3D%22129%22%20cy%3D%22133%22%20rx%3D%225%22%20ry%3D%223.5%22%20fill%3D%22%231e293b%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22171%22%20cy%3D%22133%22%20rx%3D%225%22%20ry%3D%223.5%22%20fill%3D%22%231e293b%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22130%22%20cy%3D%22132%22%20r%3D%221%22%20fill%3D%22%23ffffff%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22172%22%20cy%3D%22132%22%20r%3D%221%22%20fill%3D%22%23ffffff%22%2F%3E%0A%0A%20%20%3C!--%20Nose%20--%3E%0A%20%20%3Cpath%20d%3D%22M149%20135%20L146%20153%20L154%20153%22%20stroke%3D%22%23ea580c%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20fill%3D%22none%22%20opacity%3D%220.6%22%2F%3E%0A%0A%20%20%3C!--%20Smile%20%2F%20Mouth%20--%3E%0A%20%20%3Cpath%20d%3D%22M136%20167%20Q150%20176%20164%20167%22%20stroke%3D%22%239a3412%22%20stroke-width%3D%222.5%22%20stroke-linecap%3D%22round%22%20fill%3D%22none%22%2F%3E%0A%0A%20%20%3C!--%20Standard%20Photo%20Stamp%20Overlay%20in%20Corner%20--%3E%0A%20%20%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%22300%22%20height%3D%22400%22%20fill%3D%22none%22%20stroke%3D%22%2364748b%22%20stroke-width%3D%222%22%2F%3E%0A%3C%2Fsvg%3E';
 
-    function openProfileEditModal() {
+    let editSelectedAvatarTheme = 'warrior';
+    let editSelectedPhoto = null;
+    let editSelectedPhotoType = 'photo';
+
+    function openProfileEditModal(focusSection = null) {
       SoundSystem.play('click');
       editSelectedAvatarTheme = AppState.player.avatarTheme || 'warrior';
+      editSelectedPhoto = AppState.player.photo || null;
+      editSelectedPhotoType = AppState.player.resumePhotoType || (AppState.player.photo ? 'photo' : (AppState.player.showAvatarInResume === false ? 'none' : 'photo'));
 
       // Populate input fields
       document.getElementById('profile-input-name').value = AppState.player.name || '';
@@ -2330,13 +2446,130 @@
       document.getElementById('profile-input-blog').value = AppState.player.blog || '';
       document.getElementById('profile-input-location').value = AppState.player.location || '';
       document.getElementById('profile-input-aboutme').value = AppState.player.aboutMe || '';
-      document.getElementById('profile-input-show-avatar').checked = (AppState.player.showAvatarInResume !== false);
+
+      // Set radio selection for resume photo
+      updatePhotoTypeRadioUI(editSelectedPhotoType);
 
       renderProfileAvatarButtons();
       updateProfileModalAvatarPreview();
+      updateModalPhotoPreview();
 
       const modal = document.getElementById('profile-edit-modal');
       modal.classList.remove('hidden');
+
+      if (focusSection === 'photo') {
+        setTimeout(() => {
+          const sec = document.getElementById('profile-modal-photo-section');
+          if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 80);
+      }
+    }
+
+    function onPhotoTypeChange(type) {
+      editSelectedPhotoType = type;
+      updatePhotoTypeRadioUI(type);
+      SoundSystem.play('click');
+    }
+
+    function updatePhotoTypeRadioUI(activeType) {
+      ['photo', 'avatar', 'none'].forEach(t => {
+        const label = document.getElementById('label-photo-type-' + t);
+        const radio = document.getElementById('radio-photo-type-' + t);
+        if (label) {
+          if (t === activeType) {
+            label.className = 'flex items-center gap-2 p-2.5 bg-retro-card border-2 border-retro-primary shadow-[2px_2px_0px_#FCE22A] rounded cursor-pointer transition-all';
+            if (radio) radio.checked = true;
+          } else {
+            label.className = 'flex items-center gap-2 p-2.5 bg-black/50 border border-gray-700 hover:border-gray-500 rounded cursor-pointer transition-all';
+          }
+        }
+      });
+    }
+
+    function handleProfilePhotoUpload(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+
+      if (!file.type.startsWith('image/')) {
+        alert('이미지 파일(JPG, PNG 등)만 등록할 수 있습니다.');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          // Standard 3:4 aspect ratio canvas resize (360x480) for lightweight storage and crisp output
+          const canvas = document.createElement('canvas');
+          const targetW = 360;
+          const targetH = 480;
+          canvas.width = targetW;
+          canvas.height = targetH;
+          const ctx = canvas.getContext('2d');
+
+          // Center crop to 3:4
+          const imgRatio = img.width / img.height;
+          const targetRatio = targetW / targetH; // 0.75
+
+          let sx, sy, sWidth, sHeight;
+          if (imgRatio > targetRatio) {
+            sHeight = img.height;
+            sWidth = img.height * targetRatio;
+            sx = (img.width - sWidth) / 2;
+            sy = 0;
+          } else {
+            sWidth = img.width;
+            sHeight = img.width / targetRatio;
+            sx = 0;
+            sy = (img.height - sHeight) / 2;
+          }
+
+          ctx.drawImage(img, sx, sy, sWidth, sHeight, 0, 0, targetW, targetH);
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.88);
+
+          editSelectedPhoto = dataUrl;
+          editSelectedPhotoType = 'photo';
+          updatePhotoTypeRadioUI('photo');
+          updateModalPhotoPreview();
+          SoundSystem.play('levelup');
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function applySampleProfilePhoto() {
+      editSelectedPhoto = SAMPLE_PROFILE_PHOTO;
+      editSelectedPhotoType = 'photo';
+      updatePhotoTypeRadioUI('photo');
+      updateModalPhotoPreview();
+      SoundSystem.play('click');
+    }
+
+    function handleDeleteProfilePhoto() {
+      if (!editSelectedPhoto) return;
+      editSelectedPhoto = null;
+      updateModalPhotoPreview();
+      SoundSystem.play('click');
+    }
+
+    function updateModalPhotoPreview() {
+      const previewBox = document.getElementById('modal-photo-preview-box');
+      const delBtn = document.getElementById('modal-delete-photo-btn');
+      if (!previewBox) return;
+
+      if (editSelectedPhoto) {
+        previewBox.innerHTML = `<img src="${editSelectedPhoto}" alt="증명사진 미리보기" class="w-full h-full object-cover">`;
+        if (delBtn) delBtn.classList.remove('hidden');
+      } else {
+        previewBox.innerHTML = `
+          <div class="w-full h-full flex flex-col items-center justify-center p-2 text-center text-gray-500 bg-black/40">
+            <span class="text-2xl">👤</span>
+            <span class="text-[9px] font-pixel text-gray-400 mt-1">사진 없음</span>
+          </div>
+        `;
+        if (delBtn) delBtn.classList.add('hidden');
+      }
     }
 
     function closeProfileEditModal() {
@@ -2424,7 +2657,6 @@
       const blog = document.getElementById('profile-input-blog').value.trim();
       const loc = document.getElementById('profile-input-location').value.trim();
       const aboutme = document.getElementById('profile-input-aboutme').value.trim();
-      const showAvatar = document.getElementById('profile-input-show-avatar').checked;
 
       if (!name) {
         alert('이름(성명 또는 닉네임)을 입력해주세요!');
@@ -2444,7 +2676,9 @@
       AppState.player.location = loc || 'Seoul, Republic of Korea';
       AppState.player.aboutMe = aboutme || '실전 프로젝트 구현과 지속 가능한 성장을 추구합니다.';
       AppState.player.avatarTheme = editSelectedAvatarTheme;
-      AppState.player.showAvatarInResume = showAvatar;
+      AppState.player.photo = editSelectedPhoto;
+      AppState.player.resumePhotoType = editSelectedPhotoType;
+      AppState.player.showAvatarInResume = (editSelectedPhotoType === 'avatar');
 
       const themeObj = AVATAR_THEMES[editSelectedAvatarTheme] || AVATAR_THEMES.warrior;
       AppState.player.speech = themeObj.speech;
@@ -3238,14 +3472,34 @@ npm run build && git commit -m "feat: complete milestone"</pre>
       const aboutMeEl = document.getElementById('resume-about-me');
       if (aboutMeEl) aboutMeEl.textContent = AppState.player.aboutMe || '이론에 머무르지 않고 실제 구현과 검증을 통해 전문성을 확장해 나가고 있습니다.';
 
-      // Avatar Badge in Resume Header
-      const avatarBadge = document.getElementById('resume-avatar-badge');
-      if (avatarBadge) {
-        if (AppState.player.showAvatarInResume !== false) {
-          avatarBadge.innerHTML = renderAvatarSvg(AppState.player.avatarTheme || 'warrior', 'w-12 h-12');
-          avatarBadge.classList.remove('hidden');
+      // Official 3:4 ID Photo Frame in Resume Header
+      const resumePhotoBox = document.getElementById('resume-photo-box');
+      if (resumePhotoBox) {
+        const photoType = AppState.player.resumePhotoType || (AppState.player.photo ? 'photo' : (AppState.player.showAvatarInResume === false ? 'none' : 'photo'));
+
+        if (photoType === 'none') {
+          resumePhotoBox.classList.add('hidden');
+        } else if (photoType === 'avatar') {
+          resumePhotoBox.classList.remove('hidden');
+          resumePhotoBox.className = "w-24 h-32 sm:w-28 sm:h-36 bg-gray-900 border-2 border-gray-900 rounded-sm overflow-hidden flex items-center justify-center shrink-0 shadow-sm print:border-gray-800";
+          resumePhotoBox.innerHTML = renderAvatarSvg(AppState.player.avatarTheme || 'warrior', 'w-16 h-16 sm:w-20 sm:h-20');
         } else {
-          avatarBadge.classList.add('hidden');
+          // photoType === 'photo' (Standard Official Recruiter Headshot)
+          resumePhotoBox.classList.remove('hidden');
+          resumePhotoBox.className = "w-24 h-32 sm:w-28 sm:h-36 bg-gray-50 border-2 border-gray-900 rounded-sm overflow-hidden flex items-center justify-center shrink-0 shadow-sm print:border-gray-800";
+          if (AppState.player.photo) {
+            resumePhotoBox.innerHTML = `<img src="${AppState.player.photo}" alt="증명사진" class="w-full h-full object-cover">`;
+          } else {
+            resumePhotoBox.innerHTML = `
+              <div onclick="openProfileEditModal('photo')" class="w-full h-full flex flex-col items-center justify-center bg-gray-100 text-gray-400 p-2 text-center cursor-pointer hover:bg-gray-200 transition-colors select-none" title="클릭하여 증명사진 등록">
+                <svg class="w-8 h-8 text-gray-400 mb-1" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                </svg>
+                <span class="text-[10px] text-gray-600 font-semibold leading-tight font-sans">증명사진<br>(3:4 규격)</span>
+                <span class="text-[9px] text-blue-600 font-medium underline mt-1">등록하기</span>
+              </div>
+            `;
+          }
         }
       }
 
