@@ -326,13 +326,18 @@
           <div class="bg-retro-surface pixel-box p-5 border border-black relative">
             <div class="flex items-start justify-between">
               <div>
-                <span class="text-[10px] bg-retro-purple px-2 py-0.5 font-pixel border border-black text-yellow-300" id="card-class-badge">NOVICE EXPLORER</span>
-                <h3 class="font-pixel text-base md:text-lg text-retro-cyan mt-1.5" id="player-name">모험가 (Adventurer)</h3>
-                <p class="text-xs text-purple-200 font-vt text-base">CLASS: DEVELOPER / ARCHITECT</p>
+                <span class="text-[10px] bg-retro-purple px-2 py-0.5 font-pixel border border-black text-yellow-300" id="card-class-badge">FULL-STACK EXPLORER</span>
+                <h3 class="font-pixel text-base md:text-lg text-retro-cyan mt-1.5" id="player-name">류도현 (Do-Hyeon Ryu)</h3>
+                <p class="text-xs text-purple-200 font-vt text-base" id="player-job-title">풀스택 웹 엔지니어 (Full-Stack Engineer)</p>
               </div>
-              <div class="text-right">
-                <span class="font-pixel text-xl md:text-2xl text-retro-primary font-bold">LV.<span id="stat-level-text">1</span></span>
-                <div class="text-[10px] text-gray-400 font-pixel mt-1">EXP <span id="curr-exp-val">0</span> / <span id="max-exp-val">100</span></div>
+              <div class="text-right flex flex-col items-end gap-1.5">
+                <button onclick="openProfileEditModal()" class="pixel-btn bg-retro-primary hover:bg-yellow-300 text-black text-[10px] font-pixel px-2.5 py-1 flex items-center gap-1 font-bold shadow">
+                  <span>✏️</span> 프로필 설정
+                </button>
+                <div>
+                  <span class="font-pixel text-xl md:text-2xl text-retro-primary font-bold">LV.<span id="stat-level-text">1</span></span>
+                  <div class="text-[10px] text-gray-400 font-pixel mt-0.5">EXP <span id="curr-exp-val">0</span> / <span id="max-exp-val">100</span></div>
+                </div>
               </div>
             </div>
 
@@ -340,38 +345,11 @@
             <div class="mt-4 bg-retro-bg p-4 border border-black pixel-box-sm flex flex-col items-center justify-center relative overflow-hidden">
               <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#FCE22A_1px,transparent_1px)] [background-size:12px_12px]"></div>
 
-              <!-- Pixel Character SVG Sprite -->
+              <!-- Pixel Character Dynamic SVG Sprite Container -->
               <div class="relative z-10 my-1 cursor-pointer group" onclick="pokeAvatar()" title="캐릭터 클릭: 사운드 &amp; 대사">
-                <svg class="w-24 h-24 pixel-character-bounce filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.6)]" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <!-- Shadow -->
-                  <ellipse cx="32" cy="60" rx="18" ry="4" fill="#000000" opacity="0.4"/>
-                  <!-- Cloak / Body -->
-                  <rect x="22" y="24" width="20" height="26" fill="#3B2667" stroke="#000" stroke-width="2"/>
-                  <!-- Armor Breastplate -->
-                  <rect x="26" y="28" width="12" height="14" fill="#6C4AB6" stroke="#000" stroke-width="2"/>
-                  <rect x="29" y="32" width="6" height="6" fill="#FCE22A"/>
-                  <!-- Head / Face -->
-                  <rect x="22" y="10" width="20" height="16" fill="#FAD02C" stroke="#000" stroke-width="2"/>
-                  <!-- Hair / Helmet -->
-                  <rect x="20" y="6" width="24" height="8" fill="#1B1438" stroke="#000" stroke-width="2"/>
-                  <rect x="18" y="10" width="6" height="10" fill="#1B1438"/>
-                  <rect x="40" y="10" width="6" height="10" fill="#1B1438"/>
-                  <!-- Eyes -->
-                  <rect x="26" y="16" width="3" height="4" fill="#000"/>
-                  <rect x="35" y="16" width="3" height="4" fill="#000"/>
-                  <!-- Limbs / Boots -->
-                  <rect x="23" y="50" width="7" height="8" fill="#120E24" stroke="#000" stroke-width="2"/>
-                  <rect x="34" y="50" width="7" height="8" fill="#120E24" stroke="#000" stroke-width="2"/>
-                  <!-- Shield on Left -->
-                  <path d="M12 28H20V42C20 46 16 50 16 50C16 50 12 46 12 42V28Z" fill="#241B3D" stroke="#000" stroke-width="2"/>
-                  <rect x="15" y="32" width="2" height="10" fill="#00F0FF"/>
-                  <!-- Glowing Sword on Right -->
-                  <g class="glow-sword">
-                    <rect x="46" y="14" width="3" height="26" fill="#00F0FF" stroke="#000" stroke-width="1.5"/>
-                    <rect x="43" y="36" width="9" height="3" fill="#FCE22A" stroke="#000" stroke-width="1"/>
-                    <rect x="46" y="39" width="3" height="6" fill="#8B5CF6" stroke="#000" stroke-width="1"/>
-                  </g>
-                </svg>
+                <div id="dashboard-avatar-container" class="w-24 h-24 pixel-character-bounce filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.6)] flex items-center justify-center">
+                  <!-- Dynamically rendered via renderAvatarSvg() -->
+                </div>
                 <div class="text-[9px] font-pixel text-center text-gray-400 group-hover:text-retro-primary transition-colors mt-1">
                   [모험가 아바타 터치]
                 </div>
@@ -604,36 +582,45 @@
         <!-- Resume Header (Recruiter Standard) -->
         <header class="border-b-2 border-gray-900 pb-6 mb-6">
           <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
-            <div>
-              <div class="inline-block px-2.5 py-1 bg-gray-900 text-white text-xs font-semibold rounded mb-2">
-                Software Engineer &middot; Full-Stack / Web
+            <div class="flex items-start gap-4">
+              <!-- Pixel Avatar Badge (Toggleable) -->
+              <div id="resume-avatar-badge" class="hidden w-16 h-16 bg-gray-50 border-2 border-gray-900 rounded p-1 flex items-center justify-center shrink-0">
+                <!-- Mini Avatar SVG -->
               </div>
-              <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight" id="resume-name">
-                모험가 (Adventurer)
-              </h1>
-              <p class="text-base text-gray-700 mt-2 font-medium max-w-xl">
-                "지속 가능한 문제 해결과 실습 중심의 기록을 통해 신뢰할 수 있는 가치를 만드는 소프트웨어 엔지니어입니다."
-              </p>
+              <div>
+                <div class="inline-block px-2.5 py-1 bg-gray-900 text-white text-xs font-semibold rounded mb-2" id="resume-job-title">
+                  풀스택 웹 엔지니어 (Full-Stack Engineer)
+                </div>
+                <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight" id="resume-name">
+                  류도현 (Do-Hyeon Ryu)
+                </h1>
+                <p class="text-base text-gray-700 mt-2 font-medium max-w-xl italic" id="resume-headline">
+                  "매일 작은 퀘스트로 견고한 시스템을 설계하는 실천형 엔지니어입니다."
+                </p>
+              </div>
             </div>
             <div class="text-xs text-gray-600 space-y-1.5 md:text-right border-l-2 md:border-l-0 pl-3 md:pl-0 border-gray-200 font-sans">
-              <div>📧 <span class="font-medium text-gray-900">adventurer@lifegame.io</span></div>
-              <div>📱 <span class="font-medium text-gray-900">+82 10-0000-0000</span></div>
-              <div>🌐 <span class="font-medium text-gray-900">github.com/adventurer</span></div>
-              <div>📍 <span class="font-medium text-gray-900">Seoul, Republic of Korea</span></div>
+              <div>📧 <span class="font-medium text-gray-900" id="resume-email">dohyeon.ryu@lifegame.io</span></div>
+              <div>📱 <span class="font-medium text-gray-900" id="resume-phone">+82 10-1234-5678</span></div>
+              <div>🌐 <span class="font-medium text-gray-900" id="resume-github">github.com/dohyeon-ryu</span></div>
+              <div>🔗 <span class="font-medium text-gray-900" id="resume-blog">velog.io/@dohyeon</span></div>
+              <div>📍 <span class="font-medium text-gray-900" id="resume-location">Seoul, Republic of Korea</span></div>
             </div>
           </div>
         </header>
 
-        <!-- Executive Summary (게임 수치 완전 배제, 실무 중심 개요) -->
+        <!-- Executive Summary & About Me (현실 이력서 연동 데이터) -->
         <section class="mb-8 print-break-inside-avoid">
-          <h2 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">EXECUTIVE SUMMARY</h2>
+          <h2 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">EXECUTIVE SUMMARY / ABOUT ME</h2>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-gray-50 p-5 rounded-lg border border-gray-200">
             <div class="md:col-span-2">
-              <h3 class="text-sm font-bold text-gray-900 mb-1.5">실전 중심 엔지니어링 역량 &amp; 지속 학습 태도</h3>
-              <p class="text-xs sm:text-sm text-gray-700 leading-relaxed">
+              <h3 class="text-sm font-bold text-gray-900 mb-1.5 flex items-center gap-1.5">
+                <span>🎯</span> <span id="resume-about-headline">경력 목표 및 엔지니어링 철학</span>
+              </h3>
+              <div class="text-xs sm:text-sm text-gray-700 leading-relaxed whitespace-pre-line" id="resume-about-me">
                 이론에 머무르지 않고 매일의 문제 해결 과정과 코드 구현을 아카이빙하는 체계적인 자기주도 학습 파이프라인을 운영하고 있습니다.
                 실제 프로젝트 구현 과정에서 마주친 기술적 난관과 성능 최적화 경험을 투명하게 문서화하며, 팀과 제품의 성장에 기여합니다.
-              </p>
+              </div>
             </div>
             <div class="border-t md:border-t-0 md:border-l border-gray-200 pt-3 md:pt-0 md:pl-4 space-y-2.5">
               <div class="text-xs font-bold text-gray-900">핵심 실무 강점 (Core Highlights)</div>
@@ -1042,6 +1029,151 @@
     </div>
   </div>
 
+  <!-- ======================================================== -->
+  <!-- 8. MODAL: PROFILE & CHARACTER EDIT (캐릭터 & 프로필 편집)   -->
+  <!-- ======================================================== -->
+  <div id="profile-edit-modal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-3 md:p-6 overflow-y-auto" onclick="if(event.target===this) closeProfileEditModal()">
+    <div class="bg-retro-surface pixel-box max-w-2xl w-full my-auto border-3 border-black relative max-h-[92vh] flex flex-col shadow-2xl">
+      
+      <!-- Modal Header -->
+      <div class="bg-retro-card px-5 py-3.5 border-b-2 border-black flex items-center justify-between shrink-0">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">✏️</span>
+          <h3 class="font-pixel text-xs md:text-sm text-retro-primary font-bold">
+            캐릭터 아바타 &amp; 현실 이력서 프로필 설정
+          </h3>
+        </div>
+        <button onclick="closeProfileEditModal()" class="pixel-btn bg-black text-gray-300 hover:text-white px-2 py-0.5 text-xs font-pixel">
+          ✕
+        </button>
+      </div>
+
+      <!-- Modal Body (Scrollable Form) -->
+      <div class="p-5 md:p-6 overflow-y-auto flex-1 space-y-5 bg-retro-bg font-sans text-xs sm:text-sm">
+        
+        <!-- SECTION 1: 6 AVATAR THEMES SELECTION -->
+        <div class="bg-retro-surface p-4 border border-black pixel-box-sm space-y-3">
+          <div class="flex items-center justify-between">
+            <label class="block text-[10px] font-pixel text-retro-cyan uppercase">
+              [ 1. 6가지 도트 캐릭터 아바타 선택 ]
+            </label>
+            <span class="text-[10px] text-gray-400 font-mono">클릭 즉시 아바타 적용</span>
+          </div>
+
+          <!-- Live Preview Banner inside Modal -->
+          <div class="flex items-center gap-4 bg-black/60 p-3 border border-black pixel-box-sm">
+            <div id="profile-modal-avatar-preview" class="w-16 h-16 bg-retro-bg border-2 border-retro-primary pixel-box-sm flex items-center justify-center shrink-0">
+              <!-- Dynamically populated -->
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="font-pixel text-xs text-white" id="profile-preview-theme-name">전사 (Warrior)</span>
+                <span class="px-2 py-0.5 bg-retro-purple text-yellow-300 font-pixel text-[9px] border border-black" id="profile-preview-theme-role">집념의 엔지니어</span>
+              </div>
+              <p class="text-xs text-purple-200 mt-1 font-vt text-base" id="profile-preview-theme-speech">
+                "버그를 잡는 것이 곧 보스를 물리치는 길이다!"
+              </p>
+            </div>
+          </div>
+
+          <!-- 6 Avatar Theme Grid Buttons -->
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2" id="profile-avatar-theme-buttons">
+            <!-- Dynamically populated via JS -->
+          </div>
+        </div>
+
+        <!-- SECTION 2: BASIC RESUME PROFILE FIELDS -->
+        <div class="bg-retro-surface p-4 border border-black pixel-box-sm space-y-3">
+          <label class="block text-[10px] font-pixel text-retro-cyan uppercase">
+            [ 2. 기본 인적사항 &amp; 포지션 (이력서 헤더 연동) ]
+          </label>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[10px] font-pixel text-gray-400 mb-1">성명 (실명 또는 닉네임)</label>
+              <input id="profile-input-name" class="w-full bg-black/60 text-white border-2 border-black p-2 font-pixel text-xs outline-none focus:border-retro-primary" placeholder="예: 류도현 (Do-Hyeon Ryu)"/>
+            </div>
+            <div>
+              <label class="block text-[10px] font-pixel text-gray-400 mb-1">희망 직무 / 전문 분야 타이틀</label>
+              <input id="profile-input-job" class="w-full bg-black/60 text-white border-2 border-black p-2 font-pixel text-xs outline-none focus:border-retro-primary" placeholder="예: 풀스택 웹 엔지니어 (Full-Stack)"/>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-[10px] font-pixel text-gray-400 mb-1">한 줄 헤드라인 소개</label>
+            <input id="profile-input-headline" class="w-full bg-black/60 text-white border-2 border-black p-2 text-xs outline-none focus:border-retro-primary font-sans" placeholder="예: 매일 작은 퀘스트로 견고한 시스템을 설계하는 실천형 엔지니어입니다."/>
+          </div>
+        </div>
+
+        <!-- SECTION 3: CONTACT & LINKS -->
+        <div class="bg-retro-surface p-4 border border-black pixel-box-sm space-y-3">
+          <label class="block text-[10px] font-pixel text-retro-cyan uppercase">
+            [ 3. 연락처 &amp; 온라인 링크 (이력서 헤더 연동) ]
+          </label>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[10px] font-pixel text-gray-400 mb-1">이메일 주소</label>
+              <input id="profile-input-email" type="email" class="w-full bg-black/60 text-white border-2 border-black p-2 text-xs font-mono outline-none focus:border-retro-primary" placeholder="dohyeon.ryu@lifegame.io"/>
+            </div>
+            <div>
+              <label class="block text-[10px] font-pixel text-gray-400 mb-1">연락처 전화번호</label>
+              <input id="profile-input-phone" type="tel" class="w-full bg-black/60 text-white border-2 border-black p-2 text-xs font-mono outline-none focus:border-retro-primary" placeholder="+82 10-1234-5678"/>
+            </div>
+            <div>
+              <label class="block text-[10px] font-pixel text-gray-400 mb-1">GitHub 프로필 주소</label>
+              <input id="profile-input-github" class="w-full bg-black/60 text-white border-2 border-black p-2 text-xs font-mono outline-none focus:border-retro-primary" placeholder="github.com/dohyeon-ryu"/>
+            </div>
+            <div>
+              <label class="block text-[10px] font-pixel text-gray-400 mb-1">기술 블로그 / 포트폴리오</label>
+              <input id="profile-input-blog" class="w-full bg-black/60 text-white border-2 border-black p-2 text-xs font-mono outline-none focus:border-retro-primary" placeholder="velog.io/@dohyeon"/>
+            </div>
+            <div class="sm:col-span-2">
+              <label class="block text-[10px] font-pixel text-gray-400 mb-1">거주지 / 위치</label>
+              <input id="profile-input-location" class="w-full bg-black/60 text-white border-2 border-black p-2 text-xs font-sans outline-none focus:border-retro-primary" placeholder="Seoul, Republic of Korea"/>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 4: ABOUT ME / DETAILED INTRODUCTION -->
+        <div class="bg-retro-surface p-4 border border-black pixel-box-sm space-y-2">
+          <label class="block text-[10px] font-pixel text-retro-cyan uppercase">
+            [ 4. 상세 자기소개 &amp; 엔지니어링 철학 (About Me) ]
+          </label>
+          <p class="text-[11px] text-gray-400">
+            채용 담당자에게 전달하고 싶은 학습 태도, 문제 해결 경험, 개발 지향점을 서술하세요.
+          </p>
+          <textarea id="profile-input-aboutme" rows="4" class="w-full bg-black/60 text-white border-2 border-black p-2.5 text-xs outline-none focus:border-retro-primary font-sans leading-relaxed" placeholder="이론에 머무르지 않고 직접 손으로 코드를 작성하며..."></textarea>
+        </div>
+
+        <!-- SECTION 5: RESUME DISPLAY OPTIONS -->
+        <div class="bg-retro-surface p-3.5 border border-black pixel-box-sm">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" id="profile-input-show-avatar" class="w-4 h-4 text-retro-primary bg-black border border-white rounded focus:ring-0 cursor-pointer"/>
+            <span class="font-pixel text-xs text-white">
+              이력서 상단에 선택한 도트 캐릭터 아바타 뱃지 함께 표시하기
+            </span>
+          </label>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="bg-retro-card px-5 py-3 border-t-2 border-black flex items-center justify-between shrink-0">
+        <span class="text-[11px] text-gray-400 font-vt text-base">저장 시 이력서 뷰에 실시간 반영됩니다.</span>
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="closeProfileEditModal()" class="pixel-btn bg-gray-700 text-white px-3.5 py-1.5 text-xs font-pixel">
+            취소
+          </button>
+          <button type="button" onclick="handleSaveProfileSettings()" class="pixel-btn bg-retro-primary hover:bg-yellow-300 text-black px-4 py-1.5 text-xs font-pixel font-bold">
+            💾 설정 저장 &amp; 실시간 반영
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <!-- Global Footer -->
   <footer class="w-full bg-retro-surface py-3 border-t border-black text-center text-xs font-vt text-gray-400">
     <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
@@ -1205,16 +1337,209 @@
       { id: 'skill-luk-2', stat: 'LUK', name: '아이디어 실험', emoji: '💡', level: 1, exp: 0, count: 0, desc: '사이드 프로젝트 빌드 및 MVP 빠른 런칭' }
     ];
 
+    const AVATAR_THEMES = {
+      warrior: {
+        id: 'warrior',
+        name: '전사 (Warrior)',
+        role: '집념의 엔지니어 & 빌더',
+        icon: '⚔️',
+        speech: '버그를 잡는 것이 곧 보스를 물리치는 길이다!',
+        desc: '갑옷 & 대검 스타일의 견고한 풀스택 빌더'
+      },
+      wizard: {
+        id: 'wizard',
+        name: '마법사 (Wizard)',
+        role: '학구적인 연구자 & 설계자',
+        icon: '🧙',
+        speech: '코드의 원리를 깨우치는 것은 마법을 부리는 것과 같다.',
+        desc: '딥퍼플 로브 & 마법 스태프 스타일의 아키텍트'
+      },
+      rogue: {
+        id: 'rogue',
+        name: '도적/레인저 (Rogue)',
+        role: '민첩한 트러블슈터 & 해커',
+        icon: '🗡️',
+        speech: '어떤 난해한 버그라도 빈틈을 찾아 신속히 해결한다.',
+        desc: '다크 후드 & 네온 사이버 단검 스타일의 트러블슈터'
+      },
+      bard: {
+        id: 'bard',
+        name: '크리에이터 (Creator)',
+        role: '기획자 & 연금술사',
+        icon: '🎵',
+        speech: '좋은 아이디어와 코드가 결합할 때 최고의 프로덕트가 탄생한다.',
+        desc: '베레모 & 깃펜과 플라스크 스타일의 프로덕트 크리에이터'
+      },
+      engineer: {
+        id: 'engineer',
+        name: '기계공학자 (Engineer)',
+        role: '시스템 & 인프라 아키텍트',
+        icon: '🔧',
+        speech: '견고한 파이프라인과 인프라가 서비스의 심장이다.',
+        desc: '황동 고글 & 사이보그 렌치 스타일의 시스템 엔지니어'
+      },
+      modern: {
+        id: 'modern',
+        name: '현대 모험가 (Modern)',
+        role: '모던 캐주얼 풀스택',
+        icon: '🎧',
+        speech: '노트북 하나와 커피만 있으면 어디서든 세상을 바꿀 수 있어.',
+        desc: '헤드폰 & 후드티와 랩탑 스타일의 현대 개발자'
+      }
+    };
+
+    function renderAvatarSvg(themeId = 'warrior', extraClass = 'w-full h-full') {
+      switch(themeId) {
+        case 'wizard':
+          return `<svg class="${extraClass}" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="32" cy="60" rx="18" ry="4" fill="#000" opacity="0.4"/>
+            <rect x="20" y="24" width="24" height="28" fill="#4A154B" stroke="#000" stroke-width="2"/>
+            <rect x="29" y="24" width="6" height="28" fill="#FCE22A"/>
+            <rect x="22" y="14" width="20" height="14" fill="#FCD34D" stroke="#000" stroke-width="2"/>
+            <rect x="24" y="23" width="16" height="6" fill="#E5E7EB"/>
+            <rect x="28" y="27" width="8" height="4" fill="#E5E7EB"/>
+            <rect x="26" y="18" width="3" height="3" fill="#00F0FF"/>
+            <rect x="35" y="18" width="3" height="3" fill="#00F0FF"/>
+            <rect x="16" y="12" width="32" height="4" fill="#240046" stroke="#000" stroke-width="2"/>
+            <rect x="22" y="5" width="20" height="8" fill="#3C096C" stroke="#000" stroke-width="1.5"/>
+            <rect x="26" y="1" width="12" height="5" fill="#5A189A"/>
+            <rect x="30" y="6" width="4" height="4" fill="#FCE22A"/>
+            <rect x="46" y="12" width="3" height="40" fill="#78350F" stroke="#000" stroke-width="1.5"/>
+            <circle cx="47.5" cy="10" r="5" fill="#00F0FF" stroke="#FCE22A" stroke-width="1.5"/>
+            <rect x="44" y="4" width="2" height="2" fill="#FCE22A"/>
+            <rect x="51" y="6" width="2" height="2" fill="#00F0FF"/>
+            <rect x="14" y="32" width="4" height="4" fill="#EC4899"/>
+            <rect x="22" y="50" width="7" height="8" fill="#1B1438" stroke="#000" stroke-width="1.5"/>
+            <rect x="35" y="50" width="7" height="8" fill="#1B1438" stroke="#000" stroke-width="1.5"/>
+          </svg>`;
+
+        case 'rogue':
+          return `<svg class="${extraClass}" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="32" cy="60" rx="18" ry="4" fill="#000" opacity="0.4"/>
+            <rect x="22" y="24" width="20" height="26" fill="#0F172A" stroke="#000" stroke-width="2"/>
+            <rect x="22" y="38" width="20" height="4" fill="#334155"/>
+            <rect x="30" y="38" width="4" height="4" fill="#38E54D"/>
+            <rect x="22" y="12" width="20" height="14" fill="#FCD34D"/>
+            <rect x="22" y="18" width="20" height="8" fill="#1E293B" stroke="#000" stroke-width="1.5"/>
+            <rect x="18" y="6" width="28" height="10" fill="#0F172A" stroke="#000" stroke-width="2"/>
+            <rect x="28" y="2" width="8" height="5" fill="#0F172A"/>
+            <rect x="25" y="15" width="4" height="2" fill="#38E54D"/>
+            <rect x="35" y="15" width="4" height="2" fill="#38E54D"/>
+            <rect x="14" y="28" width="2" height="16" fill="#38E54D" stroke="#000" stroke-width="1"/>
+            <rect x="12" y="32" width="6" height="2" fill="#64748B"/>
+            <rect x="48" y="28" width="2" height="16" fill="#38E54D" stroke="#000" stroke-width="1"/>
+            <rect x="46" y="32" width="6" height="2" fill="#64748B"/>
+            <rect x="23" y="50" width="7" height="8" fill="#020617" stroke="#000" stroke-width="2"/>
+            <rect x="34" y="50" width="7" height="8" fill="#020617" stroke="#000" stroke-width="2"/>
+          </svg>`;
+
+        case 'bard':
+          return `<svg class="${extraClass}" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="32" cy="60" rx="18" ry="4" fill="#000" opacity="0.4"/>
+            <rect x="20" y="24" width="24" height="26" fill="#831843" stroke="#000" stroke-width="2"/>
+            <rect x="20" y="30" width="24" height="5" fill="#F43F5E"/>
+            <rect x="30" y="26" width="4" height="4" fill="#FCE22A"/>
+            <rect x="22" y="12" width="20" height="14" fill="#FCD34D" stroke="#000" stroke-width="2"/>
+            <rect x="26" y="17" width="3" height="3" fill="#000"/>
+            <rect x="35" y="17" width="3" height="3" fill="#000"/>
+            <rect x="29" y="22" width="6" height="2" fill="#DC2626"/>
+            <rect x="18" y="8" width="28" height="6" fill="#B45309" stroke="#000" stroke-width="2"/>
+            <rect x="22" y="4" width="20" height="5" fill="#D97706"/>
+            <rect x="38" y="0" width="4" height="9" fill="#EC4899"/>
+            <rect x="47" y="16" width="3" height="18" fill="#FCE22A" stroke="#000" stroke-width="1"/>
+            <rect x="12" y="32" width="8" height="11" fill="#06B6D4" stroke="#000" stroke-width="1.5"/>
+            <rect x="14" y="28" width="4" height="4" fill="#FCE22A"/>
+            <rect x="23" y="50" width="7" height="8" fill="#451A03" stroke="#000" stroke-width="2"/>
+            <rect x="34" y="50" width="7" height="8" fill="#451A03" stroke="#000" stroke-width="2"/>
+          </svg>`;
+
+        case 'engineer':
+          return `<svg class="${extraClass}" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="32" cy="60" rx="18" ry="4" fill="#000" opacity="0.4"/>
+            <rect x="22" y="24" width="20" height="26" fill="#B45309" stroke="#000" stroke-width="2"/>
+            <rect x="25" y="24" width="3" height="16" fill="#78350F"/>
+            <rect x="36" y="24" width="3" height="16" fill="#78350F"/>
+            <rect x="14" y="26" width="6" height="18" fill="#94A3B8" stroke="#000" stroke-width="1.5"/>
+            <rect x="16" y="30" width="2" height="10" fill="#00F0FF"/>
+            <rect x="22" y="12" width="20" height="14" fill="#FCD34D" stroke="#000" stroke-width="2"/>
+            <rect x="18" y="14" width="28" height="4" fill="#451A03"/>
+            <circle cx="27" cy="16" r="4" fill="#F59E0B" stroke="#000" stroke-width="1.5"/>
+            <circle cx="37" cy="16" r="4" fill="#00F0FF" stroke="#000" stroke-width="1.5"/>
+            <rect x="20" y="6" width="24" height="8" fill="#374151" stroke="#000" stroke-width="2"/>
+            <rect x="18" y="11" width="28" height="3" fill="#1F2937"/>
+            <rect x="47" y="22" width="4" height="22" fill="#64748B" stroke="#000" stroke-width="1.5"/>
+            <rect x="45" y="16" width="8" height="7" fill="#94A3B8" stroke="#000" stroke-width="1.5"/>
+            <rect x="23" y="50" width="7" height="8" fill="#1F2937" stroke="#000" stroke-width="2"/>
+            <rect x="34" y="50" width="7" height="8" fill="#1F2937" stroke="#000" stroke-width="2"/>
+          </svg>`;
+
+        case 'modern':
+          return `<svg class="${extraClass}" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="32" cy="60" rx="18" ry="4" fill="#000" opacity="0.4"/>
+            <rect x="20" y="24" width="24" height="26" fill="#2563EB" stroke="#000" stroke-width="2"/>
+            <rect x="24" y="36" width="16" height="8" fill="#1D4ED8"/>
+            <rect x="28" y="26" width="2" height="7" fill="#FFFFFF"/>
+            <rect x="34" y="26" width="2" height="7" fill="#FFFFFF"/>
+            <rect x="22" y="12" width="20" height="14" fill="#FCD34D" stroke="#000" stroke-width="2"/>
+            <rect x="26" y="17" width="3" height="3" fill="#000"/>
+            <rect x="35" y="17" width="3" height="3" fill="#000"/>
+            <rect x="20" y="8" width="24" height="6" fill="#18181B"/>
+            <rect x="22" y="11" width="12" height="4" fill="#18181B"/>
+            <rect x="18" y="4" width="28" height="4" fill="#FF007F" stroke="#000" stroke-width="1.5"/>
+            <rect x="17" y="12" width="5" height="8" fill="#FF007F" stroke="#000" stroke-width="1.5"/>
+            <rect x="42" y="12" width="5" height="8" fill="#FF007F" stroke="#000" stroke-width="1.5"/>
+            <rect x="44" y="30" width="12" height="15" fill="#CBD5E1" stroke="#000" stroke-width="1.5"/>
+            <rect x="49" y="35" width="3" height="4" fill="#38E54D"/>
+            <rect x="22" y="50" width="8" height="8" fill="#FFFFFF" stroke="#000" stroke-width="1.5"/>
+            <rect x="34" y="50" width="8" height="8" fill="#FFFFFF" stroke="#000" stroke-width="1.5"/>
+          </svg>`;
+
+        case 'warrior':
+        default:
+          return `<svg class="${extraClass}" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="32" cy="60" rx="18" ry="4" fill="#000" opacity="0.4"/>
+            <rect x="22" y="24" width="20" height="26" fill="#3B2667" stroke="#000" stroke-width="2"/>
+            <rect x="26" y="28" width="12" height="14" fill="#6C4AB6" stroke="#000" stroke-width="2"/>
+            <rect x="29" y="32" width="6" height="6" fill="#FCE22A"/>
+            <rect x="22" y="10" width="20" height="16" fill="#FAD02C" stroke="#000" stroke-width="2"/>
+            <rect x="20" y="6" width="24" height="8" fill="#1B1438" stroke="#000" stroke-width="2"/>
+            <rect x="18" y="10" width="6" height="10" fill="#1B1438"/>
+            <rect x="40" y="10" width="6" height="10" fill="#1B1438"/>
+            <rect x="26" y="16" width="3" height="4" fill="#000"/>
+            <rect x="35" y="16" width="3" height="4" fill="#000"/>
+            <rect x="23" y="50" width="7" height="8" fill="#120E24" stroke="#000" stroke-width="2"/>
+            <rect x="34" y="50" width="7" height="8" fill="#120E24" stroke="#000" stroke-width="2"/>
+            <path d="M12 28H20V42C20 46 16 50 16 50C16 50 12 46 12 42V28Z" fill="#241B3D" stroke="#000" stroke-width="2"/>
+            <rect x="15" y="32" width="2" height="10" fill="#00F0FF"/>
+            <g class="glow-sword">
+              <rect x="46" y="14" width="3" height="26" fill="#00F0FF" stroke="#000" stroke-width="1.5"/>
+              <rect x="43" y="36" width="9" height="3" fill="#FCE22A" stroke="#000" stroke-width="1"/>
+              <rect x="46" y="39" width="3" height="6" fill="#8B5CF6" stroke="#000" stroke-width="1"/>
+            </g>
+          </svg>`;
+      }
+    }
+
     const DEFAULT_DATA = {
       player: {
-        name: "모험가 (Adventurer)",
-        title: "견습 탐험가",
-        classBadge: "NOVICE EXPLORER",
+        name: "류도현 (Do-Hyeon Ryu)",
+        title: "풀스택 엔지니어",
+        jobTitle: "풀스택 웹 엔지니어 (Full-Stack Engineer)",
+        classBadge: "FULL-STACK EXPLORER",
         level: 1,
         currentExp: 0,
         maxExp: 100,
         gold: 0,
-        speech: "첫 번째 퀘스트를 작성하고 성장을 시작해보세요!"
+        headline: "매일 작은 퀘스트로 견고한 시스템을 설계하는 실천형 엔지니어입니다.",
+        aboutMe: "이론에 머무르지 않고 직접 손으로 코드를 작성하며 배운 지식을 기록하고 검증합니다.\n문제를 직면했을 때 원인을 깊이 파고들어 해결책을 도출하며, 클린 코드와 지속 가능한 모듈화 아키텍처를 추구합니다.\n협업과 기술 공유를 즐기며, 사용자에게 신뢰를 주는 제품을 만듭니다.",
+        email: "dohyeon.ryu@lifegame.io",
+        phone: "+82 10-1234-5678",
+        github: "github.com/dohyeon-ryu",
+        blog: "velog.io/@dohyeon",
+        location: "Seoul, Republic of Korea",
+        avatarTheme: "warrior",
+        showAvatarInResume: true,
+        speech: "오늘 작성한 퀘스트 로그가 내일의 이력서가 된다."
       },
       stats: {
         INT: 10,
@@ -1250,8 +1575,8 @@
         if (saved) {
           AppState = JSON.parse(saved);
         } else {
-          // If previous version exists, preserve quests & stats, but ensure skills
-          const prevSaved = localStorage.getItem('LIFEGAME_V25_CLEAN_EMPTY_STORE');
+          // If previous version exists, preserve quests & stats, but ensure profile
+          const prevSaved = localStorage.getItem('LIFEGAME_V26_SKILLTREE_STORE') || localStorage.getItem('LIFEGAME_V25_CLEAN_EMPTY_STORE');
           if (prevSaved) {
             try {
               AppState = JSON.parse(prevSaved);
@@ -1265,6 +1590,20 @@
       } catch (e) {
         AppState = JSON.parse(JSON.stringify(DEFAULT_DATA));
       }
+
+      // Ensure player profile fields are populated
+      if (!AppState.player) AppState.player = JSON.parse(JSON.stringify(DEFAULT_DATA.player));
+      if (!AppState.player.avatarTheme) AppState.player.avatarTheme = 'warrior';
+      if (AppState.player.name === "모험가 (Adventurer)") AppState.player.name = "류도현 (Do-Hyeon Ryu)";
+      if (!AppState.player.jobTitle) AppState.player.jobTitle = "풀스택 웹 엔지니어 (Full-Stack Engineer)";
+      if (!AppState.player.headline) AppState.player.headline = "매일 작은 퀘스트로 견고한 시스템을 설계하는 실천형 엔지니어입니다.";
+      if (!AppState.player.aboutMe) AppState.player.aboutMe = "이론에 머무르지 않고 직접 손으로 코드를 작성하며 배운 지식을 기록하고 검증합니다.\n문제를 직면했을 때 원인을 깊이 파고들어 해결책을 도출하며, 클린 코드와 지속 가능한 모듈화 아키텍처를 추구합니다.\n협업과 기술 공유를 즐기며, 사용자에게 신뢰를 주는 제품을 만듭니다.";
+      if (!AppState.player.email) AppState.player.email = "dohyeon.ryu@lifegame.io";
+      if (!AppState.player.phone) AppState.player.phone = "+82 10-1234-5678";
+      if (!AppState.player.github) AppState.player.github = "github.com/dohyeon-ryu";
+      if (!AppState.player.blog) AppState.player.blog = "velog.io/@dohyeon";
+      if (!AppState.player.location) AppState.player.location = "Seoul, Republic of Korea";
+      if (AppState.player.showAvatarInResume === undefined) AppState.player.showAvatarInResume = true;
 
       // Ensure skills array exists
       if (!AppState.skills || !Array.isArray(AppState.skills) || AppState.skills.length === 0) {
@@ -1493,14 +1832,23 @@
       document.getElementById('header-exp-bar').style.width = pct + '%';
 
       // Left Panel
-      document.getElementById('card-class-badge').textContent = AppState.player.classBadge;
+      document.getElementById('card-class-badge').textContent = AppState.player.classBadge || 'EXPLORER';
       document.getElementById('player-name').textContent = AppState.player.name;
+      const jobEl = document.getElementById('player-job-title');
+      if (jobEl) jobEl.textContent = AppState.player.jobTitle || 'CLASS: DEVELOPER / ARCHITECT';
+
       document.getElementById('stat-level-text').textContent = AppState.player.level;
       document.getElementById('curr-exp-val').textContent = AppState.player.currentExp;
       document.getElementById('max-exp-val').textContent = AppState.player.maxExp;
       document.getElementById('exp-pct-val').textContent = pct + '%';
       document.getElementById('main-exp-bar').style.width = pct + '%';
       document.getElementById('avatar-speech').textContent = AppState.player.speech;
+
+      // Render Dynamic Avatar in Dashboard
+      const avatarCont = document.getElementById('dashboard-avatar-container');
+      if (avatarCont) {
+        avatarCont.innerHTML = renderAvatarSvg(AppState.player.avatarTheme || 'warrior', 'w-24 h-24');
+      }
 
       // Stats
       document.getElementById('stat-val-int').textContent = AppState.stats.INT;
@@ -1656,6 +2004,132 @@
         }
       });
       renderQuests();
+    }
+
+    
+    /* ==========================================================================
+       6-2. PROFILE & CHARACTER EDIT MODAL CONTROLLERS
+       ========================================================================== */
+    let editSelectedAvatarTheme = 'warrior';
+
+    function openProfileEditModal() {
+      SoundSystem.play('click');
+      editSelectedAvatarTheme = AppState.player.avatarTheme || 'warrior';
+
+      // Populate input fields
+      document.getElementById('profile-input-name').value = AppState.player.name || '';
+      document.getElementById('profile-input-job').value = AppState.player.jobTitle || '';
+      document.getElementById('profile-input-headline').value = AppState.player.headline || '';
+      document.getElementById('profile-input-email').value = AppState.player.email || '';
+      document.getElementById('profile-input-phone').value = AppState.player.phone || '';
+      document.getElementById('profile-input-github').value = AppState.player.github || '';
+      document.getElementById('profile-input-blog').value = AppState.player.blog || '';
+      document.getElementById('profile-input-location').value = AppState.player.location || '';
+      document.getElementById('profile-input-aboutme').value = AppState.player.aboutMe || '';
+      document.getElementById('profile-input-show-avatar').checked = (AppState.player.showAvatarInResume !== false);
+
+      renderProfileAvatarButtons();
+      updateProfileModalAvatarPreview();
+
+      const modal = document.getElementById('profile-edit-modal');
+      modal.classList.remove('hidden');
+    }
+
+    function closeProfileEditModal() {
+      document.getElementById('profile-edit-modal').classList.add('hidden');
+      SoundSystem.play('click');
+    }
+
+    function selectAvatarThemeInModal(themeId) {
+      editSelectedAvatarTheme = themeId;
+      SoundSystem.play('click');
+      renderProfileAvatarButtons();
+      updateProfileModalAvatarPreview();
+    }
+
+    function renderProfileAvatarButtons() {
+      const container = document.getElementById('profile-avatar-theme-buttons');
+      if (!container) return;
+      container.innerHTML = '';
+
+      Object.values(AVATAR_THEMES).forEach(th => {
+        const isSelected = (th.id === editSelectedAvatarTheme);
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.onclick = () => selectAvatarThemeInModal(th.id);
+        btn.className = `p-2.5 border-2 text-left pixel-btn transition-all flex flex-col items-center justify-between gap-1.5 ${
+          isSelected 
+            ? 'bg-retro-card border-retro-primary shadow-[2px_2px_0px_#FCE22A]' 
+            : 'bg-black/60 border-black hover:border-gray-500'
+        }`;
+
+        btn.innerHTML = `
+          <div class="w-12 h-12 flex items-center justify-center pointer-events-none">
+            ${renderAvatarSvg(th.id, 'w-10 h-10')}
+          </div>
+          <div class="text-center w-full">
+            <div class="font-pixel text-[11px] ${isSelected ? 'text-retro-primary font-bold' : 'text-white'} truncate">
+              ${th.name}
+            </div>
+            <div class="text-[9px] text-gray-400 font-mono mt-0.5 truncate">${th.role}</div>
+          </div>
+          ${isSelected ? '<span class="text-[9px] font-pixel text-retro-accent">✓ 선택됨</span>' : '<span class="text-[9px] opacity-0">-</span>'}
+        `;
+        container.appendChild(btn);
+      });
+    }
+
+    function updateProfileModalAvatarPreview() {
+      const previewCont = document.getElementById('profile-modal-avatar-preview');
+      const theme = AVATAR_THEMES[editSelectedAvatarTheme] || AVATAR_THEMES.warrior;
+      if (previewCont) {
+        previewCont.innerHTML = renderAvatarSvg(editSelectedAvatarTheme, 'w-12 h-12');
+      }
+      document.getElementById('profile-preview-theme-name').textContent = theme.name;
+      document.getElementById('profile-preview-theme-role').textContent = theme.role;
+      document.getElementById('profile-preview-theme-speech').textContent = `"${theme.speech}"`;
+    }
+
+    function handleSaveProfileSettings() {
+      const name = document.getElementById('profile-input-name').value.trim();
+      const job = document.getElementById('profile-input-job').value.trim();
+      const headline = document.getElementById('profile-input-headline').value.trim();
+      const email = document.getElementById('profile-input-email').value.trim();
+      const phone = document.getElementById('profile-input-phone').value.trim();
+      const github = document.getElementById('profile-input-github').value.trim();
+      const blog = document.getElementById('profile-input-blog').value.trim();
+      const loc = document.getElementById('profile-input-location').value.trim();
+      const aboutme = document.getElementById('profile-input-aboutme').value.trim();
+      const showAvatar = document.getElementById('profile-input-show-avatar').checked;
+
+      if (!name) {
+        alert('이름(성명 또는 닉네임)을 입력해주세요!');
+        document.getElementById('profile-input-name').focus();
+        return;
+      }
+
+      // Update AppState
+      AppState.player.name = name;
+      AppState.player.jobTitle = job || '소프트웨어 엔지니어';
+      AppState.player.headline = headline || '문제를 해결하고 가치를 만드는 개발자입니다.';
+      AppState.player.email = email || 'adventurer@lifegame.io';
+      AppState.player.phone = phone || '+82 10-0000-0000';
+      AppState.player.github = github || 'github.com/adventurer';
+      AppState.player.blog = blog || 'blog.example.com';
+      AppState.player.location = loc || 'Seoul, Republic of Korea';
+      AppState.player.aboutMe = aboutme || '실전 프로젝트 구현과 지속 가능한 성장을 추구합니다.';
+      AppState.player.avatarTheme = editSelectedAvatarTheme;
+      AppState.player.showAvatarInResume = showAvatar;
+
+      const themeObj = AVATAR_THEMES[editSelectedAvatarTheme] || AVATAR_THEMES.warrior;
+      AppState.player.speech = themeObj.speech;
+
+      saveState();
+      SoundSystem.play('complete');
+      closeProfileEditModal();
+      renderAll();
+
+      showLevelUpToast('PROFILE UPDATED!', '프로필 및 이력서 설정이 성공적으로 반영되었습니다.');
     }
 
     /* ==========================================================================
@@ -2412,8 +2886,44 @@ npm run build && git commit -m "feat: complete milestone"</pre>
        9. RESUME VIEW RENDERING (채용 담당자용 표준 포맷 & 정량 데이터 렌더링)
        ========================================================================== */
     function renderResumeView() {
+      // Bind Player Profile to Resume Header & Executive Summary
       const nameEl = document.getElementById('resume-name');
       if (nameEl) nameEl.textContent = AppState.player.name;
+
+      const jobEl = document.getElementById('resume-job-title');
+      if (jobEl) jobEl.textContent = AppState.player.jobTitle || 'Software Engineer';
+
+      const headlineEl = document.getElementById('resume-headline');
+      if (headlineEl) headlineEl.textContent = `"${AppState.player.headline || '성실한 기록과 구현을 통해 가치를 창출하는 엔지니어입니다.'}"`;
+
+      const emailEl = document.getElementById('resume-email');
+      if (emailEl) emailEl.textContent = AppState.player.email || 'adventurer@lifegame.io';
+
+      const phoneEl = document.getElementById('resume-phone');
+      if (phoneEl) phoneEl.textContent = AppState.player.phone || '+82 10-0000-0000';
+
+      const gitEl = document.getElementById('resume-github');
+      if (gitEl) gitEl.textContent = AppState.player.github || 'github.com/adventurer';
+
+      const blogEl = document.getElementById('resume-blog');
+      if (blogEl) blogEl.textContent = AppState.player.blog || 'blog.example.com';
+
+      const locEl = document.getElementById('resume-location');
+      if (locEl) locEl.textContent = AppState.player.location || 'Seoul, Republic of Korea';
+
+      const aboutMeEl = document.getElementById('resume-about-me');
+      if (aboutMeEl) aboutMeEl.textContent = AppState.player.aboutMe || '이론에 머무르지 않고 실제 구현과 검증을 통해 전문성을 확장해 나가고 있습니다.';
+
+      // Avatar Badge in Resume Header
+      const avatarBadge = document.getElementById('resume-avatar-badge');
+      if (avatarBadge) {
+        if (AppState.player.showAvatarInResume !== false) {
+          avatarBadge.innerHTML = renderAvatarSvg(AppState.player.avatarTheme || 'warrior', 'w-12 h-12');
+          avatarBadge.classList.remove('hidden');
+        } else {
+          avatarBadge.classList.add('hidden');
+        }
+      }
 
       const dateEl = document.getElementById('resume-date-stamp');
       if (dateEl) dateEl.textContent = new Date().toLocaleDateString('ko-KR');
@@ -2715,10 +3225,17 @@ npm run build && git commit -m "feat: complete milestone"</pre>
     ];
 
     function pokeAvatar() {
-      const idx = Math.floor(Math.random() * SPEECHES.length);
-      AppState.player.speech = SPEECHES[idx];
-      document.getElementById('avatar-speech').textContent = SPEECHES[idx];
-      SoundSystem.play('click');
+      const theme = AVATAR_THEMES[AppState.player.avatarTheme || 'warrior'] || AVATAR_THEMES.warrior;
+      const themeSpeeches = [
+        theme.speech,
+        "오늘 작성한 퀘스트 로그가 내일의 이력서가 된다.",
+        "꾸준함은 가장 강력한 패시브 스킬입니다.",
+        "작은 성공을 매일 누적하는 것이 마스터의 비결이다."
+      ];
+      const idx = Math.floor(Math.random() * themeSpeeches.length);
+      AppState.player.speech = themeSpeeches[idx];
+      document.getElementById('avatar-speech').textContent = themeSpeeches[idx];
+      SoundSystem.play('jump');
     }
 
     function showLevelUpToast(title = 'LEVEL UP!! 레벨 업 축하합니다!', desc = '능력치 보너스와 새로운 마일스톤이 잠금 해제되었습니다!') {
