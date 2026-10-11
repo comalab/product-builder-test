@@ -319,15 +319,18 @@
 
       <!-- Brand Logo & Tabs -->
       <div class="flex items-center gap-4 sm:gap-6">
-        <div class="flex items-center gap-2.5 cursor-pointer shrink-0" onclick="switchTab('dashboard')">
-          <div class="w-9 h-9 bg-retro-primary pixel-btn flex items-center justify-center text-lg">
-            ⚔️
+        <div class="flex items-center gap-2.5 shrink-0">
+          <!-- Top-Left Profile Photo Badge (Replaces ⚔️ logo with User Profile / Default Profile Photo) -->
+          <div id="header-profile-badge" onclick="openProfileEditModal('photo')"
+            class="w-9 h-9 sm:w-10 sm:h-10 bg-retro-card border-2 border-black rounded-lg overflow-hidden cursor-pointer hover:border-retro-primary hover:scale-105 transition-all shadow-[2px_2px_0px_#000] flex items-center justify-center relative group shrink-0"
+            title="프로필 설정 열기 (증명사진 등록/변경)">
+            <!-- Dynamically populated via renderHUD() / renderAll() -->
           </div>
-          <div class="hidden sm:block">
+          <div class="cursor-pointer select-none" onclick="switchTab('dashboard')" title="대시보드로 이동">
             <h1
               class="font-pixel text-sm md:text-base text-retro-primary tracking-wider drop-shadow-[1px_1px_0px_#000]">
               THE Life Game</h1>
-            <p class="text-[10px] text-purple-300 font-vt tracking-wider">LEVEL UP REALITY &middot; QUEST TO CAREER</p>
+            <p class="text-[10px] text-purple-300 font-vt tracking-wider hidden sm:block">LEVEL UP REALITY &middot; QUEST TO CAREER</p>
           </div>
         </div>
 
@@ -2235,22 +2238,32 @@
       document.getElementById('main-exp-bar').style.width = pct + '%';
       document.getElementById('avatar-speech').textContent = AppState.player.speech;
 
-      // Render Sub Profile Photo Badge (도트캐릭터가 메인, 사진은 서브)
+      // Render Top-Left Header Profile Photo (Replaces ⚔️ sword logo)
+      const headerPhotoBadge = document.getElementById('header-profile-badge');
+      if (headerPhotoBadge) {
+        const photoSrc = AppState.player.photo || DEFAULT_PROFILE_PHOTO;
+        const isCustomPhoto = !!AppState.player.photo;
+        headerPhotoBadge.innerHTML = `
+          <img src="${photoSrc}" alt="프로필" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center text-[10px] text-yellow-300 font-pixel transition-opacity">
+            ✏️
+          </div>
+          ${!isCustomPhoto ? '<span class="absolute bottom-0 right-0 w-2 h-2 bg-yellow-400 border border-black rounded-full" title="기본 프로필 사진"></span>' : ''}
+        `;
+      }
+
+      // Render Sub Profile Photo Badge on Dashboard Card (도트캐릭터가 메인, 사진은 서브)
       const photoBadge = document.getElementById('dashboard-photo-badge');
       if (photoBadge) {
-        if (AppState.player.photo) {
-          photoBadge.innerHTML = `
-            <img src="${AppState.player.photo}" alt="프로필 사진" class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center text-[10px] text-yellow-300 font-pixel transition-opacity">✏️</div>
-          `;
-        } else {
-          photoBadge.innerHTML = `
-            <div class="w-full h-full flex flex-col items-center justify-center bg-black/40 group-hover:bg-purple-950/60 transition-colors text-gray-400 group-hover:text-retro-primary">
-              <span class="text-sm">📷</span>
-              <span class="text-[8px] font-pixel text-gray-400 group-hover:text-yellow-300">사진+</span>
-            </div>
-          `;
-        }
+        const photoSrc = AppState.player.photo || DEFAULT_PROFILE_PHOTO;
+        const isCustom = !!AppState.player.photo;
+        photoBadge.innerHTML = `
+          <img src="${photoSrc}" alt="프로필 사진" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center text-[10px] text-yellow-300 font-pixel transition-opacity">
+            ✏️
+          </div>
+          ${!isCustom ? '<span class="absolute bottom-0.5 right-0.5 bg-black/80 text-[7px] text-yellow-300 font-pixel px-1 border border-black rounded">기본</span>' : ''}
+        `;
       }
 
       // Render Dynamic Avatar in Dashboard (MAIN VISUAL: w-24 h-24 with bouncing animation)
@@ -2418,6 +2431,7 @@
     /* ==========================================================================
        6-2. PROFILE, AVATAR & ID HEADSHOT PHOTO CONTROLLERS
        ========================================================================== */
+    const DEFAULT_PROFILE_PHOTO = 'data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%20width%3D%22100%22%20height%3D%22100%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22defPfpBg%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%233b2d71%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%231e153b%22%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22defPfpHead%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%220%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23f8fafc%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23cbd5e1%22%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22defPfpBody%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%220%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2394a3b8%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%2364748b%22%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%3C%2Fdefs%3E%0A%20%20%3Crect%20width%3D%22100%22%20height%3D%22100%22%20fill%3D%22url(%23defPfpBg)%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2246%22%20fill%3D%22none%22%20stroke%3D%22%23FCE22A%22%20stroke-width%3D%221.5%22%20stroke-dasharray%3D%223%2C3%22%20opacity%3D%220.4%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%2250%22%20cy%3D%2238%22%20r%3D%2219%22%20fill%3D%22url(%23defPfpHead)%22%2F%3E%0A%20%20%3Cpath%20d%3D%22M16%2095%20C16%2068%2030%2062%2050%2062%20C70%2062%2084%2068%2084%2095%20Z%22%20fill%3D%22url(%23defPfpBody)%22%2F%3E%0A%20%20%3Cpolygon%20points%3D%2245%2C62%2055%2C62%2050%2C70%22%20fill%3D%22url(%23defPfpBg)%22%2F%3E%0A%3C%2Fsvg%3E';
     const SAMPLE_PROFILE_PHOTO = 'data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20300%20400%22%20width%3D%22300%22%20height%3D%22400%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22bgGrad%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23cbd5e1%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%2250%25%22%20stop-color%3D%22%2394a3b8%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%2364748b%22%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22suitGrad%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%220%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%231e293b%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%230f172a%22%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22skinGrad%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%220%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23fed7aa%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23fdba74%22%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22tieGrad%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%220%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%232563eb%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%231d4ed8%22%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%3C%2Fdefs%3E%0A%20%20%3C!--%20Background%20Studio%20Backdrop%20--%3E%0A%20%20%3Crect%20width%3D%22300%22%20height%3D%22400%22%20fill%3D%22url(%23bgGrad)%22%2F%3E%0A%20%20%0A%20%20%3C!--%20Subtle%20Lighting%20Vignette%20--%3E%0A%20%20%3Ccircle%20cx%3D%22150%22%20cy%3D%22150%22%20r%3D%22130%22%20fill%3D%22%23f8fafc%22%20opacity%3D%220.15%22%2F%3E%0A%0A%20%20%3C!--%20Body%20%2F%20Suit%20--%3E%0A%20%20%3C!--%20White%20Dress%20Shirt%20Collar%20--%3E%0A%20%20%3Cpolygon%20points%3D%22120%2C200%20150%2C265%20180%2C200%20165%2C190%20135%2C190%22%20fill%3D%22%23ffffff%22%2F%3E%0A%20%20%0A%20%20%3C!--%20Tie%20--%3E%0A%20%20%3Cpolygon%20points%3D%22144%2C215%20156%2C215%20158%2C310%20150%2C330%20142%2C310%22%20fill%3D%22url(%23tieGrad)%22%2F%3E%0A%20%20%3Cpolygon%20points%3D%22142%2C210%20158%2C210%20154%2C222%20146%2C222%22%20fill%3D%22%231e40af%22%2F%3E%0A%0A%20%20%3C!--%20Dark%20Navy%20Suit%20Jacket%20--%3E%0A%20%20%3Cpath%20d%3D%22M40%20400%20C40%20270%2085%20220%20125%20210%20L150%20255%20L175%20210%20C215%20220%20260%20270%20260%20400%20Z%22%20fill%3D%22url(%23suitGrad)%22%2F%3E%0A%20%20%3C!--%20Suit%20Lapels%20--%3E%0A%20%20%3Cpath%20d%3D%22M95%20240%20L135%20320%20L120%20320%20L80%20255%20Z%22%20fill%3D%22%23334155%22%2F%3E%0A%20%20%3Cpath%20d%3D%22M205%20240%20L165%20320%20L180%20320%20L220%20255%20Z%22%20fill%3D%22%23334155%22%2F%3E%0A%0A%20%20%3C!--%20Neck%20--%3E%0A%20%20%3Crect%20x%3D%22132%22%20y%3D%22170%22%20width%3D%2236%22%20height%3D%2240%22%20fill%3D%22url(%23skinGrad)%22%20rx%3D%224%22%2F%3E%0A%0A%20%20%3C!--%20Head%20%2F%20Face%20--%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22140%22%20rx%3D%2246%22%20ry%3D%2254%22%20fill%3D%22url(%23skinGrad)%22%2F%3E%0A%0A%20%20%3C!--%20Hair%20--%3E%0A%20%20%3Cpath%20d%3D%22M102%20135%20C100%2085%20130%2065%20155%2065%20C185%2065%20200%2085%20198%20135%20C192%20120%20185%20105%20170%20102%20C150%2098%20130%20105%20106%20130%20Z%22%20fill%3D%22%231e293b%22%2F%3E%0A%20%20%3C!--%20Sideburns%20%26%20Ears%20--%3E%0A%20%20%3Cellipse%20cx%3D%22103%22%20cy%3D%22142%22%20rx%3D%227%22%20ry%3D%2212%22%20fill%3D%22url(%23skinGrad)%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22197%22%20cy%3D%22142%22%20rx%3D%227%22%20ry%3D%2212%22%20fill%3D%22url(%23skinGrad)%22%2F%3E%0A%0A%20%20%3C!--%20Eyebrows%20--%3E%0A%20%20%3Cpath%20d%3D%22M118%20122%20Q130%20117%20140%20121%22%20stroke%3D%22%231e293b%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%20fill%3D%22none%22%2F%3E%0A%20%20%3Cpath%20d%3D%22M160%20121%20Q170%20117%20182%20122%22%20stroke%3D%22%231e293b%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%20fill%3D%22none%22%2F%3E%0A%0A%20%20%3C!--%20Eyes%20--%3E%0A%20%20%3Cellipse%20cx%3D%22129%22%20cy%3D%22133%22%20rx%3D%225%22%20ry%3D%223.5%22%20fill%3D%22%231e293b%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22171%22%20cy%3D%22133%22%20rx%3D%225%22%20ry%3D%223.5%22%20fill%3D%22%231e293b%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22130%22%20cy%3D%22132%22%20r%3D%221%22%20fill%3D%22%23ffffff%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22172%22%20cy%3D%22132%22%20r%3D%221%22%20fill%3D%22%23ffffff%22%2F%3E%0A%0A%20%20%3C!--%20Nose%20--%3E%0A%20%20%3Cpath%20d%3D%22M149%20135%20L146%20153%20L154%20153%22%20stroke%3D%22%23ea580c%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20fill%3D%22none%22%20opacity%3D%220.6%22%2F%3E%0A%0A%20%20%3C!--%20Smile%20%2F%20Mouth%20--%3E%0A%20%20%3Cpath%20d%3D%22M136%20167%20Q150%20176%20164%20167%22%20stroke%3D%22%239a3412%22%20stroke-width%3D%222.5%22%20stroke-linecap%3D%22round%22%20fill%3D%22none%22%2F%3E%0A%0A%20%20%3C!--%20Standard%20Photo%20Stamp%20Overlay%20in%20Corner%20--%3E%0A%20%20%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%22300%22%20height%3D%22400%22%20fill%3D%22none%22%20stroke%3D%22%2364748b%22%20stroke-width%3D%222%22%2F%3E%0A%3C%2Fsvg%3E';
 
     let editSelectedAvatarTheme = 'warrior';
@@ -2563,9 +2577,12 @@
         if (delBtn) delBtn.classList.remove('hidden');
       } else {
         previewBox.innerHTML = `
-          <div class="w-full h-full flex flex-col items-center justify-center p-2 text-center text-gray-500 bg-black/40">
-            <span class="text-2xl">👤</span>
-            <span class="text-[9px] font-pixel text-gray-400 mt-1">사진 없음</span>
+          <div class="w-full h-full relative group">
+            <img src="${DEFAULT_PROFILE_PHOTO}" alt="기본 프로필 사진" class="w-full h-full object-cover opacity-80">
+            <div class="absolute inset-0 bg-black/40 flex flex-col items-center justify-center p-1 text-center">
+              <span class="text-lg">📷</span>
+              <span class="text-[8px] font-pixel text-yellow-300 mt-0.5">기본 프로필</span>
+            </div>
           </div>
         `;
         if (delBtn) delBtn.classList.add('hidden');
@@ -3491,12 +3508,15 @@ npm run build && git commit -m "feat: complete milestone"</pre>
             resumePhotoBox.innerHTML = `<img src="${AppState.player.photo}" alt="증명사진" class="w-full h-full object-cover">`;
           } else {
             resumePhotoBox.innerHTML = `
-              <div onclick="openProfileEditModal('photo')" class="w-full h-full flex flex-col items-center justify-center bg-gray-100 text-gray-400 p-2 text-center cursor-pointer hover:bg-gray-200 transition-colors select-none" title="클릭하여 증명사진 등록">
-                <svg class="w-8 h-8 text-gray-400 mb-1" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                </svg>
-                <span class="text-[10px] text-gray-600 font-semibold leading-tight font-sans">증명사진<br>(3:4 규격)</span>
-                <span class="text-[9px] text-blue-600 font-medium underline mt-1">등록하기</span>
+              <div onclick="openProfileEditModal('photo')" class="w-full h-full relative group cursor-pointer select-none" title="클릭하여 증명사진 등록/변경">
+                <img src="${DEFAULT_PROFILE_PHOTO}" alt="기본 프로필" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center text-white transition-opacity p-1 text-center">
+                  <span class="text-xs font-pixel text-yellow-300">증명사진 등록</span>
+                  <span class="text-[9px] text-gray-200 mt-0.5">클릭하여 변경</span>
+                </div>
+                <div class="absolute bottom-1 right-1 bg-black/80 text-[8px] text-yellow-300 font-pixel px-1 border border-black rounded">
+                  기본
+                </div>
               </div>
             `;
           }
