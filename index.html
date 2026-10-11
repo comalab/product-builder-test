@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>LifeGame (인생게임) - Level Up Your Life &amp; Resume</title>
+  <title>LifeGame (인생게임) - Level Up Your Life, Skill Tree &amp; Resume</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>">
 
   <!-- Open Graph / SEO Meta Tags -->
-  <meta name="description" content="LifeGame (인생게임) - 퀘스트와 학습 기록을 실시간 RPG 스탯으로 전환하고 채용 담당자를 위한 이력서로 변환하는 레트로 2D 픽셀 아트 포트폴리오 웹사이트">
-  <meta property="og:title" content="LifeGame (인생게임) - 16-Bit 레트로 RPG 라이프 &amp; 이력서 빌더">
-  <meta property="og:description" content="블로그형 퀘스트 작성기, 6축 실시간 레이더 스탯, 채용 담당자용 PDF 이력서 실시간 연동">
+  <meta name="description" content="LifeGame (인생게임) - 퀘스트와 학습 기록을 실시간 RPG 스탯 및 스킬트리로 전환하고 채용 담당자를 위한 이력서로 변환하는 레트로 2D 픽셀 아트 포트폴리오 웹사이트">
+  <meta property="og:title" content="LifeGame (인생게임) - 16-Bit 레트로 RPG 라이프, 스킬트리 &amp; 이력서 빌더">
+  <meta property="og:description" content="커스텀 스킬트리 연구소, 블로그형 퀘스트 작성기, 6축 실시간 레이더 스탯, 채용 담당자용 이력서 실시간 연동">
   <meta property="og:type" content="website">
   <meta property="og:image" content="screen.png">
 
@@ -126,10 +126,10 @@
         color: #111827 !important;
         font-family: 'Pretendard', sans-serif !important;
       }
-      .no-print, header, footer, #scanline-layer, #level-up-toast, #quest-editor-modal, #quest-detail-modal {
+      .no-print, header, footer, #scanline-layer, #level-up-toast, #quest-editor-modal, #quest-detail-modal, #skill-modal {
         display: none !important;
       }
-      #dashboard-view {
+      #dashboard-view, #skilltree-view {
         display: none !important;
       }
       #resume-view {
@@ -204,34 +204,37 @@
     <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
       
       <!-- Brand Logo & Tabs -->
-      <div class="flex items-center gap-6">
-        <div class="flex items-center gap-2.5 cursor-pointer" onclick="switchTab('dashboard')">
+      <div class="flex items-center gap-4 sm:gap-6">
+        <div class="flex items-center gap-2.5 cursor-pointer shrink-0" onclick="switchTab('dashboard')">
           <div class="w-9 h-9 bg-retro-primary pixel-btn flex items-center justify-center text-lg">
             ⚔️
           </div>
-          <div>
+          <div class="hidden sm:block">
             <h1 class="font-pixel text-sm md:text-base text-retro-primary tracking-wider drop-shadow-[1px_1px_0px_#000]">LIFE GAME</h1>
             <p class="text-[10px] text-purple-300 font-vt tracking-wider">LEVEL UP REALITY &middot; QUEST TO CAREER</p>
           </div>
         </div>
 
-        <!-- Navigation Tabs: [대시보드] vs [이력서 뷰] -->
-        <nav class="flex items-center gap-1.5 bg-black/50 p-1 border border-black pixel-box-sm">
-          <button id="tab-btn-dashboard" onclick="switchTab('dashboard')" class="px-3.5 py-1.5 font-pixel text-xs bg-retro-primary text-black font-bold transition-all flex items-center gap-1.5">
+        <!-- Navigation Tabs: [대시보드] vs [스킬트리] vs [이력서 뷰] -->
+        <nav class="flex items-center gap-1 bg-black/50 p-1 border border-black pixel-box-sm">
+          <button id="tab-btn-dashboard" onclick="switchTab('dashboard')" class="px-2.5 sm:px-3.5 py-1.5 font-pixel text-xs bg-retro-primary text-black font-bold transition-all flex items-center gap-1.5">
             🎮 <span>대시보드</span>
           </button>
-          <button id="tab-btn-resume" onclick="switchTab('resume')" class="px-3.5 py-1.5 font-pixel text-xs bg-transparent text-gray-400 hover:text-white transition-all flex items-center gap-1.5">
+          <button id="tab-btn-skilltree" onclick="switchTab('skilltree')" class="px-2.5 sm:px-3.5 py-1.5 font-pixel text-xs bg-transparent text-gray-400 hover:text-white transition-all flex items-center gap-1.5">
+            🌲 <span>스킬트리</span>
+          </button>
+          <button id="tab-btn-resume" onclick="switchTab('resume')" class="px-2.5 sm:px-3.5 py-1.5 font-pixel text-xs bg-transparent text-gray-400 hover:text-white transition-all flex items-center gap-1.5">
             📄 <span>이력서 뷰</span>
           </button>
         </nav>
       </div>
 
       <!-- Right Header Actions -->
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2 sm:gap-3">
         <!-- Live Player Mini Status -->
-        <div class="hidden sm:flex items-center gap-3 bg-black/40 px-3 py-1 border border-black pixel-box-sm text-xs font-pixel">
+        <div class="hidden md:flex items-center gap-3 bg-black/40 px-3 py-1 border border-black pixel-box-sm text-xs font-pixel">
           <span class="text-retro-cyan">LV.<span id="header-level">1</span></span>
-          <div class="w-20 bg-gray-800 h-2 border border-black overflow-hidden">
+          <div class="w-16 lg:w-20 bg-gray-800 h-2 border border-black overflow-hidden">
             <div id="header-exp-bar" class="h-full bg-gradient-to-r from-emerald-500 to-retro-accent transition-all duration-300" style="width: 0%;"></div>
           </div>
           <span class="text-retro-gold">🪙 <span id="header-gold">0</span>G</span>
@@ -257,8 +260,8 @@
     <div class="flex items-center gap-3">
       <span class="text-2xl">🎺</span>
       <div>
-        <h3 class="font-pixel text-xs md:text-sm font-bold text-black">LEVEL UP!! 레벨 업 축하합니다!</h3>
-        <p class="font-vt text-base text-gray-900 mt-0.5">능력치 보너스와 새로운 마일스톤이 잠금 해제되었습니다!</p>
+        <h3 class="font-pixel text-xs md:text-sm font-bold text-black" id="toast-title">LEVEL UP!! 레벨 업 축하합니다!</h3>
+        <p class="font-vt text-base text-gray-900 mt-0.5" id="toast-desc">능력치 보너스와 새로운 마일스톤이 잠금 해제되었습니다!</p>
       </div>
     </div>
     <button onclick="closeLevelUpToast()" class="pixel-btn bg-black text-white px-2.5 py-1 font-pixel text-xs">확인</button>
@@ -278,12 +281,17 @@
           <h2 class="font-pixel text-sm md:text-base text-retro-primary flex items-center gap-2">
             <span>🛡️</span> 성장 대시보드
           </h2>
-          <p class="text-xs text-purple-200 mt-0.5 font-vt text-base">매일의 학습과 커밋을 실시간 스탯으로 레벨업하세요.</p>
+          <p class="text-xs text-purple-200 mt-0.5 font-vt text-base">매일의 학습과 커밋을 실시간 스탯 및 스킬 숙련도로 레벨업하세요.</p>
         </div>
         
-        <button onclick="openEditorModal()" class="pixel-btn bg-retro-primary hover:bg-yellow-300 text-black font-pixel text-xs px-4 py-2 font-bold flex items-center gap-1.5 shadow-md">
-          <span>➕</span> 새 퀘스트 작성
-        </button>
+        <div class="flex items-center gap-2">
+          <button onclick="switchTab('skilltree')" class="pixel-btn bg-retro-card hover:bg-[#2c214c] text-retro-cyan font-pixel text-xs px-3 py-2 flex items-center gap-1.5 border border-black">
+            <span>🌲</span> 스킬트리 보기
+          </button>
+          <button onclick="openEditorModal()" class="pixel-btn bg-retro-primary hover:bg-yellow-300 text-black font-pixel text-xs px-4 py-2 font-bold flex items-center gap-1.5 shadow-md">
+            <span>➕</span> 새 퀘스트 작성
+          </button>
+        </div>
       </div>
 
       <!-- Main Clean 2-Column Grid -->
@@ -298,174 +306,274 @@
               <div>
                 <span class="text-[10px] bg-retro-purple px-2 py-0.5 font-pixel border border-black text-yellow-300" id="card-class-badge">NOVICE EXPLORER</span>
                 <h3 class="font-pixel text-base md:text-lg text-retro-cyan mt-1.5" id="player-name">모험가 (Adventurer)</h3>
-                <p class="text-xs text-gray-300 font-vt text-base" id="player-role-sub">LV.<span id="stat-level-text">1</span> 견습 탐험가</p>
+                <p class="text-xs text-purple-200 font-vt text-base">CLASS: DEVELOPER / ARCHITECT</p>
               </div>
-              <div class="w-10 h-10 bg-retro-bg border border-black pixel-box-sm flex items-center justify-center text-xl">
-                🧙‍♂️
+              <div class="text-right">
+                <span class="font-pixel text-xl md:text-2xl text-retro-primary font-bold">LV.<span id="stat-level-text">1</span></span>
+                <div class="text-[10px] text-gray-400 font-pixel mt-1">EXP <span id="curr-exp-val">0</span> / <span id="max-exp-val">100</span></div>
               </div>
             </div>
 
-            <!-- Bouncing Pixel Avatar -->
-            <div class="mt-4 bg-retro-bg border-2 border-black p-4 pixel-box-sm flex flex-col items-center justify-center relative">
-              <div class="py-2 flex flex-col items-center">
-                <div class="pixel-character-bounce cursor-pointer flex flex-col items-center" onclick="SoundSystem.play('jump'); pokeAvatar();" title="클릭해서 점프 시키기!">
-                  <svg width="90" height="100" viewBox="0 0 32 36" fill="none" class="w-20 h-24 filter drop-shadow-[0_4px_0_rgba(0,0,0,0.8)]">
-                    <rect x="10" y="4" width="12" height="4" fill="#3D1C06"/>
-                    <rect x="8" y="8" width="16" height="4" fill="#3D1C06"/>
-                    <rect x="10" y="8" width="12" height="10" fill="#FFDCB2"/>
-                    <rect x="12" y="11" width="2" height="3" fill="#000000"/>
-                    <rect x="18" y="11" width="2" height="3" fill="#000000"/>
-                    <rect x="10" y="14" width="2" height="1" fill="#FF8A8A"/>
-                    <rect x="20" y="14" width="2" height="1" fill="#FF8A8A"/>
-                    <rect x="9" y="3" width="14" height="2" fill="#6C4AB6"/>
-                    <rect x="12" y="0" width="8" height="3" fill="#6C4AB6"/>
-                    <rect x="15" y="1" width="2" height="2" fill="#FCE22A"/>
-                    <rect x="9" y="18" width="14" height="10" fill="#00F0FF"/>
-                    <rect x="11" y="20" width="10" height="8" fill="#1C3879"/>
-                    <rect x="9" y="26" width="14" height="2" fill="#222"/>
-                    <rect x="15" y="26" width="2" height="2" fill="#FCE22A"/>
-                    <rect x="6" y="20" width="3" height="4" fill="#FFDCB2"/>
-                    <rect x="23" y="20" width="3" height="4" fill="#FFDCB2"/>
-                    <rect x="25" y="16" width="2" height="12" fill="#E2E8F0" class="glow-sword"/>
-                    <rect x="24" y="24" width="4" height="2" fill="#FCE22A"/>
-                    <rect x="25" y="28" width="2" height="3" fill="#6C4AB6"/>
-                    <rect x="11" y="28" width="4" height="5" fill="#332244"/>
-                    <rect x="17" y="28" width="4" height="5" fill="#332244"/>
-                    <rect x="10" y="33" width="5" height="3" fill="#111111"/>
-                    <rect x="17" y="33" width="5" height="3" fill="#111111"/>
-                  </svg>
+            <!-- Avatar Sprite Animation Box -->
+            <div class="mt-4 bg-retro-bg p-4 border border-black pixel-box-sm flex flex-col items-center justify-center relative overflow-hidden">
+              <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#FCE22A_1px,transparent_1px)] [background-size:12px_12px]"></div>
+
+              <!-- Pixel Character SVG Sprite -->
+              <div class="relative z-10 my-1 cursor-pointer group" onclick="pokeAvatar()" title="캐릭터 클릭: 사운드 &amp; 대사">
+                <svg class="w-24 h-24 pixel-character-bounce filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.6)]" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Shadow -->
+                  <ellipse cx="32" cy="60" rx="18" ry="4" fill="#000000" opacity="0.4"/>
+                  <!-- Cloak / Body -->
+                  <rect x="22" y="24" width="20" height="26" fill="#3B2667" stroke="#000" stroke-width="2"/>
+                  <!-- Armor Breastplate -->
+                  <rect x="26" y="28" width="12" height="14" fill="#6C4AB6" stroke="#000" stroke-width="2"/>
+                  <rect x="29" y="32" width="6" height="6" fill="#FCE22A"/>
+                  <!-- Head / Face -->
+                  <rect x="22" y="10" width="20" height="16" fill="#FAD02C" stroke="#000" stroke-width="2"/>
+                  <!-- Hair / Helmet -->
+                  <rect x="20" y="6" width="24" height="8" fill="#1B1438" stroke="#000" stroke-width="2"/>
+                  <rect x="18" y="10" width="6" height="10" fill="#1B1438"/>
+                  <rect x="40" y="10" width="6" height="10" fill="#1B1438"/>
+                  <!-- Eyes -->
+                  <rect x="26" y="16" width="3" height="4" fill="#000"/>
+                  <rect x="35" y="16" width="3" height="4" fill="#000"/>
+                  <!-- Limbs / Boots -->
+                  <rect x="23" y="50" width="7" height="8" fill="#120E24" stroke="#000" stroke-width="2"/>
+                  <rect x="34" y="50" width="7" height="8" fill="#120E24" stroke="#000" stroke-width="2"/>
+                  <!-- Shield on Left -->
+                  <path d="M12 28H20V42C20 46 16 50 16 50C16 50 12 46 12 42V28Z" fill="#241B3D" stroke="#000" stroke-width="2"/>
+                  <rect x="15" y="32" width="2" height="10" fill="#00F0FF"/>
+                  <!-- Glowing Sword on Right -->
+                  <g class="glow-sword">
+                    <rect x="46" y="14" width="3" height="26" fill="#00F0FF" stroke="#000" stroke-width="1.5"/>
+                    <rect x="43" y="36" width="9" height="3" fill="#FCE22A" stroke="#000" stroke-width="1"/>
+                    <rect x="46" y="39" width="3" height="6" fill="#8B5CF6" stroke="#000" stroke-width="1"/>
+                  </g>
+                </svg>
+                <div class="text-[9px] font-pixel text-center text-gray-400 group-hover:text-retro-primary transition-colors mt-1">
+                  [모험가 아바타 터치]
                 </div>
-                <div class="w-14 h-1.5 bg-black/60 rounded-full mt-1"></div>
               </div>
-              <div class="w-full text-center mt-2 bg-retro-surface border border-black py-1 px-2 font-vt text-sm text-retro-cyan">
-                💬 "<span id="avatar-speech">첫 번째 퀘스트를 작성하고 성장을 시작해보세요!</span>"
+
+              <!-- Speech Balloon -->
+              <div class="mt-2 w-full bg-black/60 border border-black p-2 pixel-box-sm">
+                <p id="avatar-speech" class="text-xs font-vt text-yellow-200 text-center tracking-wide text-base">
+                  "첫 번째 퀘스트를 작성하고 레벨업을 시작해보세요!"
+                </p>
+              </div>
+
+              <!-- Main EXP Bar -->
+              <div class="w-full mt-3">
+                <div class="flex justify-between text-[10px] font-pixel text-gray-300 mb-1">
+                  <span>EXP GAIN</span>
+                  <span id="exp-pct-val" class="text-retro-accent">0%</span>
+                </div>
+                <div class="w-full bg-black h-3 border border-black p-0.5">
+                  <div id="main-exp-bar" class="h-full bg-gradient-to-r from-emerald-500 via-retro-accent to-retro-primary transition-all duration-300" style="width: 0%;"></div>
+                </div>
               </div>
             </div>
 
-            <!-- EXP Progress Bar -->
-            <div class="mt-4">
-              <div class="flex justify-between text-xs font-pixel mb-1 text-[11px]">
-                <span class="text-retro-primary">EXP:</span>
-                <span class="text-white"><span id="curr-exp-val">0</span> / <span id="max-exp-val">100</span> XP (<span id="exp-pct-val">0%</span>)</span>
+            <!-- 6-Core Numeric Stats Grid -->
+            <div class="mt-4 grid grid-cols-3 gap-2 text-center font-pixel text-xs">
+              <div class="bg-black/40 p-2 border border-black">
+                <span class="text-[10px] text-blue-400 block">INT</span>
+                <span class="text-white text-sm" id="stat-val-int">10</span>
               </div>
-              <div class="w-full bg-black h-4 border-2 border-black p-0.5 pixel-box-sm">
-                <div id="main-exp-bar" class="h-full bg-gradient-to-r from-emerald-500 via-retro-cyan to-retro-primary transition-all duration-500" style="width: 0%;"></div>
+              <div class="bg-black/40 p-2 border border-black">
+                <span class="text-[10px] text-emerald-400 block">DEX</span>
+                <span class="text-white text-sm" id="stat-val-dex">10</span>
+              </div>
+              <div class="bg-black/40 p-2 border border-black">
+                <span class="text-[10px] text-purple-400 block">WIS</span>
+                <span class="text-white text-sm" id="stat-val-wis">10</span>
+              </div>
+              <div class="bg-black/40 p-2 border border-black">
+                <span class="text-[10px] text-pink-400 block">CHA</span>
+                <span class="text-white text-sm" id="stat-val-cha">10</span>
+              </div>
+              <div class="bg-black/40 p-2 border border-black">
+                <span class="text-[10px] text-amber-400 block">CON</span>
+                <span class="text-white text-sm" id="stat-val-con">10</span>
+              </div>
+              <div class="bg-black/40 p-2 border border-black">
+                <span class="text-[10px] text-yellow-400 block">LUK</span>
+                <span class="text-white text-sm" id="stat-val-luk">10</span>
               </div>
             </div>
           </div>
 
-          <!-- 6-Axis Radar Stat Matrix -->
-          <div class="bg-retro-surface pixel-box p-5 border border-black flex flex-col items-center">
-            <div class="w-full flex items-center justify-between mb-2">
-              <h3 class="font-pixel text-xs md:text-sm text-retro-primary flex items-center gap-1.5">
-                <span>📊</span> RADAR STAT MATRIX
+          <!-- 6-Axis Interactive Radar Chart -->
+          <div class="bg-retro-surface pixel-box p-4 border border-black">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="font-pixel text-xs text-retro-cyan flex items-center gap-1.5">
+                <span>📊</span> 6축 역량 레이더 차트
               </h3>
-              <span class="text-[9px] font-pixel text-gray-400 bg-black px-1.5 py-0.5 border border-gray-700">6대 코어 역량</span>
+              <span class="text-[10px] font-vt text-gray-400">REALTIME MATRIX</span>
             </div>
-
-            <div class="relative bg-retro-bg border-2 border-black p-2 pixel-box-sm w-full flex items-center justify-center my-1">
-              <canvas id="radarCanvas" width="340" height="280" class="max-w-full h-auto cursor-crosshair"></canvas>
-              <div id="stat-tooltip" class="hidden absolute pointer-events-none bg-black/95 text-retro-cyan border border-retro-cyan px-2 py-1 font-pixel text-[10px] z-20 pixel-box-sm"></div>
+            <div class="relative flex justify-center items-center bg-black/60 border border-black p-2">
+              <canvas id="radarCanvas" width="340" height="300" class="max-w-full"></canvas>
+              <div id="stat-tooltip" class="hidden absolute pointer-events-none bg-black/90 text-white font-pixel text-[10px] px-2 py-1 border border-retro-cyan shadow-lg z-20"></div>
             </div>
-
-            <div class="w-full grid grid-cols-3 gap-2 mt-3 font-pixel text-[10px]">
-              <div class="bg-retro-card border border-black p-2 text-center hover:border-retro-cyan transition-colors">
-                <span class="text-blue-400 block text-[9px]">INT (지능)</span>
-                <span class="text-sm font-bold text-white mt-0.5 block" id="stat-val-int">10</span>
-                <span class="text-[8px] text-gray-400">코딩 &middot; 설계</span>
-              </div>
-              <div class="bg-retro-card border border-black p-2 text-center hover:border-retro-cyan transition-colors">
-                <span class="text-emerald-400 block text-[9px]">DEX (민첩)</span>
-                <span class="text-sm font-bold text-white mt-0.5 block" id="stat-val-dex">10</span>
-                <span class="text-[8px] text-gray-400">배포 &middot; 구현</span>
-              </div>
-              <div class="bg-retro-card border border-black p-2 text-center hover:border-retro-cyan transition-colors">
-                <span class="text-purple-400 block text-[9px]">WIS (지혜)</span>
-                <span class="text-sm font-bold text-white mt-0.5 block" id="stat-val-wis">10</span>
-                <span class="text-[8px] text-gray-400">분석 &middot; 판단</span>
-              </div>
-              <div class="bg-retro-card border border-black p-2 text-center hover:border-retro-cyan transition-colors">
-                <span class="text-pink-400 block text-[9px]">CHA (매력)</span>
-                <span class="text-sm font-bold text-white mt-0.5 block" id="stat-val-cha">10</span>
-                <span class="text-[8px] text-gray-400">협업 &middot; 리드</span>
-              </div>
-              <div class="bg-retro-card border border-black p-2 text-center hover:border-retro-cyan transition-colors">
-                <span class="text-yellow-400 block text-[9px]">CON (체력)</span>
-                <span class="text-sm font-bold text-white mt-0.5 block" id="stat-val-con">10</span>
-                <span class="text-[8px] text-gray-400">집중 &middot; 멘탈</span>
-              </div>
-              <div class="bg-retro-card border border-black p-2 text-center hover:border-retro-cyan transition-colors">
-                <span class="text-amber-400 block text-[9px]">LUK (행운)</span>
-                <span class="text-sm font-bold text-white mt-0.5 block" id="stat-val-luk">10</span>
-                <span class="text-[8px] text-gray-400">이직 &middot; 기회</span>
-              </div>
-            </div>
+            <p class="text-[10px] text-gray-400 font-vt text-center mt-2">
+              퀘스트를 완료하면 해당 스탯이 실시간 성장하여 레이더 차트에 반영됩니다.
+            </p>
           </div>
+
         </aside>
 
-        <!-- RIGHT COLUMN (7 Cols): Quest Card List & Evidence Vault -->
+        <!-- RIGHT COLUMN (7 Cols): Quest List & Timeline Feed -->
         <section class="lg:col-span-7 flex flex-col gap-6">
           
-          <!-- Quest Card List Panel -->
+          <!-- Quests Board Box -->
           <div class="bg-retro-surface pixel-box p-5 border border-black">
-            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-black pb-3 mb-4">
-              <h3 class="font-pixel text-xs md:text-sm text-retro-primary flex items-center gap-1.5">
-                📜 퀘스트 로그 &amp; 블로그 기록
-              </h3>
-              
-              <!-- Filter Tabs -->
-              <div class="flex gap-1.5">
+            
+            <!-- Filters & Category Chips -->
+            <div class="flex flex-wrap items-center justify-between gap-3 mb-4 border-b border-black/80 pb-3">
+              <div>
+                <h3 class="font-pixel text-xs md:text-sm text-retro-primary flex items-center gap-2">
+                  <span>📜</span> 퀘스트 연대기 피드
+                </h3>
+                <p class="text-[11px] text-gray-400 font-vt mt-0.5 text-base">카드를 클릭하여 상세 블로그 포스팅과 증빙을 열람하세요.</p>
+              </div>
+
+              <!-- Filter Buttons -->
+              <div class="flex items-center gap-1.5">
                 <button onclick="setQuestFilter('all')" id="tab-all" class="pixel-btn bg-retro-primary text-black px-2.5 py-1 text-[10px] font-pixel font-bold">전체</button>
                 <button onclick="setQuestFilter('daily')" id="tab-daily" class="pixel-btn bg-retro-card text-gray-300 px-2.5 py-1 text-[10px] font-pixel">일일</button>
-                <button onclick="setQuestFilter('boss')" id="tab-boss" class="pixel-btn bg-retro-card text-retro-pink px-2.5 py-1 text-[10px] font-pixel">👑 보스</button>
-                <button onclick="setQuestFilter('blog')" id="tab-blog" class="pixel-btn bg-retro-card text-retro-cyan px-2.5 py-1 text-[10px] font-pixel">📝 블로그</button>
+                <button onclick="setQuestFilter('boss')" id="tab-boss" class="pixel-btn bg-retro-card text-gray-300 px-2.5 py-1 text-[10px] font-pixel">보스</button>
+                <button onclick="setQuestFilter('blog')" id="tab-blog" class="pixel-btn bg-retro-card text-gray-300 px-2.5 py-1 text-[10px] font-pixel">블로그형</button>
               </div>
             </div>
 
-            <!-- Scrollable Quest Card List -->
-            <div id="quest-list-container" class="space-y-3.5 max-h-[620px] overflow-y-auto pr-1">
-              <!-- Dynamically populated via JS -->
+            <!-- Dynamic Quest List Container -->
+            <div id="quest-list-container" class="space-y-3">
+              <!-- Populated by JS -->
             </div>
+
           </div>
 
-          <!-- Verified Evidence Vault -->
+          <!-- Evidence Vault Box -->
           <div class="bg-retro-surface pixel-box p-5 border border-black">
-            <div class="flex items-center justify-between mb-2">
-              <h3 class="font-pixel text-xs md:text-sm text-retro-cyan flex items-center gap-1.5">
-                🛡️ VERIFIED EVIDENCE VAULT (증빙 보관함)
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="font-pixel text-xs md:text-sm text-retro-cyan flex items-center gap-2">
+                <span>🛡️</span> 최근 완료된 퀘스트 증빙 보관함
               </h3>
-              <span class="text-[10px] font-pixel text-retro-accent" id="proof-count-badge">0건 완료</span>
+              <span id="proof-count-badge" class="font-pixel text-[10px] bg-black px-2 py-0.5 text-emerald-400 border border-black">
+                0건 완료
+              </span>
             </div>
-            <p class="text-xs text-gray-400 mb-3">완료된 퀘스트의 증빙 자료는 이력서 모드 포트폴리오에 자동 연동됩니다.</p>
+            
             <div id="proof-gallery" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <!-- Populated via JS -->
+              <!-- Populated by JS -->
             </div>
           </div>
 
         </section>
 
       </div>
+
     </div>
 
     <!-- ======================================================== -->
-    <!-- 3. RESUME VIEW (이력서 뷰 화면)                           -->
+    <!-- 3. SKILL TREE CUSTOM MANAGEMENT VIEW (스킬트리 관리 페이지) -->
     <!-- ======================================================== -->
-    <div id="resume-view" class="hidden max-w-4xl mx-auto my-2 transition-all duration-300">
-      <div class="bg-white text-gray-900 shadow-2xl rounded-sm border border-gray-200 p-8 md:p-12 print:p-0 print:border-none print:shadow-none">
+    <div id="skilltree-view" class="hidden transition-all duration-300">
+      
+      <!-- Top Banner & Action -->
+      <div class="mb-6 flex flex-wrap items-center justify-between gap-3 bg-retro-surface p-4 pixel-box-sm border border-black">
+        <div>
+          <h2 class="font-pixel text-sm md:text-base text-retro-primary flex items-center gap-2">
+            <span>🌲</span> 커스텀 스킬트리 연구소 (Skill Tree Lab)
+          </h2>
+          <p class="text-xs text-purple-200 mt-0.5 font-vt text-base">
+            6대 코어 스탯에 속한 세부 스킬을 자유롭게 등록·관리하고, 퀘스트를 통해 스킬 레벨과 숙련도를 성장시키세요.
+          </p>
+        </div>
         
-        <!-- Resume Action Top Bar -->
-        <div class="no-print flex flex-wrap items-center justify-between pb-6 mb-8 border-b border-gray-200">
-          <div class="flex items-center gap-2">
-            <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span class="text-xs font-semibold text-gray-600 uppercase tracking-wider">채용 담당자용 실시간 렌더링 모드 (Cloudflare Pages 호환)</span>
+        <button onclick="openSkillModal()" class="pixel-btn bg-retro-accent hover:bg-emerald-400 text-black font-pixel text-xs px-4 py-2 font-bold flex items-center gap-1.5 shadow-md">
+          <span>➕</span> 새 스킬 추가
+        </button>
+      </div>
+
+      <!-- 6 Core Stat Selector Bar -->
+      <div class="bg-retro-surface pixel-box p-4 border border-black mb-6">
+        <label class="block text-[10px] font-pixel text-gray-400 mb-2 uppercase">[ 코어 스탯 카테고리 선택 ]</label>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2" id="skill-stat-selector-bar">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Active Stat Overview Ribbon -->
+      <div class="bg-retro-surface pixel-box-sm p-4 border border-black mb-6 flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div id="skill-category-icon" class="w-12 h-12 bg-black/60 border-2 border-black pixel-box-sm flex items-center justify-center text-2xl">
+            🧠
           </div>
-          <div class="flex items-center gap-2.5">
-            <button onclick="window.print()" class="px-4 py-2 bg-gray-900 hover:bg-black text-white text-xs font-semibold rounded shadow flex items-center gap-1.5 transition-colors">
-              🖨️ PDF 인쇄 / 다운로드
-            </button>
-            <button onclick="switchTab('dashboard')" class="px-3.5 py-2 bg-purple-100 hover:bg-purple-200 text-purple-900 text-xs font-semibold rounded flex items-center gap-1.5 transition-colors">
-              🎮 대시보드로 돌아가기
-            </button>
+          <div>
+            <h3 class="font-pixel text-xs md:text-sm text-retro-cyan flex items-center gap-2" id="skill-category-title">
+              INT (지능) 계열 스킬트리
+            </h3>
+            <p class="text-xs text-gray-300 font-sans mt-0.5" id="skill-category-desc">
+              논리적 사고, 문제 해결, 알고리즘 및 소프트웨어 엔지니어링 역량
+            </p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3 font-pixel text-xs">
+          <div class="bg-black/60 px-3 py-1.5 border border-black">
+            <span class="text-gray-400 text-[10px] block">보유 스킬</span>
+            <span class="text-white text-sm" id="skill-stat-count">0개</span>
+          </div>
+          <div class="bg-black/60 px-3 py-1.5 border border-black">
+            <span class="text-retro-gold text-[10px] block">연동 퀘스트</span>
+            <span class="text-retro-primary text-sm" id="skill-stat-quests">0회 달성</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skills Cards Grid Container -->
+      <div id="skills-grid-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- Dynamically rendered by JS -->
+      </div>
+
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- 4. RESUME VIEW (이력서 뷰 화면 - 채용 담당자용)             -->
+    <!-- ======================================================== -->
+    <div id="resume-view" class="hidden transition-all duration-300">
+      
+      <!-- Top Action Toolbar -->
+      <div class="no-print mb-6 flex flex-wrap items-center justify-between gap-3 bg-retro-surface p-4 pixel-box-sm border border-black">
+        <div>
+          <h2 class="font-pixel text-sm md:text-base text-retro-primary flex items-center gap-2">
+            <span>📄</span> 채용 담당자용 검증된 이력서 뷰
+          </h2>
+          <p class="text-xs text-purple-200 mt-0.5 font-vt text-base">게임 대시보드의 검증된 퀘스트 기록이 깔끔한 전문가용 이력서로 실시간 변환됩니다.</p>
+        </div>
+        
+        <div class="flex items-center gap-2">
+          <button onclick="window.print()" class="pixel-btn bg-retro-primary hover:bg-yellow-300 text-black font-pixel text-xs px-3.5 py-1.5 font-bold flex items-center gap-1.5">
+            <span>🖨️</span> PDF 인쇄 / 저장
+          </button>
+          <button onclick="switchTab('dashboard')" class="pixel-btn bg-retro-card hover:bg-[#2c214c] text-retro-cyan font-pixel text-xs px-3.5 py-1.5 flex items-center gap-1.5">
+            <span>🎮</span> 대시보드로 복귀
+          </button>
+        </div>
+      </div>
+
+      <!-- Clean A4 White Resume Paper Container -->
+      <div class="bg-white text-gray-900 shadow-2xl rounded-none md:rounded-sm border-2 md:border-4 border-gray-900 p-6 sm:p-10 md:p-12 max-w-4xl mx-auto font-sans leading-normal">
+        
+        <!-- Live Verified Badge -->
+        <div class="flex justify-between items-center pb-4 mb-6 border-b border-gray-200 text-xs">
+          <div class="flex items-center gap-1.5 text-emerald-700 font-mono font-bold tracking-tight">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            LIFEGAME REALTIME VERIFIED CAREER LOG
+          </div>
+          <div class="text-gray-500 font-mono text-[11px]">
+            PORTFOLIO ID: <span class="text-gray-900 font-bold">#LG-V26-CAREER</span>
           </div>
         </div>
 
@@ -519,6 +627,14 @@
           </div>
         </section>
 
+        <!-- Technical Skill Tree Section (신규 연동) -->
+        <section class="mb-8 print-break-inside-avoid">
+          <h2 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">VERIFIED TECHNICAL SKILLS (스킬트리 연동 기술 스택)</h2>
+          <div id="resume-skills-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3 font-sans">
+            <!-- Populated via JS -->
+          </div>
+        </section>
+
         <!-- Certifications & Boss Milestones -->
         <section class="mb-8 print-break-inside-avoid">
           <h2 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">CERTIFICATIONS &amp; BOSS MILESTONES (검증된 자격 및 성과)</h2>
@@ -563,7 +679,7 @@
   </main>
 
   <!-- ======================================================== -->
-  <!-- 4. MODAL: QUEST EDITOR (1단 노션 스타일)                  -->
+  <!-- 5. MODAL: QUEST EDITOR (1단 노션 스타일 + 스킬 연동)       -->
   <!-- ======================================================== -->
   <div id="quest-editor-modal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-3 md:p-6 overflow-y-auto" onclick="if(event.target===this) closeEditorModal()">
     <div class="bg-retro-surface pixel-box max-w-3xl w-full my-auto border-3 border-black relative max-h-[92vh] flex flex-col shadow-2xl">
@@ -607,6 +723,21 @@
               <button type="button" onclick="selectModalStat('LUK')" data-stat="LUK" class="modal-stat-chip px-2.5 py-1 text-xs font-pixel bg-retro-card text-gray-300 border border-black hover:text-white">
                 LUK (행운 +2)
               </button>
+            </div>
+          </div>
+
+          <!-- Dynamic Sub-Skill Chips (연동 스킬 선택) -->
+          <div class="pt-2 border-t border-black/60">
+            <div class="flex items-center justify-between mb-1.5">
+              <label class="text-[10px] font-pixel text-retro-cyan uppercase flex items-center gap-1.5">
+                <span>🌲</span> [ 2. 연동 스킬 선택 (Skill Link) ]
+              </label>
+              <button type="button" onclick="openSkillAddFromEditor()" class="text-[10px] text-yellow-300 font-pixel hover:underline flex items-center gap-1">
+                <span>➕</span> 새 스킬 추가
+              </button>
+            </div>
+            <div id="editor-skill-chips" class="flex flex-wrap gap-1.5 min-h-[30px] items-center">
+              <!-- Populated dynamically based on modalSelectedStat -->
             </div>
           </div>
 
@@ -703,7 +834,7 @@
   </div>
 
   <!-- ======================================================== -->
-  <!-- 5. MODAL: QUEST DETAIL BLOG VIEW                         -->
+  <!-- 6. MODAL: QUEST DETAIL BLOG VIEW                         -->
   <!-- ======================================================== -->
   <div id="quest-detail-modal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-3 md:p-6 overflow-y-auto" onclick="if(event.target===this) closeDetailModal()">
     <div class="bg-retro-surface pixel-box max-w-3xl w-full my-auto border-3 border-black relative max-h-[92vh] flex flex-col shadow-2xl">
@@ -735,7 +866,12 @@
             퀘스트 제목
           </h2>
 
-          <div class="mt-2.5 flex flex-wrap gap-1.5" id="detail-tags-container">
+          <!-- Linked Skills in Detail -->
+          <div class="mt-2.5 flex flex-wrap items-center gap-1.5" id="detail-skills-container">
+            <!-- Dynamic skills badges -->
+          </div>
+
+          <div class="mt-2 flex flex-wrap gap-1.5" id="detail-tags-container">
             <!-- Tags dynamic -->
           </div>
         </div>
@@ -779,11 +915,105 @@
     </div>
   </div>
 
+  <!-- ======================================================== -->
+  <!-- 7. MODAL: SKILL ADD / EDIT (스킬 커스텀 모달)               -->
+  <!-- ======================================================== -->
+  <div id="skill-modal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-3 md:p-6 overflow-y-auto" onclick="if(event.target===this) closeSkillModal()">
+    <div class="bg-retro-surface pixel-box max-w-md w-full my-auto border-3 border-black relative flex flex-col shadow-2xl">
+      
+      <!-- Modal Header -->
+      <div class="bg-retro-card px-5 py-3 border-b-2 border-black flex items-center justify-between shrink-0">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">🌲</span>
+          <h3 class="font-pixel text-xs md:text-sm text-retro-primary font-bold" id="skill-modal-title">
+            새 스킬 등록
+          </h3>
+        </div>
+        <button onclick="closeSkillModal()" class="pixel-btn bg-black text-gray-300 hover:text-white px-2 py-0.5 text-xs font-pixel">
+          ✕
+        </button>
+      </div>
+
+      <!-- Modal Form Body -->
+      <div class="p-5 space-y-4 bg-retro-bg font-sans text-sm">
+        
+        <!-- Stat Category Selector -->
+        <div>
+          <label class="block text-[10px] font-pixel text-gray-400 mb-1.5 uppercase">[ 1. 소속 코어 스탯 ]</label>
+          <select id="skill-form-stat" class="w-full bg-retro-surface text-white border-2 border-black p-2 font-pixel text-xs outline-none focus:border-retro-primary">
+            <option value="INT">🧠 INT (지능 - 개발/알고리즘/논리)</option>
+            <option value="DEX">⚡ DEX (민첩 - 엔진/퍼블리싱/도구)</option>
+            <option value="WIS">📚 WIS (지혜 - 이론/CS기초/자격증)</option>
+            <option value="CHA">🗣️ CHA (매력 - 협업/발표/블로그)</option>
+            <option value="CON">🛡️ CON (체력 - 운동/스트릭/루틴)</option>
+            <option value="LUK">🍀 LUK (행운 - 해커톤/아이디어/도전)</option>
+          </select>
+        </div>
+
+        <!-- Emoji Selector & Presets -->
+        <div>
+          <label class="block text-[10px] font-pixel text-gray-400 mb-1.5 uppercase">[ 2. 스킬 이모지 아이콘 ]</label>
+          <div class="flex items-center gap-2 mb-2">
+            <div id="skill-emoji-preview" class="w-10 h-10 bg-retro-surface border-2 border-black flex items-center justify-center text-xl shrink-0">
+              🐍
+            </div>
+            <input id="skill-form-emoji" value="🐍" maxlength="4" class="w-20 bg-retro-surface text-center font-sans text-lg text-white border-2 border-black p-1 outline-none" oninput="updateSkillEmojiPreview(this.value)"/>
+            <span class="text-[11px] text-gray-400 font-vt text-base">직접 입력하거나 아래 프리셋을 클릭하세요</span>
+          </div>
+          <div class="flex flex-wrap gap-1 bg-black/50 p-2 border border-black" id="skill-emoji-presets">
+            <button type="button" onclick="setSkillPresetEmoji('🐍')" class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">🐍</button>
+            <button type="button" onclick="setSkillPresetEmoji('📊')" class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">📊</button>
+            <button type="button" onclick="setSkillPresetEmoji('⚡')" class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">⚡</button>
+            <button type="button" onclick="setSkillPresetEmoji('🎮')" class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">🎮</button>
+            <button type="button" onclick="setSkillPresetEmoji('🌐')" class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">🌐</button>
+            <button type="button" onclick="setSkillPresetEmoji('🎨')" class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">🎨</button>
+            <button type="button" onclick="setSkillPresetEmoji('📜')" class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">📜</button>
+            <button type="button" onclick="setSkillPresetEmoji('💻')" class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">💻</button>
+            <button type="button" onclick="setSkillPresetEmoji('📢')" class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">📢</button>
+            <button type="button" onclick="setSkillPresetEmoji('🤝')" class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">🤝</button>
+            <button type="button" onclick="setSkillPresetEmoji('🏃')" class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">🏃</button>
+            <button type="button" onclick="setSkillPresetEmoji('⏰')" class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">⏰</button>
+            <button type="button" onclick="setSkillPresetEmoji('🏆')" class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">🏆</button>
+            <button type="button" onclick="setSkillPresetEmoji('💡')" class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">💡</button>
+            <button type="button" onclick="setSkillPresetEmoji('🛡️')" class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">🛡️</button>
+            <button type="button" onclick="setSkillPresetEmoji('⚙️')" class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">⚙️</button>
+            <button type="button" onclick="setSkillPresetEmoji('🚀')" class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">🚀</button>
+            <button type="button" onclick="setSkillPresetEmoji('🤖')" class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">🤖</button>
+          </div>
+        </div>
+
+        <!-- Skill Name Input -->
+        <div>
+          <label class="block text-[10px] font-pixel text-gray-400 mb-1.5 uppercase">[ 3. 스킬 이름 ]</label>
+          <input id="skill-form-name" class="w-full bg-retro-surface text-white border-2 border-black p-2 font-pixel text-xs outline-none focus:border-retro-primary" placeholder="예: 파이썬 기초, 리액트 개발, CS 이론"/>
+        </div>
+
+        <!-- Skill Description Input -->
+        <div>
+          <label class="block text-[10px] font-pixel text-gray-400 mb-1.5 uppercase">[ 4. 스킬 설명 &amp; 목표 (선택) ]</label>
+          <textarea id="skill-form-desc" rows="2" class="w-full bg-retro-surface text-white border-2 border-black p-2 font-sans text-xs outline-none focus:border-retro-primary" placeholder="스킬의 학습 목표 또는 상세 분야를 간단히 적어보세요."></textarea>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="bg-retro-card px-5 py-3 border-t-2 border-black flex items-center justify-end gap-2 shrink-0">
+        <button type="button" onclick="closeSkillModal()" class="pixel-btn bg-gray-700 text-white px-3 py-1.5 text-xs font-pixel">
+          취소
+        </button>
+        <button type="button" onclick="handleSaveSkillForm()" class="pixel-btn bg-retro-accent hover:bg-emerald-400 text-black px-4 py-1.5 text-xs font-pixel font-bold">
+          💾 저장하기
+        </button>
+      </div>
+
+    </div>
+  </div>
+
   <!-- Global Footer -->
   <footer class="w-full bg-retro-surface py-3 border-t border-black text-center text-xs font-vt text-gray-400">
     <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-      <span>[LIFEGAME v2.5] 2D Pixel RPG Portfolio Dashboard</span>
-      <span>Cloudflare Pages &middot; Clean Slate</span>
+      <span>[LIFEGAME v2.6] 2D Pixel RPG Portfolio Dashboard &middot; Custom Skill Tree System</span>
+      <span>Cloudflare Pages &middot; LocalStorage Live Sync</span>
     </div>
   </footer>
 
@@ -842,6 +1072,9 @@
               break;
             case 'toggle':
               this.playToneSequence([{ f: 330, d: 0.05 }, { f: 493.88, d: 0.08 }], 'sine');
+              break;
+            case 'delete':
+              this.playSlide(400, 150, 0.15, 'sawtooth');
               break;
           }
         } catch (e) {
@@ -907,9 +1140,37 @@
     }
 
     /* ==========================================================================
-       2. CLEAN INITIAL DATA (모든 더미데이터 제거 완료)
+       2. INITIAL DATA & LOCALSTORAGE WITH SKILL TREE
        ========================================================================== */
-    const STORAGE_KEY = 'LIFEGAME_V25_CLEAN_EMPTY_STORE';
+    const STORAGE_KEY = 'LIFEGAME_V26_SKILLTREE_STORE';
+
+    const DEFAULT_SKILLS = [
+      // INT: 파이썬 기초, 데이터 분석, 알고리즘
+      { id: 'skill-int-1', stat: 'INT', name: '파이썬 기초', emoji: '🐍', level: 1, exp: 0, count: 0, desc: '파이썬 핵심 문법 및 기본 프로그래밍 실습' },
+      { id: 'skill-int-2', stat: 'INT', name: '데이터 분석', emoji: '📊', level: 1, exp: 0, count: 0, desc: 'Pandas & Numpy를 활용한 데이터 처리 및 시각화' },
+      { id: 'skill-int-3', stat: 'INT', name: '알고리즘', emoji: '⚡', level: 1, exp: 0, count: 0, desc: '자료구조와 문제 해결 알고리즘 테스트 역량' },
+
+      // DEX: 유니티 개발, 웹 퍼블리싱, 포토샵
+      { id: 'skill-dex-1', stat: 'DEX', name: '유니티 개발', emoji: '🎮', level: 1, exp: 0, count: 0, desc: 'Unity 2D/3D 엔진 조작 및 C# 게임 로직 작성' },
+      { id: 'skill-dex-2', stat: 'DEX', name: '웹 퍼블리싱', emoji: '🌐', level: 1, exp: 0, count: 0, desc: 'HTML5/Tailwind 반응형 UI 구현 및 웹 레이아웃' },
+      { id: 'skill-dex-3', stat: 'DEX', name: '포토샵', emoji: '🎨', level: 1, exp: 0, count: 0, desc: '픽셀 아트 리소스 및 UI 에셋 그래픽 편집' },
+
+      // WIS: 자격증 이론, CS 기초
+      { id: 'skill-wis-1', stat: 'WIS', name: '자격증 이론', emoji: '📜', level: 1, exp: 0, count: 0, desc: '정보처리기사 및 관련 국가공인 자격증 지식' },
+      { id: 'skill-wis-2', stat: 'WIS', name: 'CS 기초', emoji: '💻', level: 1, exp: 0, count: 0, desc: '운영체제, 네트워크, DB 및 컴퓨터 구조 이론' },
+
+      // CHA: 기술 블로그 발표, 팀 프로젝트
+      { id: 'skill-cha-1', stat: 'CHA', name: '기술 블로그 발표', emoji: '📢', level: 1, exp: 0, count: 0, desc: '학습 인사이트 기술 포스팅 및 사내 세미나 발표' },
+      { id: 'skill-cha-2', stat: 'CHA', name: '팀 프로젝트', emoji: '🤝', level: 1, exp: 0, count: 0, desc: '깃허브 협업, PR 코드리뷰 및 팀 커뮤니케이션' },
+
+      // CON: 운동, 루틴 유지
+      { id: 'skill-con-1', stat: 'CON', name: '운동 & 피트니스', emoji: '🏃', level: 1, exp: 0, count: 0, desc: '체력 증진 헬스 및 데일리 유산소 운동' },
+      { id: 'skill-con-2', stat: 'CON', name: '루틴 스트릭 유지', emoji: '⏰', level: 1, exp: 0, count: 0, desc: '매일 목표 시간 몰입 및 생활 습관 지속력' },
+
+      // LUK: 공모전 도전, 아이디어 실험
+      { id: 'skill-luk-1', stat: 'LUK', name: '공모전 & 해커톤', emoji: '🏆', level: 1, exp: 0, count: 0, desc: '신규 대회 참가 및 해커톤 프로토타입 도전' },
+      { id: 'skill-luk-2', stat: 'LUK', name: '아이디어 실험', emoji: '💡', level: 1, exp: 0, count: 0, desc: '사이드 프로젝트 빌드 및 MVP 빠른 런칭' }
+    ];
 
     const DEFAULT_DATA = {
       player: {
@@ -930,15 +1191,21 @@
         CON: 10,
         LUK: 10
       },
+      skills: DEFAULT_SKILLS,
       quests: []
     };
 
     let AppState = null;
-    let activeTab = 'dashboard'; // 'dashboard' | 'resume'
+    let activeTab = 'dashboard'; // 'dashboard' | 'skilltree' | 'resume'
     let activeFilter = 'all';
+
+    // Skill Tree state
+    let activeSkillStat = 'INT';
+    let editingSkillId = null;
 
     // Editor local state
     let modalSelectedStat = 'INT';
+    let modalSelectedSkillIds = [];
     let modalSelectedDiff = 'adept';
     let modalTags = [];
     let modalThumbDataUrl = null;
@@ -950,12 +1217,28 @@
         if (saved) {
           AppState = JSON.parse(saved);
         } else {
-          AppState = JSON.parse(JSON.stringify(DEFAULT_DATA));
-          saveState();
+          // If previous version exists, preserve quests & stats, but ensure skills
+          const prevSaved = localStorage.getItem('LIFEGAME_V25_CLEAN_EMPTY_STORE');
+          if (prevSaved) {
+            try {
+              AppState = JSON.parse(prevSaved);
+            } catch(e) {
+              AppState = JSON.parse(JSON.stringify(DEFAULT_DATA));
+            }
+          } else {
+            AppState = JSON.parse(JSON.stringify(DEFAULT_DATA));
+          }
         }
       } catch (e) {
         AppState = JSON.parse(JSON.stringify(DEFAULT_DATA));
       }
+
+      // Ensure skills array exists
+      if (!AppState.skills || !Array.isArray(AppState.skills) || AppState.skills.length === 0) {
+        AppState.skills = JSON.parse(JSON.stringify(DEFAULT_SKILLS));
+      }
+
+      saveState();
     }
 
     function saveState() {
@@ -967,7 +1250,7 @@
     }
 
     function resetDataPrompt() {
-      if (confirm("모든 데이터를 초기화하시겠습니까? (깨끗한 초기 상태로 복원됩니다)")) {
+      if (confirm("모든 데이터를 초기화하시겠습니까? (퀘스트, 스킬트리, 스탯이 기본 상태로 복원됩니다)")) {
         AppState = JSON.parse(JSON.stringify(DEFAULT_DATA));
         saveState();
         renderAll();
@@ -976,34 +1259,44 @@
     }
 
     /* ==========================================================================
-       3. SCREEN TAB SWITCHING
+       3. TAB NAVIGATION (대시보드 / 스킬트리 / 이력서 뷰)
        ========================================================================== */
     function switchTab(tab) {
       activeTab = tab;
       SoundSystem.play('toggle');
 
       const dashView = document.getElementById('dashboard-view');
+      const skillView = document.getElementById('skilltree-view');
       const resumeView = document.getElementById('resume-view');
+
       const dashBtn = document.getElementById('tab-btn-dashboard');
+      const skillBtn = document.getElementById('tab-btn-skilltree');
       const resumeBtn = document.getElementById('tab-btn-resume');
       const scanlines = document.getElementById('scanline-layer');
 
+      // Hide all
+      dashView.classList.add('hidden');
+      skillView.classList.add('hidden');
+      resumeView.classList.add('hidden');
+
+      // Reset buttons
+      dashBtn.className = 'px-2.5 sm:px-3.5 py-1.5 font-pixel text-xs bg-transparent text-gray-400 hover:text-white transition-all flex items-center gap-1.5';
+      skillBtn.className = 'px-2.5 sm:px-3.5 py-1.5 font-pixel text-xs bg-transparent text-gray-400 hover:text-white transition-all flex items-center gap-1.5';
+      resumeBtn.className = 'px-2.5 sm:px-3.5 py-1.5 font-pixel text-xs bg-transparent text-gray-400 hover:text-white transition-all flex items-center gap-1.5';
+
       if (tab === 'resume') {
-        dashView.classList.add('hidden');
         resumeView.classList.remove('hidden');
-
-        dashBtn.className = 'px-3.5 py-1.5 font-pixel text-xs bg-transparent text-gray-400 hover:text-white transition-all flex items-center gap-1.5';
-        resumeBtn.className = 'px-3.5 py-1.5 font-pixel text-xs bg-retro-primary text-black font-bold transition-all flex items-center gap-1.5 shadow';
-
+        resumeBtn.className = 'px-2.5 sm:px-3.5 py-1.5 font-pixel text-xs bg-retro-primary text-black font-bold transition-all flex items-center gap-1.5 shadow';
         scanlines.style.opacity = '0';
         renderResumeView();
+      } else if (tab === 'skilltree') {
+        skillView.classList.remove('hidden');
+        skillBtn.className = 'px-2.5 sm:px-3.5 py-1.5 font-pixel text-xs bg-retro-primary text-black font-bold transition-all flex items-center gap-1.5 shadow';
+        scanlines.style.opacity = '0.3';
+        renderSkillTreePage();
       } else {
-        resumeView.classList.add('hidden');
         dashView.classList.remove('hidden');
-
-        dashBtn.className = 'px-3.5 py-1.5 font-pixel text-xs bg-retro-primary text-black font-bold transition-all flex items-center gap-1.5 shadow';
-        resumeBtn.className = 'px-3.5 py-1.5 font-pixel text-xs bg-transparent text-gray-400 hover:text-white transition-all flex items-center gap-1.5';
-
+        dashBtn.className = 'px-2.5 sm:px-3.5 py-1.5 font-pixel text-xs bg-retro-primary text-black font-bold transition-all flex items-center gap-1.5 shadow';
         scanlines.style.opacity = '0.3';
         drawRadarChart();
       }
@@ -1015,21 +1308,13 @@
        4. HTML5 CANVAS RADAR STAT MATRIX
        ========================================================================== */
     const STAT_KEYS = ['INT', 'DEX', 'WIS', 'CHA', 'CON', 'LUK'];
-    const STAT_LABELS = {
-      INT: '지능 (INT)',
-      DEX: '민첩 (DEX)',
-      WIS: '지혜 (WIS)',
-      CHA: '매력 (CHA)',
-      CON: '체력 (CON)',
-      LUK: '행운 (LUK)'
-    };
-    const STAT_COLORS = {
-      INT: '#3B82F6',
-      DEX: '#10B981',
-      WIS: '#8B5CF6',
-      CHA: '#EC4899',
-      CON: '#F59E0B',
-      LUK: '#EAB308'
+    const STAT_INFO = {
+      INT: { name: '지능', icon: '🧠', color: '#3B82F6', desc: '논리적 문제 해결, 소프트웨어 개발, 알고리즘' },
+      DEX: { name: '민첩', icon: '⚡', color: '#10B981', desc: '도구 활용, 게임엔진/웹 퍼블리싱, 신속한 제작' },
+      WIS: { name: '지혜', icon: '📚', color: '#8B5CF6', desc: '컴퓨터 사이언스 이론, 자격증, 깊이 있는 통찰' },
+      CHA: { name: '매력', icon: '🗣️', color: '#EC4899', desc: '기술 블로그 공유, 세미나 발표, 팀 커뮤니케이션' },
+      CON: { name: '체력', icon: '🛡️', color: '#F59E0B', desc: '건강 유지, 꾸준한 습관 스트릭, 기초 지구력' },
+      LUK: { name: '행운', icon: '🍀', color: '#EAB308', desc: '공모전/해커톤 도전, 새로운 기회 및 아이디어 실험' }
     };
 
     function drawRadarChart() {
@@ -1069,7 +1354,7 @@
         }
       }
 
-      // Axis lines
+      // Radial Axis Lines
       for (let i = 0; i < 6; i++) {
         const angle = (Math.PI / 3) * i - Math.PI / 2;
         const x = centerX + radius * Math.cos(angle);
@@ -1077,12 +1362,12 @@
         ctx.beginPath();
         ctx.moveTo(centerX, centerY);
         ctx.lineTo(x, y);
-        ctx.strokeStyle = '#2F2350';
+        ctx.strokeStyle = '#241B3D';
         ctx.lineWidth = 1;
         ctx.stroke();
       }
 
-      // Player Stat Polygon
+      // Player Data Polygon
       const statCoords = [];
       ctx.beginPath();
       for (let i = 0; i < 6; i++) {
@@ -1094,28 +1379,22 @@
         const x = centerX + r * Math.cos(angle);
         const y = centerY + r * Math.sin(angle);
         statCoords.push({ x, y, key, val: rawVal });
-
         if (i === 0) ctx.moveTo(x, y);
         else ctx.lineTo(x, y);
       }
       ctx.closePath();
 
-      // Translucent Fill
-      const grad = ctx.createRadialGradient(centerX, centerY, 5, centerX, centerY, radius);
-      grad.addColorStop(0, 'rgba(0, 240, 255, 0.4)');
-      grad.addColorStop(1, 'rgba(252, 226, 42, 0.2)');
-      ctx.fillStyle = grad;
+      // Polygon Fill & Stroke
+      ctx.fillStyle = 'rgba(0, 240, 255, 0.28)';
       ctx.fill();
-
-      // Border
       ctx.strokeStyle = '#00F0FF';
       ctx.lineWidth = 2.5;
       ctx.stroke();
 
-      // Vertex Nodes
+      // Stat Node Pixels
       statCoords.forEach(pt => {
         ctx.fillStyle = '#FCE22A';
-        ctx.fillRect(pt.x - 3.5, pt.y - 3.5, 7, 7);
+        ctx.fillRect(pt.x - 3, pt.y - 3, 6, 6);
         ctx.strokeStyle = '#000000';
         ctx.lineWidth = 1.5;
         ctx.strokeRect(pt.x - 3.5, pt.y - 3.5, 7, 7);
@@ -1132,8 +1411,8 @@
         const labelDist = radius + 22;
         const x = centerX + labelDist * Math.cos(angle);
         const y = centerY + labelDist * Math.sin(angle);
-        ctx.fillStyle = STAT_COLORS[key] || '#ffffff';
-        ctx.fillText(`${key} ${val}`, x, y);
+        ctx.fillStyle = STAT_INFO[key].color || '#ffffff';
+        ctx.fillText(key + ' ' + val, x, y);
       }
 
       // Hover Tooltip
@@ -1155,7 +1434,7 @@
         }
 
         if (hovered) {
-          tooltip.textContent = `${hovered.key}: ${hovered.val} (${STAT_LABELS[hovered.key]})`;
+          tooltip.textContent = hovered.key + ': ' + hovered.val + ' (' + STAT_INFO[hovered.key].name + ')';
           tooltip.style.left = Math.max(10, Math.min(rect.width - 130, (hovered.x / scaleX) - 25)) + 'px';
           tooltip.style.top = Math.max(10, (hovered.y / scaleY) - 25) + 'px';
           tooltip.classList.remove('hidden');
@@ -1246,6 +1525,13 @@
 
         const tagBadges = (quest.tags || []).map(t => `<span class="bg-black/50 text-retro-cyan px-1.5 py-0.5 text-[9px] font-mono border border-black">#${t}</span>`).join(' ');
 
+        // Linked skills badges
+        const linkedSkillsBadges = (quest.skillIds || []).map(sid => {
+          const s = (AppState.skills || []).find(sk => sk.id === sid);
+          if (!s) return '';
+          return `<span class="bg-indigo-950 text-indigo-300 border border-indigo-500 font-pixel text-[9px] px-1.5 py-0.5">${s.emoji} ${s.name} (Lv.${s.level || 1})</span>`;
+        }).filter(Boolean).join(' ');
+
         card.innerHTML = `
           <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
             <div class="flex-1">
@@ -1270,6 +1556,7 @@
               </p>
 
               <div class="mt-2 flex flex-wrap items-center gap-1.5">
+                ${linkedSkillsBadges}
                 ${tagBadges}
               </div>
             </div>
@@ -1339,7 +1626,267 @@
     }
 
     /* ==========================================================================
-       6. 1-COLUMN COMPACT QUEST EDITOR MODAL
+       6. SKILL TREE CUSTOM MANAGEMENT LAB (스킬트리 연구소)
+       ========================================================================== */
+    function renderSkillTreePage() {
+      // 1. Render Stat Selector Bar
+      const bar = document.getElementById('skill-stat-selector-bar');
+      bar.innerHTML = '';
+
+      STAT_KEYS.forEach(key => {
+        const info = STAT_INFO[key];
+        const count = (AppState.skills || []).filter(s => s.stat === key).length;
+        const statVal = AppState.stats[key] || 10;
+        const isActive = (key === activeSkillStat);
+
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.onclick = () => selectSkillTreeStat(key);
+        btn.className = `p-2.5 border-2 text-left transition-all pixel-btn flex flex-col justify-between ${
+          isActive 
+            ? 'bg-retro-card border-retro-primary shadow-[2px_2px_0px_#FCE22A]' 
+            : 'bg-black/50 border-black hover:border-gray-500'
+        }`;
+
+        btn.innerHTML = `
+          <div class="flex items-center justify-between w-full mb-1">
+            <span class="text-lg">${info.icon}</span>
+            <span class="font-pixel text-[10px] ${isActive ? 'text-retro-primary font-bold' : 'text-gray-400'}">${key}</span>
+          </div>
+          <div class="font-pixel text-[11px] text-white truncate">${info.name}</div>
+          <div class="flex justify-between items-center mt-1.5 text-[10px] font-mono text-gray-400">
+            <span>${count}개 스킬</span>
+            <span class="text-retro-cyan font-bold">${statVal}pt</span>
+          </div>
+        `;
+        bar.appendChild(btn);
+      });
+
+      // 2. Update Ribbon Info
+      const currentInfo = STAT_INFO[activeSkillStat];
+      document.getElementById('skill-category-icon').textContent = currentInfo.icon;
+      document.getElementById('skill-category-title').textContent = `${activeSkillStat} (${currentInfo.name}) 계열 스킬트리`;
+      document.getElementById('skill-category-desc').textContent = currentInfo.desc;
+
+      const currentSkills = (AppState.skills || []).filter(s => s.stat === activeSkillStat);
+      document.getElementById('skill-stat-count').textContent = `${currentSkills.length}개`;
+
+      // Total linked quests in this stat
+      const totalQuests = currentSkills.reduce((acc, s) => acc + (s.count || 0), 0);
+      document.getElementById('skill-stat-quests').textContent = `${totalQuests}회 달성`;
+
+      // 3. Render Skill Cards Grid
+      const grid = document.getElementById('skills-grid-container');
+      grid.innerHTML = '';
+
+      if (currentSkills.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full py-12 px-4 text-center bg-retro-surface pixel-box-sm border border-black font-pixel text-xs text-gray-400 space-y-3">
+            <div class="text-3xl">${currentInfo.icon}</div>
+            <p class="text-white">${activeSkillStat} 계열에 등록된 스킬이 없습니다.</p>
+            <p class="text-[11px] text-gray-400 font-sans">새로운 스킬을 등록하고 퀘스트와 함께 마스터해보세요!</p>
+            <button onclick="openSkillModal('${activeSkillStat}')" class="pixel-btn bg-retro-accent text-black px-4 py-2 text-xs font-bold inline-block mt-2">
+              ➕ ${activeSkillStat} 첫 스킬 등록하기
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      currentSkills.forEach(skill => {
+        const card = document.createElement('div');
+        card.className = 'bg-retro-surface pixel-box-sm p-4 border-2 border-black flex flex-col justify-between hover:border-retro-cyan transition-all';
+        
+        const expInLevel = (skill.exp || 0) % 100;
+        const lvl = skill.level || 1;
+        const questCnt = skill.count || 0;
+
+        card.innerHTML = `
+          <div>
+            <!-- Card Header -->
+            <div class="flex items-start justify-between gap-3 mb-2">
+              <div class="flex items-center gap-2.5">
+                <div class="w-10 h-10 bg-black/60 border border-black pixel-box-sm flex items-center justify-center text-xl shrink-0">
+                  ${skill.emoji || '⭐'}
+                </div>
+                <div>
+                  <h4 class="font-pixel text-xs text-white font-bold leading-tight">
+                    ${skill.name}
+                  </h4>
+                  <span class="text-[10px] text-retro-cyan font-mono mt-0.5 block">[${skill.stat} 코어 스킬]</span>
+                </div>
+              </div>
+
+              <span class="px-2 py-0.5 bg-retro-purple text-yellow-300 font-pixel text-[10px] border border-black font-bold shrink-0">
+                Lv.${lvl}
+              </span>
+            </div>
+
+            <!-- Description -->
+            <p class="text-xs text-gray-300 font-sans leading-relaxed my-2 line-clamp-2">
+              ${skill.desc || '퀘스트를 완료하여 스킬의 숙련도를 높이세요.'}
+            </p>
+
+            <!-- Proficiency Progress Bar -->
+            <div class="bg-black/40 p-2.5 border border-black my-2">
+              <div class="flex justify-between items-center text-[10px] font-pixel text-gray-300 mb-1">
+                <span>숙련도 경험치</span>
+                <span class="text-retro-accent">${expInLevel} / 100 XP</span>
+              </div>
+              <div class="w-full bg-black h-2.5 border border-black p-0.5">
+                <div class="h-full bg-gradient-to-r from-emerald-500 to-retro-accent transition-all duration-300" style="width: ${expInLevel}%;"></div>
+              </div>
+              <div class="mt-1.5 flex justify-between items-center text-[10px] text-gray-400 font-mono">
+                <span>⚔️ 완료 퀘스트</span>
+                <span class="text-retro-gold font-bold">${questCnt}회 달성</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Actions Footer -->
+          <div class="pt-2 border-t border-black/80 flex items-center justify-end gap-2 mt-2">
+            <button onclick="openSkillModal(null, '${skill.id}')" class="pixel-btn bg-black/40 hover:bg-black text-retro-cyan text-[10px] font-pixel px-2.5 py-1 border border-black flex items-center gap-1">
+              ✏️ 수정
+            </button>
+            <button onclick="deleteSkill('${skill.id}')" class="pixel-btn bg-red-950/60 hover:bg-red-900 text-red-300 text-[10px] font-pixel px-2.5 py-1 border border-black flex items-center gap-1">
+              🗑️ 삭제
+            </button>
+          </div>
+        `;
+
+        grid.appendChild(card);
+      });
+    }
+
+    function selectSkillTreeStat(stat) {
+      activeSkillStat = stat;
+      SoundSystem.play('click');
+      renderSkillTreePage();
+    }
+
+    /* Modal for Add / Edit Skill */
+    function openSkillModal(defaultStat = null, skillId = null) {
+      editingSkillId = skillId;
+      SoundSystem.play('click');
+
+      const modal = document.getElementById('skill-modal');
+      const title = document.getElementById('skill-modal-title');
+      const statSel = document.getElementById('skill-form-stat');
+      const emojiInput = document.getElementById('skill-form-emoji');
+      const nameInput = document.getElementById('skill-form-name');
+      const descInput = document.getElementById('skill-form-desc');
+
+      if (skillId) {
+        const s = (AppState.skills || []).find(item => item.id === skillId);
+        if (s) {
+          title.textContent = '스킬 정보 수정';
+          statSel.value = s.stat;
+          emojiInput.value = s.emoji || '⭐';
+          nameInput.value = s.name;
+          descInput.value = s.desc || '';
+          updateSkillEmojiPreview(s.emoji || '⭐');
+        }
+      } else {
+        title.textContent = '새 스킬 등록';
+        statSel.value = defaultStat || activeSkillStat || 'INT';
+        emojiInput.value = '🐍';
+        nameInput.value = '';
+        descInput.value = '';
+        updateSkillEmojiPreview('🐍');
+      }
+
+      modal.classList.remove('hidden');
+      setTimeout(() => nameInput.focus(), 50);
+    }
+
+    function closeSkillModal() {
+      document.getElementById('skill-modal').classList.add('hidden');
+      editingSkillId = null;
+      SoundSystem.play('click');
+    }
+
+    function updateSkillEmojiPreview(emoji) {
+      document.getElementById('skill-emoji-preview').textContent = emoji || '⭐';
+    }
+
+    function setSkillPresetEmoji(emoji) {
+      document.getElementById('skill-form-emoji').value = emoji;
+      updateSkillEmojiPreview(emoji);
+      SoundSystem.play('click');
+    }
+
+    function handleSaveSkillForm() {
+      const stat = document.getElementById('skill-form-stat').value;
+      const emoji = document.getElementById('skill-form-emoji').value.trim() || '⭐';
+      const name = document.getElementById('skill-form-name').value.trim();
+      const desc = document.getElementById('skill-form-desc').value.trim();
+
+      if (!name) {
+        alert('스킬 이름을 입력해주세요!');
+        document.getElementById('skill-form-name').focus();
+        return;
+      }
+
+      if (editingSkillId) {
+        // Edit existing
+        const s = (AppState.skills || []).find(item => item.id === editingSkillId);
+        if (s) {
+          s.stat = stat;
+          s.emoji = emoji;
+          s.name = name;
+          s.desc = desc;
+        }
+      } else {
+        // Add new
+        const newSkill = {
+          id: 'skill-' + Date.now().toString(36),
+          stat: stat,
+          name: name,
+          emoji: emoji,
+          level: 1,
+          exp: 0,
+          count: 0,
+          desc: desc
+        };
+        if (!AppState.skills) AppState.skills = [];
+        AppState.skills.push(newSkill);
+      }
+
+      saveState();
+      SoundSystem.play('complete');
+      closeSkillModal();
+
+      // Render if on skill tree page
+      if (activeTab === 'skilltree') {
+        activeSkillStat = stat;
+        renderSkillTreePage();
+      }
+      // Re-render editor chips if editor modal is open
+      if (!document.getElementById('quest-editor-modal').classList.contains('hidden')) {
+        renderModalSkillChips();
+      }
+    }
+
+    function deleteSkill(skillId) {
+      const s = (AppState.skills || []).find(item => item.id === skillId);
+      if (!s) return;
+      if (!confirm(`"${s.name}" 스킬을 삭제하시겠습니까?\n(해당 스킬을 완료한 퀘스트 기록은 보존됩니다)`)) {
+        return;
+      }
+
+      AppState.skills = (AppState.skills || []).filter(item => item.id !== skillId);
+      saveState();
+      SoundSystem.play('delete');
+      renderSkillTreePage();
+    }
+
+    /* Helper from Editor */
+    function openSkillAddFromEditor() {
+      openSkillModal(modalSelectedStat, null);
+    }
+
+    /* ==========================================================================
+       7. 1-COLUMN COMPACT QUEST EDITOR MODAL (스킬트리 연동 강화)
        ========================================================================== */
     function openEditorModal(questId = null) {
       modalEditingQuestId = questId;
@@ -1357,6 +1904,7 @@
           canvas.innerHTML = q.contentHtml || `<p>${q.desc}</p>`;
           modalSelectedStat = q.statKey || 'INT';
           modalSelectedDiff = q.difficulty || 'adept';
+          modalSelectedSkillIds = [...(q.skillIds || [])];
           modalTags = [...(q.tags || [])];
           modalThumbDataUrl = q.thumbnail || q.proofImg || null;
         }
@@ -1366,11 +1914,13 @@
         canvas.innerHTML = '<p><br></p>';
         modalSelectedStat = 'INT';
         modalSelectedDiff = 'adept';
+        modalSelectedSkillIds = [];
         modalTags = [];
         modalThumbDataUrl = null;
       }
 
       renderModalStatChips();
+      renderModalSkillChips();
       renderModalDiffChips();
       renderModalTags();
       renderModalThumbPreview();
@@ -1390,6 +1940,7 @@
       modalSelectedStat = stat;
       SoundSystem.play('click');
       renderModalStatChips();
+      renderModalSkillChips();
       updateModalRewardProjection();
     }
 
@@ -1402,6 +1953,60 @@
           btn.className = 'modal-stat-chip px-2.5 py-1 text-xs font-pixel bg-retro-card text-gray-300 border border-black hover:text-white';
         }
       });
+    }
+
+    /* Dynamic Sub-Skill Chips in Quest Editor */
+    function renderModalSkillChips() {
+      const container = document.getElementById('editor-skill-chips');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const relevantSkills = (AppState.skills || []).filter(s => s.stat === modalSelectedStat);
+
+      if (relevantSkills.length === 0) {
+        container.innerHTML = `
+          <span class="text-xs text-gray-400 font-sans italic py-1">
+            해당 ${modalSelectedStat} 스탯에 등록된 스킬이 없습니다.
+          </span>
+          <button type="button" onclick="openSkillAddFromEditor()" class="pixel-btn bg-retro-accent text-black px-2 py-0.5 text-[10px] font-pixel font-bold ml-1">
+            ➕ 스킬 추가
+          </button>
+        `;
+        return;
+      }
+
+      relevantSkills.forEach(skill => {
+        const isSelected = modalSelectedSkillIds.includes(skill.id);
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.onclick = () => toggleModalSkill(skill.id);
+
+        if (isSelected) {
+          btn.className = 'px-2.5 py-1 text-xs font-pixel bg-retro-accent text-black font-bold border-2 border-black shadow-[2px_2px_0px_#000] flex items-center gap-1 transition-all';
+        } else {
+          btn.className = 'px-2.5 py-1 text-xs font-pixel bg-retro-card text-gray-300 border border-black hover:text-white hover:border-gray-400 flex items-center gap-1 transition-all';
+        }
+
+        btn.innerHTML = `
+          <span>${skill.emoji || '⭐'}</span>
+          <span>${skill.name}</span>
+          <span class="text-[9px] opacity-80">(Lv.${skill.level || 1})</span>
+          ${isSelected ? '<span>✓</span>' : ''}
+        `;
+
+        container.appendChild(btn);
+      });
+    }
+
+    function toggleModalSkill(skillId) {
+      const idx = modalSelectedSkillIds.indexOf(skillId);
+      if (idx >= 0) {
+        modalSelectedSkillIds.splice(idx, 1);
+      } else {
+        modalSelectedSkillIds.push(skillId);
+      }
+      SoundSystem.play('click');
+      renderModalSkillChips();
     }
 
     function selectModalDiff(diff) {
@@ -1566,6 +2171,15 @@ npm run build && git commit -m "feat: complete milestone"</pre>
       const questId = modalEditingQuestId || 'Q-' + Date.now().toString(36).toUpperCase();
       const existingIdx = AppState.quests.findIndex(q => q.id === questId);
 
+      // Auto-tag selected skills
+      const finalTags = [...modalTags];
+      modalSelectedSkillIds.forEach(sid => {
+        const s = (AppState.skills || []).find(sk => sk.id === sid);
+        if (s && !finalTags.includes(s.name)) {
+          finalTags.push(s.name);
+        }
+      });
+
       const questObj = {
         id: questId,
         title: title,
@@ -1573,10 +2187,11 @@ npm run build && git commit -m "feat: complete milestone"</pre>
         difficulty: modalSelectedDiff,
         category: modalSelectedStat,
         statKey: modalSelectedStat,
+        skillIds: [...modalSelectedSkillIds],
         statBonus: statBonus,
         expBonus: expBonus,
         goldBonus: goldBonus,
-        tags: [...modalTags],
+        tags: finalTags,
         desc: plainDesc || '퀘스트를 완료하고 역량을 강화했습니다.',
         thumbnail: modalThumbDataUrl || (existingIdx >= 0 ? AppState.quests[existingIdx].thumbnail : null),
         contentHtml: contentHtml,
@@ -1592,12 +2207,30 @@ npm run build && git commit -m "feat: complete milestone"</pre>
         AppState.quests[existingIdx] = questObj;
       } else {
         AppState.quests.unshift(questObj);
-        // Apply rewards
+        
+        // 1. Apply core stat rewards
         AppState.stats[modalSelectedStat] = Math.min(100, (AppState.stats[modalSelectedStat] || 10) + statBonus);
         AppState.player.gold += goldBonus;
         AppState.player.currentExp += expBonus;
 
-        // Level Up check
+        // 2. Increase proficiency & quest count for each linked skill!
+        const skillExpGain = modalSelectedDiff === 'boss' ? 60 : modalSelectedDiff === 'novice' ? 25 : 40;
+        let skillLeveledUpName = null;
+
+        modalSelectedSkillIds.forEach(sid => {
+          const s = (AppState.skills || []).find(sk => sk.id === sid);
+          if (s) {
+            s.count = (s.count || 0) + 1;
+            s.exp = (s.exp || 0) + skillExpGain;
+            const newLvl = Math.floor(s.exp / 100) + 1;
+            if (newLvl > (s.level || 1)) {
+              s.level = newLvl;
+              skillLeveledUpName = s.name;
+            }
+          }
+        });
+
+        // 3. Player Level Up check
         let leveledUp = false;
         while (AppState.player.currentExp >= AppState.player.maxExp) {
           AppState.player.level += 1;
@@ -1608,7 +2241,10 @@ npm run build && git commit -m "feat: complete milestone"</pre>
 
         if (leveledUp) {
           SoundSystem.play('levelup');
-          showLevelUpToast();
+          showLevelUpToast('LEVEL UP!! 플레이어 레벨 상승!', '새로운 마일스톤과 스탯 성장을 달성했습니다!');
+        } else if (skillLeveledUpName) {
+          SoundSystem.play('levelup');
+          showLevelUpToast(`SKILL UP!! ${skillLeveledUpName}`, '스킬 숙련도 레벨이 올랐습니다!');
         } else {
           SoundSystem.play('complete');
         }
@@ -1621,7 +2257,7 @@ npm run build && git commit -m "feat: complete milestone"</pre>
     }
 
     /* ==========================================================================
-       7. QUEST DETAIL BLOG MODAL & RESUME TOGGLE
+       8. QUEST DETAIL BLOG MODAL & RESUME TOGGLE
        ========================================================================== */
     let currentDetailId = null;
 
@@ -1649,34 +2285,50 @@ npm run build && git commit -m "feat: complete milestone"</pre>
         diffBadge.className = 'px-2 py-0.5 bg-retro-purple text-yellow-300 font-pixel text-[10px] border border-black';
       }
 
+      // Linked Skills display
+      const skillsContainer = document.getElementById('detail-skills-container');
+      skillsContainer.innerHTML = '';
+      if (q.skillIds && q.skillIds.length > 0) {
+        q.skillIds.forEach(sid => {
+          const s = (AppState.skills || []).find(sk => sk.id === sid);
+          if (s) {
+            const span = document.createElement('span');
+            span.className = 'px-2 py-0.5 bg-indigo-900/80 text-retro-cyan font-pixel text-[10px] border border-indigo-500 flex items-center gap-1';
+            span.innerHTML = `<span>${s.emoji}</span> ${s.name} <span class="text-retro-gold font-bold">Lv.${s.level || 1}</span>`;
+            skillsContainer.appendChild(span);
+          }
+        });
+      }
+
       // Tags
       const tagsContainer = document.getElementById('detail-tags-container');
       tagsContainer.innerHTML = '';
       (q.tags || []).forEach(t => {
         const span = document.createElement('span');
-        span.className = 'bg-black/60 text-retro-cyan px-1.5 py-0.5 font-mono text-xs border border-black';
+        span.className = 'px-2 py-0.5 bg-black/60 text-retro-cyan font-mono text-[10px] border border-black';
         span.textContent = '#' + t;
         tagsContainer.appendChild(span);
       });
 
       // Thumbnail
-      const thumbBox = document.getElementById('detail-thumb-container');
+      const thumbCont = document.getElementById('detail-thumb-container');
       const thumbImg = document.getElementById('detail-thumb-img');
-      const imgSrc = q.thumbnail || q.proofImg;
-      if (imgSrc) {
-        thumbImg.src = imgSrc;
-        thumbBox.classList.remove('hidden');
+      const thumbSrc = q.thumbnail || q.proofImg;
+      if (thumbSrc) {
+        thumbImg.src = thumbSrc;
+        thumbCont.classList.remove('hidden');
       } else {
-        thumbBox.classList.add('hidden');
+        thumbCont.classList.add('hidden');
       }
 
-      // Content Body
-      document.getElementById('detail-content-body').innerHTML = q.contentHtml || `<p>${q.desc}</p>`;
+      // Rich Article Content
+      const contentBody = document.getElementById('detail-content-body');
+      contentBody.innerHTML = q.contentHtml || `<p>${q.desc}</p>`;
 
-      // Resume Toggle State
+      // Resume Toggle Sync
       const toggle = document.getElementById('detail-resume-toggle');
       const status = document.getElementById('detail-resume-status');
-      toggle.checked = q.inResume !== false;
+      toggle.checked = (q.inResume !== false);
       if (toggle.checked) {
         status.textContent = '[연동됨]';
         status.className = 'text-[10px] text-emerald-400 font-pixel ml-1';
@@ -1724,7 +2376,7 @@ npm run build && git commit -m "feat: complete milestone"</pre>
     }
 
     /* ==========================================================================
-       8. RESUME VIEW RENDERING
+       9. RESUME VIEW RENDERING (이력서 뷰 & 스킬 연동)
        ========================================================================== */
     function renderResumeView() {
       document.getElementById('resume-name').textContent = AppState.player.name;
@@ -1734,7 +2386,41 @@ npm run build && git commit -m "feat: complete milestone"</pre>
       document.getElementById('resume-stat-cha').textContent = AppState.stats.CHA + '%';
       document.getElementById('resume-date-stamp').textContent = new Date().toLocaleDateString('ko-KR');
 
-      // Certifications
+      // 1. Technical Skills Matrix (from Custom Skill Tree)
+      const skillsContainer = document.getElementById('resume-skills-list');
+      skillsContainer.innerHTML = '';
+      
+      const skills = AppState.skills || [];
+      if (skills.length === 0) {
+        skillsContainer.innerHTML = '<p class="col-span-2 text-xs text-gray-400 italic py-2 text-center">등록된 스킬이 없습니다.</p>';
+      } else {
+        STAT_KEYS.forEach(key => {
+          const group = skills.filter(s => s.stat === key);
+          if (group.length > 0) {
+            const card = document.createElement('div');
+            card.className = 'p-3 bg-gray-50 border border-gray-200 rounded';
+            const skillChips = group.map(s => 
+              `<span class="inline-flex items-center gap-1 px-2 py-0.5 bg-white border border-gray-300 rounded text-xs font-medium text-gray-800">
+                <span>${s.emoji}</span> ${s.name} <span class="text-indigo-600 font-bold font-mono">Lv.${s.level || 1}</span>
+                ${s.count > 0 ? `<span class="text-[10px] text-gray-400">(${s.count}건)</span>` : ''}
+              </span>`
+            ).join(' ');
+
+            card.innerHTML = `
+              <div class="text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-1.5 flex items-center justify-between">
+                <span>${STAT_INFO[key].icon} ${key} (${STAT_INFO[key].name})</span>
+                <span class="text-gray-400 font-mono">${group.length}개 역량</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5">
+                ${skillChips}
+              </div>
+            `;
+            skillsContainer.appendChild(card);
+          }
+        });
+      }
+
+      // 2. Certifications & Boss Milestones
       const certsContainer = document.getElementById('resume-certs-list');
       certsContainer.innerHTML = '';
       const bossQuests = AppState.quests.filter(q => (q.type === 'boss' || q.difficulty === 'boss') && q.completed);
@@ -1761,7 +2447,7 @@ npm run build && git commit -m "feat: complete milestone"</pre>
         });
       }
 
-      // Projects
+      // 3. Projects
       const projContainer = document.getElementById('resume-projects-list');
       const badge = document.getElementById('resume-project-count-badge');
       projContainer.innerHTML = '';
@@ -1799,12 +2485,13 @@ npm run build && git commit -m "feat: complete milestone"</pre>
     }
 
     /* ==========================================================================
-       9. AVATAR & UTILS
+       10. AVATAR & UTILS
        ========================================================================== */
     const SPEECHES = [
       "첫 번째 퀘스트를 작성하고 레벨업을 시작해보세요!",
       "버그를 잡는 것이 곧 보스를 물리치는 길이다!",
       "오늘 작성한 퀘스트 로그가 내일의 이력서가 된다.",
+      "스킬트리를 확장하고 전문 역량을 강화해보세요!",
       "꾸준함은 가장 강력한 패시브 스킬입니다."
     ];
 
@@ -1812,10 +2499,13 @@ npm run build && git commit -m "feat: complete milestone"</pre>
       const idx = Math.floor(Math.random() * SPEECHES.length);
       AppState.player.speech = SPEECHES[idx];
       document.getElementById('avatar-speech').textContent = SPEECHES[idx];
+      SoundSystem.play('click');
     }
 
-    function showLevelUpToast() {
+    function showLevelUpToast(title = 'LEVEL UP!! 레벨 업 축하합니다!', desc = '능력치 보너스와 새로운 마일스톤이 잠금 해제되었습니다!') {
       const toast = document.getElementById('level-up-toast');
+      document.getElementById('toast-title').textContent = title;
+      document.getElementById('toast-desc').textContent = desc;
       toast.classList.remove('hidden');
       setTimeout(() => closeLevelUpToast(), 5000);
     }
@@ -1828,7 +2518,11 @@ npm run build && git commit -m "feat: complete milestone"</pre>
       renderHUD();
       renderQuests();
       renderProofVault();
-      renderResumeView();
+      if (activeTab === 'skilltree') {
+        renderSkillTreePage();
+      } else if (activeTab === 'resume') {
+        renderResumeView();
+      }
     }
 
     // Init App on Load
