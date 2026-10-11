@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>LifeGame (인생게임) - Level Up Your Life, Skill Tree &amp; Resume</title>
+  <title>THE Life Game (인생게임) - Level Up Your Life, Skill Tree &amp; Resume</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>">
 
   <!-- Open Graph / SEO Meta Tags -->
-  <meta name="description" content="LifeGame (인생게임) - 퀘스트와 학습 기록을 실시간 RPG 스탯 및 스킬트리로 전환하고 채용 담당자를 위한 이력서로 변환하는 레트로 2D 픽셀 아트 포트폴리오 웹사이트">
-  <meta property="og:title" content="LifeGame (인생게임) - 16-Bit 레트로 RPG 라이프, 스킬트리 &amp; 이력서 빌더">
+  <meta name="description" content="THE Life Game (인생게임) - 퀘스트와 학습 기록을 실시간 RPG 스탯 및 스킬트리로 전환하고 채용 담당자를 위한 이력서로 변환하는 레트로 2D 픽셀 아트 포트폴리오 웹사이트">
+  <meta property="og:title" content="THE Life Game (인생게임) - 16-Bit 레트로 RPG 라이프, 스킬트리 &amp; 이력서 빌더">
   <meta property="og:description" content="커스텀 스킬트리 연구소, 블로그형 퀘스트 작성기, 6축 실시간 레이더 스탯, 채용 담당자용 이력서 실시간 연동">
   <meta property="og:type" content="website">
   <meta property="og:image" content="screen.png">
@@ -19,6 +19,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Anybody:wght@700;800;900&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
+  <!-- Retro Korean Pixel Fonts (Galmuri) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/galmuri/dist/galmuri.css"/>
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -43,11 +45,13 @@
             }
           },
           fontFamily: {
-            pixel: ['"Press Start 2P"', 'monospace'],
-            vt: ['"VT323"', 'monospace'],
-            sans: ['"Pretendard"', 'sans-serif'],
-            mono: ['"Courier Prime"', 'monospace'],
-            headline: ['"Anybody"', 'sans-serif']
+            pixel: ['"Press Start 2P"', '"DungGeunMo"', '"Galmuri11"', 'monospace'],
+            game: ['"DungGeunMo"', '"Galmuri11"', '"Press Start 2P"', 'monospace'],
+            vt: ['"VT323"', '"DungGeunMo"', '"Galmuri11"', 'monospace'],
+            clean: ['"Pretendard"', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
+            sans: ['"DungGeunMo"', '"Galmuri11"', '"Pretendard"', 'sans-serif'],
+            mono: ['"Courier Prime"', '"DungGeunMo"', 'monospace'],
+            headline: ['"Anybody"', '"DungGeunMo"', 'sans-serif']
           }
         }
       }
@@ -55,6 +59,28 @@
   </script>
 
   <style>
+    /* Classic 16-Bit Korean Retro RPG Font: DungGeunMo (둥근모꼴) */
+    @font-face {
+      font-family: 'DungGeunMo';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    /* Global Base Retro Game Font for UI & Controls */
+    body, button, input, select, textarea {
+      font-family: 'DungGeunMo', 'Galmuri11', 'Press Start 2P', monospace, sans-serif;
+    }
+
+    /* Recruiter Standard Clean Typography (Resume View Protection) */
+    #resume-paper-container,
+    #resume-paper-container * {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif !important;
+    }
+    #resume-paper-container .font-mono {
+      font-family: 'Courier Prime', monospace !important;
+    }
     /* Clean Pixel Box Styling */
     .pixel-box {
       border: 3px solid #000;
@@ -214,7 +240,7 @@
   </style>
 </head>
 
-<body class="bg-retro-bg text-gray-100 min-h-screen font-sans selection:bg-retro-cyan selection:text-black relative">
+<body class="bg-retro-bg text-gray-100 min-h-screen font-game selection:bg-retro-cyan selection:text-black relative">
 
   <!-- Subtle CRT Scanlines -->
   <div id="scanline-layer" class="fixed inset-0 scanlines z-40 opacity-30 pointer-events-none transition-opacity"></div>
@@ -232,7 +258,7 @@
             ⚔️
           </div>
           <div class="hidden sm:block">
-            <h1 class="font-pixel text-sm md:text-base text-retro-primary tracking-wider drop-shadow-[1px_1px_0px_#000]">LIFE GAME</h1>
+            <h1 class="font-pixel text-sm md:text-base text-retro-primary tracking-wider drop-shadow-[1px_1px_0px_#000]">THE Life Game</h1>
             <p class="text-[10px] text-purple-300 font-vt tracking-wider">LEVEL UP REALITY &middot; QUEST TO CAREER</p>
           </div>
         </div>
@@ -691,7 +717,7 @@
 
         <!-- Watermark Footer (Clean recruiter style) -->
         <footer class="mt-12 pt-6 border-t border-gray-200 flex justify-between items-center text-[11px] text-gray-500 font-sans">
-          <span>Official Technical Resume &middot; Authentic Practice Logs &middot; LifeGame Verified</span>
+          <span>Official Technical Resume &middot; Authentic Practice Logs &middot; THE Life Game Verified</span>
           <span>Last Updated: <span id="resume-date-stamp" class="font-mono text-gray-700"></span></span>
         </footer>
 
@@ -1177,7 +1203,7 @@
   <!-- Global Footer -->
   <footer class="w-full bg-retro-surface py-3 border-t border-black text-center text-xs font-vt text-gray-400">
     <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-      <span>[LIFEGAME v2.6] 2D Pixel RPG Portfolio Dashboard &middot; Custom Skill Tree System</span>
+      <span>[THE LIFE GAME v2.7] 2D Pixel RPG Portfolio Dashboard &middot; Custom Skill Tree System</span>
       <span>Cloudflare Pages &middot; LocalStorage Live Sync</span>
     </div>
   </footer>
@@ -1721,7 +1747,7 @@
 
         if (l === levels) {
           ctx.fillStyle = '#6C4AB6';
-          ctx.font = '10px "VT323", monospace';
+          ctx.font = '10px "DungGeunMo", "Galmuri11", "VT323", monospace';
           ctx.fillText('100', centerX + 4, centerY - r + 11);
         }
       }
@@ -1773,7 +1799,7 @@
       });
 
       // Stat Labels
-      ctx.font = '10px "Press Start 2P", monospace';
+      ctx.font = '10px "Press Start 2P", "DungGeunMo", "Galmuri11", monospace';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       for (let i = 0; i < 6; i++) {
