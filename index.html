@@ -1,26 +1,40 @@
 <!DOCTYPE html>
 <html class="dark" lang="ko">
+
 <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>THE Life Game (인생게임) - Level Up Your Life, Skill Tree &amp; Resume</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>">
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>THE Life Game - 매일 퀘스트를 깼더니 어느새 완성형 캐릭터가 되어버린 건에 대하여 | THE Life Game (Dorage)</title>
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>">
+
+  <!-- Mobile Browser Status Bar & PWA Meta Tags -->
+  <meta name="theme-color" content="#120e24" id="theme-color-meta" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="THE Life Game" />
 
   <!-- Open Graph / SEO Meta Tags -->
-  <meta name="description" content="THE Life Game (인생게임) - 퀘스트와 학습 기록을 실시간 RPG 스탯 및 스킬트리로 전환하고 채용 담당자를 위한 이력서로 변환하는 레트로 2D 픽셀 아트 포트폴리오 웹사이트">
-  <meta property="og:title" content="THE Life Game (인생게임) - 16-Bit 레트로 RPG 라이프, 스킬트리 &amp; 이력서 빌더">
-  <meta property="og:description" content="커스텀 스킬트리 연구소, 블로그형 퀘스트 작성기, 6축 실시간 레이더 스탯, 채용 담당자용 이력서 실시간 연동">
+  <meta name="description"
+    content="THE Life Game (Dorage) - 매일 퀘스트를 깼더니 어느새 완성형 캐릭터가 되어버린 건에 대하여. 2D 픽셀 아트 감성의 직관적인 성장형 블로그 &amp; 실무 이력서 변환 웹 플랫폼">
+  <meta property="og:title" content="THE Life Game - 매일 퀘스트를 깼더니 어느새 완성형 캐릭터가 되어버린 건에 대하여">
+  <meta property="og:description" content="THE Life Game (Dorage) - 커스텀 스킬트리 연구소, 블로그형 퀘스트 작성기, 6축 실시간 레이더 스탯, 채용 담당자용 이력서 실시간 연동">
   <meta property="og:type" content="website">
   <meta property="og:image" content="screen.png">
 
   <!-- Google & Pretendard Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
-  <link href="https://fonts.googleapis.com/css2?family=Anybody:wght@700;800;900&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
-  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Anybody:wght@700;800;900&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Press+Start+2P&family=VT323&display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    rel="stylesheet" />
+  <link rel="stylesheet" as="style" crossorigin
+    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
   <!-- Retro Korean Pixel Fonts (Galmuri) -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/galmuri/dist/galmuri.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/galmuri/dist/galmuri.css" />
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -69,7 +83,11 @@
     }
 
     /* Global Base Retro Game Font for UI & Controls */
-    body, button, input, select, textarea {
+    body,
+    button,
+    input,
+    select,
+    textarea {
       font-family: 'DungGeunMo', 'Galmuri11', 'Press Start 2P', monospace, sans-serif;
     }
 
@@ -78,28 +96,34 @@
     #resume-paper-container * {
       font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif !important;
     }
+
     #resume-paper-container .font-mono {
       font-family: 'Courier Prime', monospace !important;
     }
+
     /* Clean Pixel Box Styling */
     .pixel-box {
       border: 3px solid #000;
       box-shadow: 4px 4px 0px 0px #000;
     }
+
     .pixel-box-sm {
       border: 2px solid #000;
       box-shadow: 2px 2px 0px 0px #000;
     }
+
     .pixel-btn {
       border: 2px solid #000;
       box-shadow: 3px 3px 0px #000;
       transition: transform 0.06s ease, box-shadow 0.06s ease;
       user-select: none;
     }
+
     .pixel-btn:hover {
       transform: translate(-1px, -1px);
       box-shadow: 4px 4px 0px #000;
     }
+
     .pixel-btn:active {
       transform: translate(2px, 2px);
       box-shadow: 1px 1px 0px #000;
@@ -114,17 +138,34 @@
 
     /* Pixel Character Bounce Animation */
     @keyframes pixel-idle {
-      0%, 100% { transform: translateY(0px) scaleY(1); }
-      50% { transform: translateY(-6px) scaleY(1.03); }
+
+      0%,
+      100% {
+        transform: translateY(0px) scaleY(1);
+      }
+
+      50% {
+        transform: translateY(-6px) scaleY(1.03);
+      }
     }
+
     @keyframes sword-glow {
-      0%, 100% { filter: drop-shadow(0 0 2px #00f0ff); }
-      50% { filter: drop-shadow(0 0 6px #00f0ff); }
+
+      0%,
+      100% {
+        filter: drop-shadow(0 0 2px #00f0ff);
+      }
+
+      50% {
+        filter: drop-shadow(0 0 6px #00f0ff);
+      }
     }
+
     .pixel-character-bounce {
       animation: pixel-idle 0.9s cubic-bezier(0.28, 0.84, 0.42, 1) infinite;
       image-rendering: pixelated;
     }
+
     .glow-sword {
       animation: sword-glow 1.5s infinite;
     }
@@ -134,13 +175,16 @@
       width: 6px;
       height: 6px;
     }
+
     ::-webkit-scrollbar-track {
       background: #120E24;
     }
+
     ::-webkit-scrollbar-thumb {
       background: #241B3D;
       border: 1px solid #000;
     }
+
     ::-webkit-scrollbar-thumb:hover {
       background: #FCE22A;
     }
@@ -151,18 +195,29 @@
         size: A4 portrait;
         margin: 12mm 10mm 12mm 10mm;
       }
-      html, body {
+
+      html,
+      body {
         background: #ffffff !important;
         color: #111827 !important;
         font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
-      .no-print, header, footer, #scanline-layer, #level-up-toast, 
-      #quest-editor-modal, #quest-detail-modal, #skill-modal,
-      #dashboard-view, #skilltree-view {
+
+      .no-print,
+      header,
+      footer,
+      #scanline-layer,
+      #level-up-toast,
+      #quest-editor-modal,
+      #quest-detail-modal,
+      #skill-modal,
+      #dashboard-view,
+      #skilltree-view {
         display: none !important;
       }
+
       #resume-view {
         display: block !important;
         margin: 0 !important;
@@ -171,6 +226,7 @@
         box-shadow: none !important;
         border: none !important;
       }
+
       #resume-paper-container {
         box-shadow: none !important;
         border: none !important;
@@ -178,13 +234,16 @@
         margin: 0 !important;
         max-width: 100% !important;
       }
+
       .print-break-inside-avoid {
         break-inside: avoid !important;
         page-break-inside: avoid !important;
       }
+
       .print-hide {
         display: none !important;
       }
+
       a {
         text-decoration: none !important;
         color: inherit !important;
@@ -198,6 +257,7 @@
       pointer-events: none;
       display: block;
     }
+
     #editor-canvas h2 {
       font-size: 1.35rem;
       font-weight: 800;
@@ -207,6 +267,7 @@
       border-bottom: 1px solid #374151;
       padding-bottom: 0.25rem;
     }
+
     #editor-canvas h3 {
       font-size: 1.15rem;
       font-weight: 700;
@@ -214,11 +275,13 @@
       margin-top: 1rem;
       margin-bottom: 0.35rem;
     }
+
     #editor-canvas p {
       margin-bottom: 0.85rem;
       line-height: 1.75;
       color: #E5E7EB;
     }
+
     #editor-canvas blockquote {
       border-left: 3px solid #FCE22A;
       background: #1B1438;
@@ -227,11 +290,13 @@
       font-style: italic;
       color: #D1D5DB;
     }
+
     #editor-canvas ul {
       list-style-type: disc;
       padding-left: 1.5rem;
       margin-bottom: 0.85rem;
     }
+
     #editor-canvas ol {
       list-style-type: decimal;
       padding-left: 1.5rem;
@@ -250,7 +315,7 @@
   <!-- ======================================================== -->
   <header class="fixed top-0 left-0 w-full z-50 bg-retro-surface/95 backdrop-blur-sm border-b-2 border-black shadow-md">
     <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
-      
+
       <!-- Brand Logo & Tabs -->
       <div class="flex items-center gap-4 sm:gap-6">
         <div class="flex items-center gap-2.5 cursor-pointer shrink-0" onclick="switchTab('dashboard')">
@@ -258,20 +323,25 @@
             ⚔️
           </div>
           <div class="hidden sm:block">
-            <h1 class="font-pixel text-sm md:text-base text-retro-primary tracking-wider drop-shadow-[1px_1px_0px_#000]">THE Life Game</h1>
+            <h1
+              class="font-pixel text-sm md:text-base text-retro-primary tracking-wider drop-shadow-[1px_1px_0px_#000]">
+              THE Life Game</h1>
             <p class="text-[10px] text-purple-300 font-vt tracking-wider">LEVEL UP REALITY &middot; QUEST TO CAREER</p>
           </div>
         </div>
 
         <!-- Navigation Tabs: [대시보드] vs [스킬트리] vs [이력서 뷰] -->
         <nav class="flex items-center gap-1 bg-black/50 p-1 border border-black pixel-box-sm">
-          <button id="tab-btn-dashboard" onclick="switchTab('dashboard')" class="px-2.5 sm:px-3.5 py-1.5 font-pixel text-xs bg-retro-primary text-black font-bold transition-all flex items-center gap-1.5">
+          <button id="tab-btn-dashboard" onclick="switchTab('dashboard')"
+            class="px-2.5 sm:px-3.5 py-1.5 font-pixel text-xs bg-retro-primary text-black font-bold transition-all flex items-center gap-1.5">
             🎮 <span>대시보드</span>
           </button>
-          <button id="tab-btn-skilltree" onclick="switchTab('skilltree')" class="px-2.5 sm:px-3.5 py-1.5 font-pixel text-xs bg-transparent text-gray-400 hover:text-white transition-all flex items-center gap-1.5">
+          <button id="tab-btn-skilltree" onclick="switchTab('skilltree')"
+            class="px-2.5 sm:px-3.5 py-1.5 font-pixel text-xs bg-transparent text-gray-400 hover:text-white transition-all flex items-center gap-1.5">
             🌲 <span>스킬트리</span>
           </button>
-          <button id="tab-btn-resume" onclick="switchTab('resume')" class="px-2.5 sm:px-3.5 py-1.5 font-pixel text-xs bg-transparent text-gray-400 hover:text-white transition-all flex items-center gap-1.5">
+          <button id="tab-btn-resume" onclick="switchTab('resume')"
+            class="px-2.5 sm:px-3.5 py-1.5 font-pixel text-xs bg-transparent text-gray-400 hover:text-white transition-all flex items-center gap-1.5">
             📄 <span>이력서 뷰</span>
           </button>
         </nav>
@@ -280,22 +350,28 @@
       <!-- Right Header Actions -->
       <div class="flex items-center gap-2 sm:gap-3">
         <!-- Live Player Mini Status -->
-        <div class="hidden md:flex items-center gap-3 bg-black/40 px-3 py-1 border border-black pixel-box-sm text-xs font-pixel">
+        <div
+          class="hidden md:flex items-center gap-3 bg-black/40 px-3 py-1 border border-black pixel-box-sm text-xs font-pixel">
           <span class="text-retro-cyan">LV.<span id="header-level">1</span></span>
           <div class="w-16 lg:w-20 bg-gray-800 h-2 border border-black overflow-hidden">
-            <div id="header-exp-bar" class="h-full bg-gradient-to-r from-emerald-500 to-retro-accent transition-all duration-300" style="width: 0%;"></div>
+            <div id="header-exp-bar"
+              class="h-full bg-gradient-to-r from-emerald-500 to-retro-accent transition-all duration-300"
+              style="width: 0%;"></div>
           </div>
           <span class="text-retro-gold">🪙 <span id="header-gold">0</span>G</span>
         </div>
 
         <!-- Audio FX Toggle -->
-        <button id="sound-btn" onclick="toggleMute()" class="pixel-btn bg-retro-card hover:bg-[#2f2350] text-yellow-300 px-2.5 py-1 text-xs font-pixel flex items-center gap-1" title="8-Bit 사운드 토글">
+        <button id="sound-btn" onclick="toggleMute()"
+          class="pixel-btn bg-retro-card hover:bg-[#2f2350] text-yellow-300 px-2.5 py-1 text-xs font-pixel flex items-center gap-1"
+          title="8-Bit 사운드 토글">
           <span id="sound-icon">🔊</span>
           <span class="hidden md:inline text-[10px]">FX</span>
         </button>
 
         <!-- Reset Data -->
-        <button onclick="resetDataPrompt()" class="pixel-btn bg-red-950 hover:bg-red-900 text-red-200 px-2 py-1 text-xs font-pixel" title="데이터 초기화">
+        <button onclick="resetDataPrompt()"
+          class="pixel-btn bg-red-950 hover:bg-red-900 text-red-200 px-2 py-1 text-xs font-pixel" title="데이터 초기화">
           🔄
         </button>
       </div>
@@ -304,7 +380,8 @@
   </header>
 
   <!-- Level Up Global Toast -->
-  <div id="level-up-toast" class="hidden fixed top-20 left-1/2 -translate-x-1/2 z-50 max-w-lg w-[90%] bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 border-4 border-black p-3.5 pixel-box text-black flex items-center justify-between shadow-2xl animate-bounce">
+  <div id="level-up-toast"
+    class="hidden fixed top-20 left-1/2 -translate-x-1/2 z-50 max-w-lg w-[90%] bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 border-4 border-black p-3.5 pixel-box text-black flex items-center justify-between shadow-2xl animate-bounce">
     <div class="flex items-center gap-3">
       <span class="text-2xl">🎺</span>
       <div>
@@ -312,7 +389,8 @@
         <p class="font-vt text-base text-gray-900 mt-0.5" id="toast-desc">능력치 보너스와 새로운 마일스톤이 잠금 해제되었습니다!</p>
       </div>
     </div>
-    <button onclick="closeLevelUpToast()" class="pixel-btn bg-black text-white px-2.5 py-1 font-pixel text-xs">확인</button>
+    <button onclick="closeLevelUpToast()"
+      class="pixel-btn bg-black text-white px-2.5 py-1 font-pixel text-xs">확인</button>
   </div>
 
   <!-- MAIN VIEWPORT -->
@@ -322,21 +400,24 @@
     <!-- 2. DASHBOARD VIEW (대시보드 화면)                         -->
     <!-- ======================================================== -->
     <div id="dashboard-view" class="transition-all duration-300">
-      
+
       <!-- Top Action Bar with [+ 새 퀘스트 작성] -->
-      <div class="mb-6 flex flex-wrap items-center justify-between gap-3 bg-retro-surface p-4 pixel-box-sm border border-black">
+      <div
+        class="mb-6 flex flex-wrap items-center justify-between gap-3 bg-retro-surface p-4 pixel-box-sm border border-black">
         <div>
           <h2 class="font-pixel text-sm md:text-base text-retro-primary flex items-center gap-2">
             <span>🛡️</span> 성장 대시보드
           </h2>
           <p class="text-xs text-purple-200 mt-0.5 font-vt text-base">매일의 학습과 커밋을 실시간 스탯 및 스킬 숙련도로 레벨업하세요.</p>
         </div>
-        
+
         <div class="flex items-center gap-2">
-          <button onclick="switchTab('skilltree')" class="pixel-btn bg-retro-card hover:bg-[#2c214c] text-retro-cyan font-pixel text-xs px-3 py-2 flex items-center gap-1.5 border border-black">
+          <button onclick="switchTab('skilltree')"
+            class="pixel-btn bg-retro-card hover:bg-[#2c214c] text-retro-cyan font-pixel text-xs px-3 py-2 flex items-center gap-1.5 border border-black">
             <span>🌲</span> 스킬트리 보기
           </button>
-          <button onclick="openEditorModal()" class="pixel-btn bg-retro-primary hover:bg-yellow-300 text-black font-pixel text-xs px-4 py-2 font-bold flex items-center gap-1.5 shadow-md">
+          <button onclick="openEditorModal()"
+            class="pixel-btn bg-retro-primary hover:bg-yellow-300 text-black font-pixel text-xs px-4 py-2 font-bold flex items-center gap-1.5 shadow-md">
             <span>➕</span> 새 퀘스트 작성
           </button>
         </div>
@@ -344,39 +425,50 @@
 
       <!-- Main Clean 2-Column Grid -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        
+
         <!-- LEFT COLUMN (5 Cols): Profile + Bouncing Avatar + 6-Axis Radar Chart -->
         <aside class="lg:col-span-5 flex flex-col gap-6">
-          
+
           <!-- Character Card -->
           <div class="bg-retro-surface pixel-box p-5 border border-black relative">
             <div class="flex items-start justify-between">
               <div>
-                <span class="text-[10px] bg-retro-purple px-2 py-0.5 font-pixel border border-black text-yellow-300" id="card-class-badge">FULL-STACK EXPLORER</span>
-                <h3 class="font-pixel text-base md:text-lg text-retro-cyan mt-1.5" id="player-name">류도현 (Do-Hyeon Ryu)</h3>
-                <p class="text-xs text-purple-200 font-vt text-base" id="player-job-title">풀스택 웹 엔지니어 (Full-Stack Engineer)</p>
+                <span class="text-[10px] bg-retro-purple px-2 py-0.5 font-pixel border border-black text-yellow-300"
+                  id="card-class-badge">FULL-STACK EXPLORER</span>
+                <h3 class="font-pixel text-base md:text-lg text-retro-cyan mt-1.5" id="player-name">류도현 (Do-Hyeon Ryu)
+                </h3>
+                <p class="text-xs text-purple-200 font-vt text-base" id="player-job-title">풀스택 웹 엔지니어 (Full-Stack
+                  Engineer)</p>
               </div>
               <div class="text-right flex flex-col items-end gap-1.5">
-                <button onclick="openProfileEditModal()" class="pixel-btn bg-retro-primary hover:bg-yellow-300 text-black text-[10px] font-pixel px-2.5 py-1 flex items-center gap-1 font-bold shadow">
+                <button onclick="openProfileEditModal()"
+                  class="pixel-btn bg-retro-primary hover:bg-yellow-300 text-black text-[10px] font-pixel px-2.5 py-1 flex items-center gap-1 font-bold shadow">
                   <span>✏️</span> 프로필 설정
                 </button>
                 <div>
-                  <span class="font-pixel text-xl md:text-2xl text-retro-primary font-bold">LV.<span id="stat-level-text">1</span></span>
-                  <div class="text-[10px] text-gray-400 font-pixel mt-0.5">EXP <span id="curr-exp-val">0</span> / <span id="max-exp-val">100</span></div>
+                  <span class="font-pixel text-xl md:text-2xl text-retro-primary font-bold">LV.<span
+                      id="stat-level-text">1</span></span>
+                  <div class="text-[10px] text-gray-400 font-pixel mt-0.5">EXP <span id="curr-exp-val">0</span> / <span
+                      id="max-exp-val">100</span></div>
                 </div>
               </div>
             </div>
 
             <!-- Avatar Sprite Animation Box -->
-            <div class="mt-4 bg-retro-bg p-4 border border-black pixel-box-sm flex flex-col items-center justify-center relative overflow-hidden">
-              <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#FCE22A_1px,transparent_1px)] [background-size:12px_12px]"></div>
+            <div
+              class="mt-4 bg-retro-bg p-4 border border-black pixel-box-sm flex flex-col items-center justify-center relative overflow-hidden">
+              <div
+                class="absolute inset-0 opacity-10 bg-[radial-gradient(#FCE22A_1px,transparent_1px)] [background-size:12px_12px]">
+              </div>
 
               <!-- Pixel Character Dynamic SVG Sprite Container -->
               <div class="relative z-10 my-1 cursor-pointer group" onclick="pokeAvatar()" title="캐릭터 클릭: 사운드 &amp; 대사">
-                <div id="dashboard-avatar-container" class="w-24 h-24 pixel-character-bounce filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.6)] flex items-center justify-center">
+                <div id="dashboard-avatar-container"
+                  class="w-24 h-24 pixel-character-bounce filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.6)] flex items-center justify-center">
                   <!-- Dynamically rendered via renderAvatarSvg() -->
                 </div>
-                <div class="text-[9px] font-pixel text-center text-gray-400 group-hover:text-retro-primary transition-colors mt-1">
+                <div
+                  class="text-[9px] font-pixel text-center text-gray-400 group-hover:text-retro-primary transition-colors mt-1">
                   [모험가 아바타 터치]
                 </div>
               </div>
@@ -395,7 +487,9 @@
                   <span id="exp-pct-val" class="text-retro-accent">0%</span>
                 </div>
                 <div class="w-full bg-black h-3 border border-black p-0.5">
-                  <div id="main-exp-bar" class="h-full bg-gradient-to-r from-emerald-500 via-retro-accent to-retro-primary transition-all duration-300" style="width: 0%;"></div>
+                  <div id="main-exp-bar"
+                    class="h-full bg-gradient-to-r from-emerald-500 via-retro-accent to-retro-primary transition-all duration-300"
+                    style="width: 0%;"></div>
                 </div>
               </div>
             </div>
@@ -439,7 +533,9 @@
             </div>
             <div class="relative flex justify-center items-center bg-black/60 border border-black p-2">
               <canvas id="radarCanvas" width="340" height="300" class="max-w-full"></canvas>
-              <div id="stat-tooltip" class="hidden absolute pointer-events-none bg-black/90 text-white font-pixel text-[10px] px-2 py-1 border border-retro-cyan shadow-lg z-20"></div>
+              <div id="stat-tooltip"
+                class="hidden absolute pointer-events-none bg-black/90 text-white font-pixel text-[10px] px-2 py-1 border border-retro-cyan shadow-lg z-20">
+              </div>
             </div>
             <p class="text-[10px] text-gray-400 font-vt text-center mt-2">
               퀘스트를 완료하면 해당 스탯이 실시간 성장하여 레이더 차트에 반영됩니다.
@@ -450,10 +546,10 @@
 
         <!-- RIGHT COLUMN (7 Cols): Quest List & Timeline Feed -->
         <section class="lg:col-span-7 flex flex-col gap-6">
-          
+
           <!-- Quests Board Box -->
           <div class="bg-retro-surface pixel-box p-5 border border-black">
-            
+
             <!-- Filters & Category Chips -->
             <div class="flex flex-wrap items-center justify-between gap-3 mb-4 border-b border-black/80 pb-3">
               <div>
@@ -465,10 +561,14 @@
 
               <!-- Filter Buttons -->
               <div class="flex items-center gap-1.5">
-                <button onclick="setQuestFilter('all')" id="tab-all" class="pixel-btn bg-retro-primary text-black px-2.5 py-1 text-[10px] font-pixel font-bold">전체</button>
-                <button onclick="setQuestFilter('daily')" id="tab-daily" class="pixel-btn bg-retro-card text-gray-300 px-2.5 py-1 text-[10px] font-pixel">일일</button>
-                <button onclick="setQuestFilter('boss')" id="tab-boss" class="pixel-btn bg-retro-card text-gray-300 px-2.5 py-1 text-[10px] font-pixel">보스</button>
-                <button onclick="setQuestFilter('blog')" id="tab-blog" class="pixel-btn bg-retro-card text-gray-300 px-2.5 py-1 text-[10px] font-pixel">블로그형</button>
+                <button onclick="setQuestFilter('all')" id="tab-all"
+                  class="pixel-btn bg-retro-primary text-black px-2.5 py-1 text-[10px] font-pixel font-bold">전체</button>
+                <button onclick="setQuestFilter('daily')" id="tab-daily"
+                  class="pixel-btn bg-retro-card text-gray-300 px-2.5 py-1 text-[10px] font-pixel">일일</button>
+                <button onclick="setQuestFilter('boss')" id="tab-boss"
+                  class="pixel-btn bg-retro-card text-gray-300 px-2.5 py-1 text-[10px] font-pixel">보스</button>
+                <button onclick="setQuestFilter('blog')" id="tab-blog"
+                  class="pixel-btn bg-retro-card text-gray-300 px-2.5 py-1 text-[10px] font-pixel">블로그형</button>
               </div>
             </div>
 
@@ -485,11 +585,12 @@
               <h3 class="font-pixel text-xs md:text-sm text-retro-cyan flex items-center gap-2">
                 <span>🛡️</span> 최근 완료된 퀘스트 증빙 보관함
               </h3>
-              <span id="proof-count-badge" class="font-pixel text-[10px] bg-black px-2 py-0.5 text-emerald-400 border border-black">
+              <span id="proof-count-badge"
+                class="font-pixel text-[10px] bg-black px-2 py-0.5 text-emerald-400 border border-black">
                 0건 완료
               </span>
             </div>
-            
+
             <div id="proof-gallery" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <!-- Populated by JS -->
             </div>
@@ -505,9 +606,10 @@
     <!-- 3. SKILL TREE CUSTOM MANAGEMENT VIEW (스킬트리 관리 페이지) -->
     <!-- ======================================================== -->
     <div id="skilltree-view" class="hidden transition-all duration-300">
-      
+
       <!-- Top Banner & Action -->
-      <div class="mb-6 flex flex-wrap items-center justify-between gap-3 bg-retro-surface p-4 pixel-box-sm border border-black">
+      <div
+        class="mb-6 flex flex-wrap items-center justify-between gap-3 bg-retro-surface p-4 pixel-box-sm border border-black">
         <div>
           <h2 class="font-pixel text-sm md:text-base text-retro-primary flex items-center gap-2">
             <span>🌲</span> 커스텀 스킬트리 연구소 (Skill Tree Lab)
@@ -516,8 +618,9 @@
             6대 코어 스탯에 속한 세부 스킬을 자유롭게 등록·관리하고, 퀘스트를 통해 스킬 레벨과 숙련도를 성장시키세요.
           </p>
         </div>
-        
-        <button onclick="openSkillModal()" class="pixel-btn bg-retro-accent hover:bg-emerald-400 text-black font-pixel text-xs px-4 py-2 font-bold flex items-center gap-1.5 shadow-md">
+
+        <button onclick="openSkillModal()"
+          class="pixel-btn bg-retro-accent hover:bg-emerald-400 text-black font-pixel text-xs px-4 py-2 font-bold flex items-center gap-1.5 shadow-md">
           <span>➕</span> 새 스킬 추가
         </button>
       </div>
@@ -531,9 +634,11 @@
       </div>
 
       <!-- Active Stat Overview Ribbon -->
-      <div class="bg-retro-surface pixel-box-sm p-4 border border-black mb-6 flex flex-wrap items-center justify-between gap-4">
+      <div
+        class="bg-retro-surface pixel-box-sm p-4 border border-black mb-6 flex flex-wrap items-center justify-between gap-4">
         <div class="flex items-center gap-3">
-          <div id="skill-category-icon" class="w-12 h-12 bg-black/60 border-2 border-black pixel-box-sm flex items-center justify-center text-2xl">
+          <div id="skill-category-icon"
+            class="w-12 h-12 bg-black/60 border-2 border-black pixel-box-sm flex items-center justify-center text-2xl">
             🧠
           </div>
           <div>
@@ -569,9 +674,10 @@
     <!-- 4. RESUME VIEW (이력서 뷰 화면 - 실제 채용 담당자 제출용 표준 포맷) -->
     <!-- ======================================================== -->
     <div id="resume-view" class="hidden transition-all duration-300">
-      
+
       <!-- Top Action Toolbar -->
-      <div class="no-print mb-6 flex flex-wrap items-center justify-between gap-3 bg-retro-surface p-4 pixel-box-sm border border-black">
+      <div
+        class="no-print mb-6 flex flex-wrap items-center justify-between gap-3 bg-retro-surface p-4 pixel-box-sm border border-black">
         <div>
           <h2 class="font-pixel text-sm md:text-base text-retro-primary flex items-center gap-2">
             <span>📄</span> 채용 담당자 제출용 표준 기술 이력서
@@ -580,20 +686,23 @@
             게임 스탯을 배제하고 실무 기술 스택, 정량적 프로젝트, 공인 자격증 및 증빙 자료 중심의 표준 포맷으로 출력됩니다.
           </p>
         </div>
-        
+
         <div class="flex items-center gap-2">
-          <button onclick="window.print()" class="pixel-btn bg-retro-primary hover:bg-yellow-300 text-black font-pixel text-xs px-3.5 py-1.5 font-bold flex items-center gap-1.5 shadow">
+          <button onclick="window.print()"
+            class="pixel-btn bg-retro-primary hover:bg-yellow-300 text-black font-pixel text-xs px-3.5 py-1.5 font-bold flex items-center gap-1.5 shadow">
             <span>🖨️</span> PDF 인쇄 / 다운로드
           </button>
-          <button onclick="switchTab('dashboard')" class="pixel-btn bg-retro-card hover:bg-[#2c214c] text-retro-cyan font-pixel text-xs px-3.5 py-1.5 flex items-center gap-1.5">
+          <button onclick="switchTab('dashboard')"
+            class="pixel-btn bg-retro-card hover:bg-[#2c214c] text-retro-cyan font-pixel text-xs px-3.5 py-1.5 flex items-center gap-1.5">
             <span>🎮</span> 대시보드로 복귀
           </button>
         </div>
       </div>
 
       <!-- Clean A4 White Resume Paper Container -->
-      <div id="resume-paper-container" class="bg-white text-gray-900 shadow-2xl rounded-none md:rounded-sm border-2 md:border-4 border-gray-900 p-6 sm:p-10 md:p-12 max-w-4xl mx-auto font-sans leading-normal">
-        
+      <div id="resume-paper-container"
+        class="bg-white text-gray-900 shadow-2xl rounded-none md:rounded-sm border-2 md:border-4 border-gray-900 p-6 sm:p-10 md:p-12 max-w-4xl mx-auto font-sans leading-normal">
+
         <!-- Live Verified Badge & Document Meta -->
         <div class="flex justify-between items-center pb-4 mb-6 border-b border-gray-200 text-xs">
           <div class="flex items-center gap-1.5 text-emerald-800 font-mono font-bold tracking-tight">
@@ -610,11 +719,13 @@
           <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div class="flex items-start gap-4">
               <!-- Pixel Avatar Badge (Toggleable) -->
-              <div id="resume-avatar-badge" class="hidden w-16 h-16 bg-gray-50 border-2 border-gray-900 rounded p-1 flex items-center justify-center shrink-0">
+              <div id="resume-avatar-badge"
+                class="hidden w-16 h-16 bg-gray-50 border-2 border-gray-900 rounded p-1 flex items-center justify-center shrink-0">
                 <!-- Mini Avatar SVG -->
               </div>
               <div>
-                <div class="inline-block px-2.5 py-1 bg-gray-900 text-white text-xs font-semibold rounded mb-2" id="resume-job-title">
+                <div class="inline-block px-2.5 py-1 bg-gray-900 text-white text-xs font-semibold rounded mb-2"
+                  id="resume-job-title">
                   풀스택 웹 엔지니어 (Full-Stack Engineer)
                 </div>
                 <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight" id="resume-name">
@@ -625,7 +736,8 @@
                 </p>
               </div>
             </div>
-            <div class="text-xs text-gray-600 space-y-1.5 md:text-right border-l-2 md:border-l-0 pl-3 md:pl-0 border-gray-200 font-sans">
+            <div
+              class="text-xs text-gray-600 space-y-1.5 md:text-right border-l-2 md:border-l-0 pl-3 md:pl-0 border-gray-200 font-sans">
               <div>📧 <span class="font-medium text-gray-900" id="resume-email">dohyeon.ryu@lifegame.io</span></div>
               <div>📱 <span class="font-medium text-gray-900" id="resume-phone">+82 10-1234-5678</span></div>
               <div>🌐 <span class="font-medium text-gray-900" id="resume-github">github.com/dohyeon-ryu</span></div>
@@ -716,57 +828,69 @@
         </section>
 
         <!-- Watermark Footer (Clean recruiter style) -->
-        <footer class="mt-12 pt-6 border-t border-gray-200 flex justify-between items-center text-[11px] text-gray-500 font-sans">
+        <footer
+          class="mt-12 pt-6 border-t border-gray-200 flex justify-between items-center text-[11px] text-gray-500 font-sans">
           <span>Official Technical Resume &middot; Authentic Practice Logs &middot; THE Life Game Verified</span>
           <span>Last Updated: <span id="resume-date-stamp" class="font-mono text-gray-700"></span></span>
         </footer>
 
       </div>
-    </div></main>
+    </div>
+  </main>
 
   <!-- ======================================================== -->
   <!-- 5. MODAL: QUEST EDITOR (1단 노션 스타일 + 스킬 연동)       -->
   <!-- ======================================================== -->
-  <div id="quest-editor-modal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-3 md:p-6 overflow-y-auto" onclick="if(event.target===this) closeEditorModal()">
-    <div class="bg-retro-surface pixel-box max-w-3xl w-full my-auto border-3 border-black relative max-h-[92vh] flex flex-col shadow-2xl">
-      
+  <div id="quest-editor-modal"
+    class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-3 md:p-6 overflow-y-auto"
+    onclick="if(event.target===this) closeEditorModal()">
+    <div
+      class="bg-retro-surface pixel-box max-w-3xl w-full my-auto border-3 border-black relative max-h-[92vh] flex flex-col shadow-2xl">
+
       <!-- Modal Header -->
       <div class="bg-retro-card px-5 py-3.5 border-b-2 border-black flex items-center justify-between shrink-0">
         <div class="flex items-center gap-2">
           <span class="text-xl">✍️</span>
           <h3 class="font-pixel text-xs md:text-sm text-retro-primary font-bold">퀘스트 작성 / 편집기</h3>
         </div>
-        <button onclick="closeEditorModal()" class="pixel-btn bg-black text-gray-300 hover:text-white px-2 py-0.5 text-xs font-pixel">
+        <button onclick="closeEditorModal()"
+          class="pixel-btn bg-black text-gray-300 hover:text-white px-2 py-0.5 text-xs font-pixel">
           ✕
         </button>
       </div>
 
       <!-- Scrollable Single-Column Body -->
       <div class="p-5 md:p-7 overflow-y-auto flex-1 space-y-4 bg-retro-bg">
-        
+
         <!-- Compact Stat & Meta Chips Bar -->
         <div class="bg-retro-surface p-3.5 border border-black pixel-box-sm space-y-3">
-          
+
           <!-- Stat Category Chips -->
           <div>
             <label class="block text-[10px] font-pixel text-gray-400 mb-1.5 uppercase">[ 1. 성장 스탯 선택 ]</label>
             <div class="flex flex-wrap gap-1.5" id="editor-stat-chips">
-              <button type="button" onclick="selectModalStat('INT')" data-stat="INT" class="modal-stat-chip px-2.5 py-1 text-xs font-pixel bg-retro-primary text-black font-bold border border-black">
+              <button type="button" onclick="selectModalStat('INT')" data-stat="INT"
+                class="modal-stat-chip px-2.5 py-1 text-xs font-pixel bg-retro-primary text-black font-bold border border-black">
                 INT (지능 +2)
               </button>
-              <button type="button" onclick="selectModalStat('DEX')" data-stat="DEX" class="modal-stat-chip px-2.5 py-1 text-xs font-pixel bg-retro-card text-gray-300 border border-black hover:text-white">
+              <button type="button" onclick="selectModalStat('DEX')" data-stat="DEX"
+                class="modal-stat-chip px-2.5 py-1 text-xs font-pixel bg-retro-card text-gray-300 border border-black hover:text-white">
                 DEX (민첩 +2)
               </button>
-              <button type="button" onclick="selectModalStat('WIS')" data-stat="WIS" class="modal-stat-chip px-2.5 py-1 text-xs font-pixel bg-retro-card text-gray-300 border border-black hover:text-white">
+              <button type="button" onclick="selectModalStat('WIS')" data-stat="WIS"
+                class="modal-stat-chip px-2.5 py-1 text-xs font-pixel bg-retro-card text-gray-300 border border-black hover:text-white">
                 WIS (지혜 +2)
               </button>
-              <button type="button" onclick="selectModalStat('CHA')" data-stat="CHA" class="modal-stat-chip px-2.5 py-1 text-xs font-pixel bg-retro-card text-gray-300 border border-black hover:text-white">
+              <button type="button" onclick="selectModalStat('CHA')" data-stat="CHA"
+                class="modal-stat-chip px-2.5 py-1 text-xs font-pixel bg-retro-card text-gray-300 border border-black hover:text-white">
                 CHA (매력 +2)
               </button>
-              <button type="button" onclick="selectModalStat('CON')" data-stat="CON" class="modal-stat-chip px-2.5 py-1 text-xs font-pixel bg-retro-card text-gray-300 border border-black hover:text-white">
+              <button type="button" onclick="selectModalStat('CON')" data-stat="CON"
+                class="modal-stat-chip px-2.5 py-1 text-xs font-pixel bg-retro-card text-gray-300 border border-black hover:text-white">
                 CON (체력 +2)
               </button>
-              <button type="button" onclick="selectModalStat('LUK')" data-stat="LUK" class="modal-stat-chip px-2.5 py-1 text-xs font-pixel bg-retro-card text-gray-300 border border-black hover:text-white">
+              <button type="button" onclick="selectModalStat('LUK')" data-stat="LUK"
+                class="modal-stat-chip px-2.5 py-1 text-xs font-pixel bg-retro-card text-gray-300 border border-black hover:text-white">
                 LUK (행운 +2)
               </button>
             </div>
@@ -778,7 +902,8 @@
               <label class="text-[10px] font-pixel text-retro-cyan uppercase flex items-center gap-1.5">
                 <span>🌲</span> [ 2. 연동 스킬 선택 (Skill Link) ]
               </label>
-              <button type="button" onclick="openSkillAddFromEditor()" class="text-[10px] text-yellow-300 font-pixel hover:underline flex items-center gap-1">
+              <button type="button" onclick="openSkillAddFromEditor()"
+                class="text-[10px] text-yellow-300 font-pixel hover:underline flex items-center gap-1">
                 <span>➕</span> 새 스킬 추가
               </button>
             </div>
@@ -792,19 +917,25 @@
             <!-- Difficulty Chips -->
             <div class="flex items-center gap-1.5">
               <span class="text-[10px] font-pixel text-gray-400">등급:</span>
-              <button type="button" onclick="selectModalDiff('novice')" data-diff="novice" class="modal-diff-chip px-2 py-0.5 text-[11px] font-pixel bg-retro-card text-gray-300 border border-black">★초급</button>
-              <button type="button" onclick="selectModalDiff('adept')" data-diff="adept" class="modal-diff-chip px-2 py-0.5 text-[11px] font-pixel bg-retro-pink text-white font-bold border border-black">★★숙련</button>
-              <button type="button" onclick="selectModalDiff('boss')" data-diff="boss" class="modal-diff-chip px-2 py-0.5 text-[11px] font-pixel bg-retro-card text-gray-300 border border-black">★★★보스</button>
+              <button type="button" onclick="selectModalDiff('novice')" data-diff="novice"
+                class="modal-diff-chip px-2 py-0.5 text-[11px] font-pixel bg-retro-card text-gray-300 border border-black">★초급</button>
+              <button type="button" onclick="selectModalDiff('adept')" data-diff="adept"
+                class="modal-diff-chip px-2 py-0.5 text-[11px] font-pixel bg-retro-pink text-white font-bold border border-black">★★숙련</button>
+              <button type="button" onclick="selectModalDiff('boss')" data-diff="boss"
+                class="modal-diff-chip px-2 py-0.5 text-[11px] font-pixel bg-retro-card text-gray-300 border border-black">★★★보스</button>
             </div>
 
             <!-- Thumbnail Upload Button -->
             <div class="flex items-center gap-2">
-              <input type="file" id="modal-thumb-input" accept="image/*" class="hidden" onchange="handleModalThumbSelect(event)"/>
-              <button type="button" onclick="document.getElementById('modal-thumb-input').click()" class="pixel-btn bg-retro-card hover:bg-[#2e224e] text-retro-cyan px-2.5 py-1 text-xs font-pixel flex items-center gap-1">
+              <input type="file" id="modal-thumb-input" accept="image/*" class="hidden"
+                onchange="handleModalThumbSelect(event)" />
+              <button type="button" onclick="document.getElementById('modal-thumb-input').click()"
+                class="pixel-btn bg-retro-card hover:bg-[#2e224e] text-retro-cyan px-2.5 py-1 text-xs font-pixel flex items-center gap-1">
                 <span>📷</span> <span id="modal-thumb-status">썸네일 첨부</span>
               </button>
-              <div id="modal-thumb-preview" class="hidden w-7 h-7 border border-black bg-black overflow-hidden flex items-center justify-center">
-                <img id="modal-thumb-img" src="" alt="Thumbnail" class="w-full h-full object-cover"/>
+              <div id="modal-thumb-preview"
+                class="hidden w-7 h-7 border border-black bg-black overflow-hidden flex items-center justify-center">
+                <img id="modal-thumb-img" src="" alt="Thumbnail" class="w-full h-full object-cover" />
               </div>
             </div>
           </div>
@@ -815,46 +946,71 @@
             <div id="modal-tags-list" class="flex flex-wrap gap-1 items-center">
               <!-- Dynamically populated -->
             </div>
-            <input id="modal-tag-input" onkeydown="handleModalTagKeydown(event)" class="bg-black/40 text-xs text-retro-cyan placeholder:text-gray-600 px-2 py-0.5 border border-black outline-none flex-1 font-mono" placeholder="#태그 입력 후 Enter"/>
+            <input id="modal-tag-input" onkeydown="handleModalTagKeydown(event)"
+              class="bg-black/40 text-xs text-retro-cyan placeholder:text-gray-600 px-2 py-0.5 border border-black outline-none flex-1 font-mono"
+              placeholder="#태그 입력 후 Enter" />
           </div>
 
         </div>
 
         <!-- 1-Column Clean Editor -->
         <div class="bg-retro-surface p-4 border border-black pixel-box-sm space-y-3">
-          
+
           <!-- Title Input Field -->
           <div>
-            <input id="modal-title-input" class="w-full bg-transparent font-headline text-lg md:text-xl font-bold text-white placeholder:text-gray-600 outline-none border-b border-gray-700 focus:border-retro-primary pb-1 transition-colors" placeholder="퀘스트 제목을 입력하세요..."/>
+            <input id="modal-title-input"
+              class="w-full bg-transparent font-headline text-lg md:text-xl font-bold text-white placeholder:text-gray-600 outline-none border-b border-gray-700 focus:border-retro-primary pb-1 transition-colors"
+              placeholder="퀘스트 제목을 입력하세요..." />
           </div>
 
           <!-- Minimal Formatting Toolbar -->
           <div class="flex flex-wrap items-center gap-1 bg-black/40 p-1.5 border border-black">
-            <button onclick="formatModalDoc('bold')" class="w-7 h-7 bg-retro-card hover:bg-black text-white text-xs font-bold border border-black flex items-center justify-center" title="굵게" type="button">B</button>
-            <button onclick="formatModalDoc('italic')" class="w-7 h-7 bg-retro-card hover:bg-black text-white text-xs italic border border-black flex items-center justify-center" title="기울임" type="button">I</button>
+            <button onclick="formatModalDoc('bold')"
+              class="w-7 h-7 bg-retro-card hover:bg-black text-white text-xs font-bold border border-black flex items-center justify-center"
+              title="굵게" type="button">B</button>
+            <button onclick="formatModalDoc('italic')"
+              class="w-7 h-7 bg-retro-card hover:bg-black text-white text-xs italic border border-black flex items-center justify-center"
+              title="기울임" type="button">I</button>
             <div class="w-[1px] h-5 bg-gray-700 mx-0.5"></div>
-            <button onclick="formatModalBlock('h2')" class="px-1.5 h-7 bg-retro-card hover:bg-black text-retro-cyan text-xs font-bold border border-black" title="대제목" type="button">H1</button>
-            <button onclick="formatModalBlock('h3')" class="px-1.5 h-7 bg-retro-card hover:bg-black text-retro-cyan text-xs font-bold border border-black" title="중제목" type="button">H2</button>
+            <button onclick="formatModalBlock('h2')"
+              class="px-1.5 h-7 bg-retro-card hover:bg-black text-retro-cyan text-xs font-bold border border-black"
+              title="대제목" type="button">H1</button>
+            <button onclick="formatModalBlock('h3')"
+              class="px-1.5 h-7 bg-retro-card hover:bg-black text-retro-cyan text-xs font-bold border border-black"
+              title="중제목" type="button">H2</button>
             <div class="w-[1px] h-5 bg-gray-700 mx-0.5"></div>
-            <button onclick="formatModalDoc('insertUnorderedList')" class="w-7 h-7 bg-retro-card hover:bg-black text-white text-xs border border-black flex items-center justify-center" title="글머리 기호" type="button">•</button>
-            <button onclick="formatModalDoc('insertOrderedList')" class="w-7 h-7 bg-retro-card hover:bg-black text-white text-xs border border-black flex items-center justify-center" title="번호 목록" type="button">1.</button>
-            <button onclick="formatModalBlock('blockquote')" class="w-7 h-7 bg-retro-card hover:bg-black text-retro-gold text-xs border border-black flex items-center justify-center" title="인용구" type="button">❝</button>
+            <button onclick="formatModalDoc('insertUnorderedList')"
+              class="w-7 h-7 bg-retro-card hover:bg-black text-white text-xs border border-black flex items-center justify-center"
+              title="글머리 기호" type="button">•</button>
+            <button onclick="formatModalDoc('insertOrderedList')"
+              class="w-7 h-7 bg-retro-card hover:bg-black text-white text-xs border border-black flex items-center justify-center"
+              title="번호 목록" type="button">1.</button>
+            <button onclick="formatModalBlock('blockquote')"
+              class="w-7 h-7 bg-retro-card hover:bg-black text-retro-gold text-xs border border-black flex items-center justify-center"
+              title="인용구" type="button">❝</button>
             <div class="w-[1px] h-5 bg-gray-700 mx-0.5"></div>
-            
+
             <!-- Insert Local Image with Caption -->
-            <input type="file" id="modal-inline-img-input" accept="image/*" class="hidden" onchange="handleModalInlineImageInsert(event)"/>
-            <button onclick="document.getElementById('modal-inline-img-input').click()" class="px-2 h-7 bg-retro-card hover:bg-[#2e224e] text-retro-accent text-xs font-pixel flex items-center gap-1 border border-black" title="본문 중간에 사진 삽입" type="button">
+            <input type="file" id="modal-inline-img-input" accept="image/*" class="hidden"
+              onchange="handleModalInlineImageInsert(event)" />
+            <button onclick="document.getElementById('modal-inline-img-input').click()"
+              class="px-2 h-7 bg-retro-card hover:bg-[#2e224e] text-retro-accent text-xs font-pixel flex items-center gap-1 border border-black"
+              title="본문 중간에 사진 삽입" type="button">
               <span>📷</span> <span>+사진</span>
             </button>
-            
+
             <!-- Insert Code Block -->
-            <button onclick="insertModalCodeTemplate()" class="px-2 h-7 bg-retro-card hover:bg-[#2e224e] text-retro-cyan text-xs font-pixel flex items-center gap-1 border border-black" title="코드 블록 삽입" type="button">
+            <button onclick="insertModalCodeTemplate()"
+              class="px-2 h-7 bg-retro-card hover:bg-[#2e224e] text-retro-cyan text-xs font-pixel flex items-center gap-1 border border-black"
+              title="코드 블록 삽입" type="button">
               <span>💻</span> <span>코드</span>
             </button>
           </div>
 
           <!-- Single Column Editor Canvas -->
-          <div id="editor-canvas" contenteditable="true" class="min-h-[280px] max-h-[420px] overflow-y-auto p-3 bg-retro-bg border border-black outline-none font-sans text-sm text-gray-200 leading-relaxed" placeholder="여기에 퀘스트 수행 과정, 문제 해결 경험, 배운 점을 자유롭게 기록하세요...">
+          <div id="editor-canvas" contenteditable="true"
+            class="min-h-[280px] max-h-[420px] overflow-y-auto p-3 bg-retro-bg border border-black outline-none font-sans text-sm text-gray-200 leading-relaxed"
+            placeholder="여기에 퀘스트 수행 과정, 문제 해결 경험, 배운 점을 자유롭게 기록하세요...">
           </div>
 
         </div>
@@ -862,15 +1018,18 @@
       </div>
 
       <!-- Modal Footer -->
-      <div class="bg-retro-card px-5 py-3 border-t-2 border-black flex flex-wrap items-center justify-between gap-3 shrink-0">
+      <div
+        class="bg-retro-card px-5 py-3 border-t-2 border-black flex flex-wrap items-center justify-between gap-3 shrink-0">
         <div class="text-xs font-pixel text-yellow-300">
           획득 보상: <span id="modal-reward-text" class="text-white">+100 EXP / INT +2 / 🪙 +350G</span>
         </div>
         <div class="flex items-center gap-2">
-          <button type="button" onclick="closeEditorModal()" class="pixel-btn bg-gray-700 text-white px-3 py-1.5 text-xs font-pixel">
+          <button type="button" onclick="closeEditorModal()"
+            class="pixel-btn bg-gray-700 text-white px-3 py-1.5 text-xs font-pixel">
             취소
           </button>
-          <button type="button" onclick="handlePublishModalQuest()" class="pixel-btn bg-retro-primary hover:bg-yellow-300 text-black px-4 py-1.5 text-xs font-pixel font-bold">
+          <button type="button" onclick="handlePublishModalQuest()"
+            class="pixel-btn bg-retro-primary hover:bg-yellow-300 text-black px-4 py-1.5 text-xs font-pixel font-bold">
             ⚔️ 퀘스트 완료 &amp; 발행
           </button>
         </div>
@@ -882,29 +1041,38 @@
   <!-- ======================================================== -->
   <!-- 6. MODAL: QUEST DETAIL BLOG VIEW                         -->
   <!-- ======================================================== -->
-  <div id="quest-detail-modal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-3 md:p-6 overflow-y-auto" onclick="if(event.target===this) closeDetailModal()">
-    <div class="bg-retro-surface pixel-box max-w-3xl w-full my-auto border-3 border-black relative max-h-[92vh] flex flex-col shadow-2xl">
-      
+  <div id="quest-detail-modal"
+    class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-3 md:p-6 overflow-y-auto"
+    onclick="if(event.target===this) closeDetailModal()">
+    <div
+      class="bg-retro-surface pixel-box max-w-3xl w-full my-auto border-3 border-black relative max-h-[92vh] flex flex-col shadow-2xl">
+
       <!-- Top Modal Header -->
       <div class="bg-retro-card px-5 py-3 border-b-2 border-black flex items-center justify-between shrink-0">
         <div class="flex items-center gap-2">
           <span class="text-lg">📜</span>
           <span class="font-pixel text-xs md:text-sm text-retro-primary font-bold">퀘스트 상세 연대기</span>
         </div>
-        <button onclick="closeDetailModal()" class="pixel-btn bg-black text-gray-300 hover:text-white px-2 py-0.5 text-xs font-pixel">
+        <button onclick="closeDetailModal()"
+          class="pixel-btn bg-black text-gray-300 hover:text-white px-2 py-0.5 text-xs font-pixel">
           ✕
         </button>
       </div>
 
       <!-- Scrollable Modal Body -->
       <div class="p-5 md:p-6 overflow-y-auto flex-1 space-y-4 bg-retro-bg">
-        
+
         <!-- Header Banner & Tags -->
         <div class="bg-retro-surface p-4 border border-black pixel-box-sm">
           <div class="flex flex-wrap items-center gap-2 mb-2">
-            <span id="detail-difficulty-badge" class="px-2 py-0.5 bg-retro-pink text-white font-pixel text-[10px] font-bold border border-black">★★ 숙련</span>
-            <span id="detail-stat-badge" class="px-2 py-0.5 bg-retro-card text-retro-cyan font-pixel text-[10px] border border-black">+2 INT</span>
-            <span id="detail-exp-badge" class="px-2 py-0.5 bg-retro-card text-emerald-400 font-pixel text-[10px] border border-black">+100 EXP</span>
+            <span id="detail-difficulty-badge"
+              class="px-2 py-0.5 bg-retro-pink text-white font-pixel text-[10px] font-bold border border-black">★★
+              숙련</span>
+            <span id="detail-stat-badge"
+              class="px-2 py-0.5 bg-retro-card text-retro-cyan font-pixel text-[10px] border border-black">+2 INT</span>
+            <span id="detail-exp-badge"
+              class="px-2 py-0.5 bg-retro-card text-emerald-400 font-pixel text-[10px] border border-black">+100
+              EXP</span>
             <span id="detail-date-badge" class="text-gray-400 font-pixel text-[10px] ml-auto">2024.11.04</span>
           </div>
 
@@ -925,7 +1093,7 @@
         <!-- Thumbnail (if exists) -->
         <div id="detail-thumb-container" class="hidden bg-retro-surface p-2 border border-black pixel-box-sm">
           <div class="bg-black p-2 border border-black flex justify-center">
-            <img id="detail-thumb-img" src="" alt="Thumbnail" class="max-h-64 max-w-full object-contain"/>
+            <img id="detail-thumb-img" src="" alt="Thumbnail" class="max-h-64 max-w-full object-contain" />
           </div>
         </div>
 
@@ -939,9 +1107,11 @@
       </div>
 
       <!-- Detail Modal Footer with Resume Toggle -->
-      <div class="bg-retro-card px-5 py-3 border-t-2 border-black flex flex-wrap items-center justify-between gap-3 shrink-0">
+      <div
+        class="bg-retro-card px-5 py-3 border-t-2 border-black flex flex-wrap items-center justify-between gap-3 shrink-0">
         <label class="flex items-center gap-2 cursor-pointer bg-black/40 px-3 py-1 border border-black pixel-btn">
-          <input type="checkbox" id="detail-resume-toggle" onchange="handleToggleResumeInDetail(event)" class="w-4 h-4 text-emerald-500 bg-black border border-white rounded focus:ring-0 cursor-pointer"/>
+          <input type="checkbox" id="detail-resume-toggle" onchange="handleToggleResumeInDetail(event)"
+            class="w-4 h-4 text-emerald-500 bg-black border border-white rounded focus:ring-0 cursor-pointer" />
           <span class="font-pixel text-[11px] text-white">
             📄 이력서 포트폴리오에 포함하기
           </span>
@@ -949,10 +1119,12 @@
         </label>
 
         <div class="flex items-center gap-2">
-          <button onclick="handleEditQuestFromDetail()" class="pixel-btn bg-retro-surface hover:bg-retro-card text-retro-cyan px-3 py-1 font-pixel text-xs border border-black">
+          <button onclick="handleEditQuestFromDetail()"
+            class="pixel-btn bg-retro-surface hover:bg-retro-card text-retro-cyan px-3 py-1 font-pixel text-xs border border-black">
             ✏️ 수정
           </button>
-          <button onclick="closeDetailModal()" class="pixel-btn bg-retro-primary text-black px-3.5 py-1 font-pixel text-xs font-bold">
+          <button onclick="closeDetailModal()"
+            class="pixel-btn bg-retro-primary text-black px-3.5 py-1 font-pixel text-xs font-bold">
             확인 닫기
           </button>
         </div>
@@ -964,9 +1136,12 @@
   <!-- ======================================================== -->
   <!-- 7. MODAL: SKILL ADD / EDIT (스킬 커스텀 모달)               -->
   <!-- ======================================================== -->
-  <div id="skill-modal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-3 md:p-6 overflow-y-auto" onclick="if(event.target===this) closeSkillModal()">
-    <div class="bg-retro-surface pixel-box max-w-md w-full my-auto border-3 border-black relative flex flex-col shadow-2xl">
-      
+  <div id="skill-modal"
+    class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-3 md:p-6 overflow-y-auto"
+    onclick="if(event.target===this) closeSkillModal()">
+    <div
+      class="bg-retro-surface pixel-box max-w-md w-full my-auto border-3 border-black relative flex flex-col shadow-2xl">
+
       <!-- Modal Header -->
       <div class="bg-retro-card px-5 py-3 border-b-2 border-black flex items-center justify-between shrink-0">
         <div class="flex items-center gap-2">
@@ -975,18 +1150,20 @@
             새 스킬 등록
           </h3>
         </div>
-        <button onclick="closeSkillModal()" class="pixel-btn bg-black text-gray-300 hover:text-white px-2 py-0.5 text-xs font-pixel">
+        <button onclick="closeSkillModal()"
+          class="pixel-btn bg-black text-gray-300 hover:text-white px-2 py-0.5 text-xs font-pixel">
           ✕
         </button>
       </div>
 
       <!-- Modal Form Body -->
       <div class="p-5 space-y-4 bg-retro-bg font-sans text-sm">
-        
+
         <!-- Stat Category Selector -->
         <div>
           <label class="block text-[10px] font-pixel text-gray-400 mb-1.5 uppercase">[ 1. 소속 코어 스탯 ]</label>
-          <select id="skill-form-stat" class="w-full bg-retro-surface text-white border-2 border-black p-2 font-pixel text-xs outline-none focus:border-retro-primary">
+          <select id="skill-form-stat"
+            class="w-full bg-retro-surface text-white border-2 border-black p-2 font-pixel text-xs outline-none focus:border-retro-primary">
             <option value="INT">🧠 INT (지능 - 개발/알고리즘/논리)</option>
             <option value="DEX">⚡ DEX (민첩 - 엔진/퍼블리싱/도구)</option>
             <option value="WIS">📚 WIS (지혜 - 이론/CS기초/자격증)</option>
@@ -1000,54 +1177,81 @@
         <div>
           <label class="block text-[10px] font-pixel text-gray-400 mb-1.5 uppercase">[ 2. 스킬 이모지 아이콘 ]</label>
           <div class="flex items-center gap-2 mb-2">
-            <div id="skill-emoji-preview" class="w-10 h-10 bg-retro-surface border-2 border-black flex items-center justify-center text-xl shrink-0">
+            <div id="skill-emoji-preview"
+              class="w-10 h-10 bg-retro-surface border-2 border-black flex items-center justify-center text-xl shrink-0">
               🐍
             </div>
-            <input id="skill-form-emoji" value="🐍" maxlength="4" class="w-20 bg-retro-surface text-center font-sans text-lg text-white border-2 border-black p-1 outline-none" oninput="updateSkillEmojiPreview(this.value)"/>
+            <input id="skill-form-emoji" value="🐍" maxlength="4"
+              class="w-20 bg-retro-surface text-center font-sans text-lg text-white border-2 border-black p-1 outline-none"
+              oninput="updateSkillEmojiPreview(this.value)" />
             <span class="text-[11px] text-gray-400 font-vt text-base">직접 입력하거나 아래 프리셋을 클릭하세요</span>
           </div>
           <div class="flex flex-wrap gap-1 bg-black/50 p-2 border border-black" id="skill-emoji-presets">
-            <button type="button" onclick="setSkillPresetEmoji('🐍')" class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">🐍</button>
-            <button type="button" onclick="setSkillPresetEmoji('📊')" class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">📊</button>
-            <button type="button" onclick="setSkillPresetEmoji('⚡')" class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">⚡</button>
-            <button type="button" onclick="setSkillPresetEmoji('🎮')" class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">🎮</button>
-            <button type="button" onclick="setSkillPresetEmoji('🌐')" class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">🌐</button>
-            <button type="button" onclick="setSkillPresetEmoji('🎨')" class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">🎨</button>
-            <button type="button" onclick="setSkillPresetEmoji('📜')" class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">📜</button>
-            <button type="button" onclick="setSkillPresetEmoji('💻')" class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">💻</button>
-            <button type="button" onclick="setSkillPresetEmoji('📢')" class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">📢</button>
-            <button type="button" onclick="setSkillPresetEmoji('🤝')" class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">🤝</button>
-            <button type="button" onclick="setSkillPresetEmoji('🏃')" class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">🏃</button>
-            <button type="button" onclick="setSkillPresetEmoji('⏰')" class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">⏰</button>
-            <button type="button" onclick="setSkillPresetEmoji('🏆')" class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">🏆</button>
-            <button type="button" onclick="setSkillPresetEmoji('💡')" class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">💡</button>
-            <button type="button" onclick="setSkillPresetEmoji('🛡️')" class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">🛡️</button>
-            <button type="button" onclick="setSkillPresetEmoji('⚙️')" class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">⚙️</button>
-            <button type="button" onclick="setSkillPresetEmoji('🚀')" class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">🚀</button>
-            <button type="button" onclick="setSkillPresetEmoji('🤖')" class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">🤖</button>
+            <button type="button" onclick="setSkillPresetEmoji('🐍')"
+              class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">🐍</button>
+            <button type="button" onclick="setSkillPresetEmoji('📊')"
+              class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">📊</button>
+            <button type="button" onclick="setSkillPresetEmoji('⚡')"
+              class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">⚡</button>
+            <button type="button" onclick="setSkillPresetEmoji('🎮')"
+              class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">🎮</button>
+            <button type="button" onclick="setSkillPresetEmoji('🌐')"
+              class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">🌐</button>
+            <button type="button" onclick="setSkillPresetEmoji('🎨')"
+              class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">🎨</button>
+            <button type="button" onclick="setSkillPresetEmoji('📜')"
+              class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">📜</button>
+            <button type="button" onclick="setSkillPresetEmoji('💻')"
+              class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">💻</button>
+            <button type="button" onclick="setSkillPresetEmoji('📢')"
+              class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">📢</button>
+            <button type="button" onclick="setSkillPresetEmoji('🤝')"
+              class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">🤝</button>
+            <button type="button" onclick="setSkillPresetEmoji('🏃')"
+              class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">🏃</button>
+            <button type="button" onclick="setSkillPresetEmoji('⏰')"
+              class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">⏰</button>
+            <button type="button" onclick="setSkillPresetEmoji('🏆')"
+              class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">🏆</button>
+            <button type="button" onclick="setSkillPresetEmoji('💡')"
+              class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">💡</button>
+            <button type="button" onclick="setSkillPresetEmoji('🛡️')"
+              class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">🛡️</button>
+            <button type="button" onclick="setSkillPresetEmoji('⚙️')"
+              class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">⚙️</button>
+            <button type="button" onclick="setSkillPresetEmoji('🚀')"
+              class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">🚀</button>
+            <button type="button" onclick="setSkillPresetEmoji('🤖')"
+              class="w-7 h-7 bg-retro-surface hover:bg-black border border-black flex items-center justify-center text-sm">🤖</button>
           </div>
         </div>
 
         <!-- Skill Name Input -->
         <div>
           <label class="block text-[10px] font-pixel text-gray-400 mb-1.5 uppercase">[ 3. 스킬 이름 ]</label>
-          <input id="skill-form-name" class="w-full bg-retro-surface text-white border-2 border-black p-2 font-pixel text-xs outline-none focus:border-retro-primary" placeholder="예: 파이썬 기초, 리액트 개발, CS 이론"/>
+          <input id="skill-form-name"
+            class="w-full bg-retro-surface text-white border-2 border-black p-2 font-pixel text-xs outline-none focus:border-retro-primary"
+            placeholder="예: 파이썬 기초, 리액트 개발, CS 이론" />
         </div>
 
         <!-- Skill Description Input -->
         <div>
           <label class="block text-[10px] font-pixel text-gray-400 mb-1.5 uppercase">[ 4. 스킬 설명 &amp; 목표 (선택) ]</label>
-          <textarea id="skill-form-desc" rows="2" class="w-full bg-retro-surface text-white border-2 border-black p-2 font-sans text-xs outline-none focus:border-retro-primary" placeholder="스킬의 학습 목표 또는 상세 분야를 간단히 적어보세요."></textarea>
+          <textarea id="skill-form-desc" rows="2"
+            class="w-full bg-retro-surface text-white border-2 border-black p-2 font-sans text-xs outline-none focus:border-retro-primary"
+            placeholder="스킬의 학습 목표 또는 상세 분야를 간단히 적어보세요."></textarea>
         </div>
 
       </div>
 
       <!-- Modal Footer -->
       <div class="bg-retro-card px-5 py-3 border-t-2 border-black flex items-center justify-end gap-2 shrink-0">
-        <button type="button" onclick="closeSkillModal()" class="pixel-btn bg-gray-700 text-white px-3 py-1.5 text-xs font-pixel">
+        <button type="button" onclick="closeSkillModal()"
+          class="pixel-btn bg-gray-700 text-white px-3 py-1.5 text-xs font-pixel">
           취소
         </button>
-        <button type="button" onclick="handleSaveSkillForm()" class="pixel-btn bg-retro-accent hover:bg-emerald-400 text-black px-4 py-1.5 text-xs font-pixel font-bold">
+        <button type="button" onclick="handleSaveSkillForm()"
+          class="pixel-btn bg-retro-accent hover:bg-emerald-400 text-black px-4 py-1.5 text-xs font-pixel font-bold">
           💾 저장하기
         </button>
       </div>
@@ -1058,9 +1262,12 @@
   <!-- ======================================================== -->
   <!-- 8. MODAL: PROFILE & CHARACTER EDIT (캐릭터 & 프로필 편집)   -->
   <!-- ======================================================== -->
-  <div id="profile-edit-modal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-3 md:p-6 overflow-y-auto" onclick="if(event.target===this) closeProfileEditModal()">
-    <div class="bg-retro-surface pixel-box max-w-2xl w-full my-auto border-3 border-black relative max-h-[92vh] flex flex-col shadow-2xl">
-      
+  <div id="profile-edit-modal"
+    class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-3 md:p-6 overflow-y-auto"
+    onclick="if(event.target===this) closeProfileEditModal()">
+    <div
+      class="bg-retro-surface pixel-box max-w-2xl w-full my-auto border-3 border-black relative max-h-[92vh] flex flex-col shadow-2xl">
+
       <!-- Modal Header -->
       <div class="bg-retro-card px-5 py-3.5 border-b-2 border-black flex items-center justify-between shrink-0">
         <div class="flex items-center gap-2">
@@ -1069,14 +1276,15 @@
             캐릭터 아바타 &amp; 현실 이력서 프로필 설정
           </h3>
         </div>
-        <button onclick="closeProfileEditModal()" class="pixel-btn bg-black text-gray-300 hover:text-white px-2 py-0.5 text-xs font-pixel">
+        <button onclick="closeProfileEditModal()"
+          class="pixel-btn bg-black text-gray-300 hover:text-white px-2 py-0.5 text-xs font-pixel">
           ✕
         </button>
       </div>
 
       <!-- Modal Body (Scrollable Form) -->
       <div class="p-5 md:p-6 overflow-y-auto flex-1 space-y-5 bg-retro-bg font-sans text-xs sm:text-sm">
-        
+
         <!-- SECTION 1: 6 AVATAR THEMES SELECTION -->
         <div class="bg-retro-surface p-4 border border-black pixel-box-sm space-y-3">
           <div class="flex items-center justify-between">
@@ -1088,13 +1296,15 @@
 
           <!-- Live Preview Banner inside Modal -->
           <div class="flex items-center gap-4 bg-black/60 p-3 border border-black pixel-box-sm">
-            <div id="profile-modal-avatar-preview" class="w-16 h-16 bg-retro-bg border-2 border-retro-primary pixel-box-sm flex items-center justify-center shrink-0">
+            <div id="profile-modal-avatar-preview"
+              class="w-16 h-16 bg-retro-bg border-2 border-retro-primary pixel-box-sm flex items-center justify-center shrink-0">
               <!-- Dynamically populated -->
             </div>
             <div>
               <div class="flex items-center gap-2">
                 <span class="font-pixel text-xs text-white" id="profile-preview-theme-name">전사 (Warrior)</span>
-                <span class="px-2 py-0.5 bg-retro-purple text-yellow-300 font-pixel text-[9px] border border-black" id="profile-preview-theme-role">집념의 엔지니어</span>
+                <span class="px-2 py-0.5 bg-retro-purple text-yellow-300 font-pixel text-[9px] border border-black"
+                  id="profile-preview-theme-role">집념의 엔지니어</span>
               </div>
               <p class="text-xs text-purple-200 mt-1 font-vt text-base" id="profile-preview-theme-speech">
                 "버그를 잡는 것이 곧 보스를 물리치는 길이다!"
@@ -1117,17 +1327,23 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label class="block text-[10px] font-pixel text-gray-400 mb-1">성명 (실명 또는 닉네임)</label>
-              <input id="profile-input-name" class="w-full bg-black/60 text-white border-2 border-black p-2 font-pixel text-xs outline-none focus:border-retro-primary" placeholder="예: 류도현 (Do-Hyeon Ryu)"/>
+              <input id="profile-input-name"
+                class="w-full bg-black/60 text-white border-2 border-black p-2 font-pixel text-xs outline-none focus:border-retro-primary"
+                placeholder="예: 류도현 (Do-Hyeon Ryu)" />
             </div>
             <div>
               <label class="block text-[10px] font-pixel text-gray-400 mb-1">희망 직무 / 전문 분야 타이틀</label>
-              <input id="profile-input-job" class="w-full bg-black/60 text-white border-2 border-black p-2 font-pixel text-xs outline-none focus:border-retro-primary" placeholder="예: 풀스택 웹 엔지니어 (Full-Stack)"/>
+              <input id="profile-input-job"
+                class="w-full bg-black/60 text-white border-2 border-black p-2 font-pixel text-xs outline-none focus:border-retro-primary"
+                placeholder="예: 풀스택 웹 엔지니어 (Full-Stack)" />
             </div>
           </div>
 
           <div>
             <label class="block text-[10px] font-pixel text-gray-400 mb-1">한 줄 헤드라인 소개</label>
-            <input id="profile-input-headline" class="w-full bg-black/60 text-white border-2 border-black p-2 text-xs outline-none focus:border-retro-primary font-sans" placeholder="예: 매일 작은 퀘스트로 견고한 시스템을 설계하는 실천형 엔지니어입니다."/>
+            <input id="profile-input-headline"
+              class="w-full bg-black/60 text-white border-2 border-black p-2 text-xs outline-none focus:border-retro-primary font-sans"
+              placeholder="예: 매일 작은 퀘스트로 견고한 시스템을 설계하는 실천형 엔지니어입니다." />
           </div>
         </div>
 
@@ -1140,23 +1356,33 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label class="block text-[10px] font-pixel text-gray-400 mb-1">이메일 주소</label>
-              <input id="profile-input-email" type="email" class="w-full bg-black/60 text-white border-2 border-black p-2 text-xs font-mono outline-none focus:border-retro-primary" placeholder="dohyeon.ryu@lifegame.io"/>
+              <input id="profile-input-email" type="email"
+                class="w-full bg-black/60 text-white border-2 border-black p-2 text-xs font-mono outline-none focus:border-retro-primary"
+                placeholder="dohyeon.ryu@lifegame.io" />
             </div>
             <div>
               <label class="block text-[10px] font-pixel text-gray-400 mb-1">연락처 전화번호</label>
-              <input id="profile-input-phone" type="tel" class="w-full bg-black/60 text-white border-2 border-black p-2 text-xs font-mono outline-none focus:border-retro-primary" placeholder="+82 10-1234-5678"/>
+              <input id="profile-input-phone" type="tel"
+                class="w-full bg-black/60 text-white border-2 border-black p-2 text-xs font-mono outline-none focus:border-retro-primary"
+                placeholder="+82 10-1234-5678" />
             </div>
             <div>
               <label class="block text-[10px] font-pixel text-gray-400 mb-1">GitHub 프로필 주소</label>
-              <input id="profile-input-github" class="w-full bg-black/60 text-white border-2 border-black p-2 text-xs font-mono outline-none focus:border-retro-primary" placeholder="github.com/dohyeon-ryu"/>
+              <input id="profile-input-github"
+                class="w-full bg-black/60 text-white border-2 border-black p-2 text-xs font-mono outline-none focus:border-retro-primary"
+                placeholder="github.com/dohyeon-ryu" />
             </div>
             <div>
               <label class="block text-[10px] font-pixel text-gray-400 mb-1">기술 블로그 / 포트폴리오</label>
-              <input id="profile-input-blog" class="w-full bg-black/60 text-white border-2 border-black p-2 text-xs font-mono outline-none focus:border-retro-primary" placeholder="velog.io/@dohyeon"/>
+              <input id="profile-input-blog"
+                class="w-full bg-black/60 text-white border-2 border-black p-2 text-xs font-mono outline-none focus:border-retro-primary"
+                placeholder="velog.io/@dohyeon" />
             </div>
             <div class="sm:col-span-2">
               <label class="block text-[10px] font-pixel text-gray-400 mb-1">거주지 / 위치</label>
-              <input id="profile-input-location" class="w-full bg-black/60 text-white border-2 border-black p-2 text-xs font-sans outline-none focus:border-retro-primary" placeholder="Seoul, Republic of Korea"/>
+              <input id="profile-input-location"
+                class="w-full bg-black/60 text-white border-2 border-black p-2 text-xs font-sans outline-none focus:border-retro-primary"
+                placeholder="Seoul, Republic of Korea" />
             </div>
           </div>
         </div>
@@ -1169,13 +1395,16 @@
           <p class="text-[11px] text-gray-400">
             채용 담당자에게 전달하고 싶은 학습 태도, 문제 해결 경험, 개발 지향점을 서술하세요.
           </p>
-          <textarea id="profile-input-aboutme" rows="4" class="w-full bg-black/60 text-white border-2 border-black p-2.5 text-xs outline-none focus:border-retro-primary font-sans leading-relaxed" placeholder="이론에 머무르지 않고 직접 손으로 코드를 작성하며..."></textarea>
+          <textarea id="profile-input-aboutme" rows="4"
+            class="w-full bg-black/60 text-white border-2 border-black p-2.5 text-xs outline-none focus:border-retro-primary font-sans leading-relaxed"
+            placeholder="이론에 머무르지 않고 직접 손으로 코드를 작성하며..."></textarea>
         </div>
 
         <!-- SECTION 5: RESUME DISPLAY OPTIONS -->
         <div class="bg-retro-surface p-3.5 border border-black pixel-box-sm">
           <label class="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" id="profile-input-show-avatar" class="w-4 h-4 text-retro-primary bg-black border border-white rounded focus:ring-0 cursor-pointer"/>
+            <input type="checkbox" id="profile-input-show-avatar"
+              class="w-4 h-4 text-retro-primary bg-black border border-white rounded focus:ring-0 cursor-pointer" />
             <span class="font-pixel text-xs text-white">
               이력서 상단에 선택한 도트 캐릭터 아바타 뱃지 함께 표시하기
             </span>
@@ -1188,10 +1417,12 @@
       <div class="bg-retro-card px-5 py-3 border-t-2 border-black flex items-center justify-between shrink-0">
         <span class="text-[11px] text-gray-400 font-vt text-base">저장 시 이력서 뷰에 실시간 반영됩니다.</span>
         <div class="flex items-center gap-2">
-          <button type="button" onclick="closeProfileEditModal()" class="pixel-btn bg-gray-700 text-white px-3.5 py-1.5 text-xs font-pixel">
+          <button type="button" onclick="closeProfileEditModal()"
+            class="pixel-btn bg-gray-700 text-white px-3.5 py-1.5 text-xs font-pixel">
             취소
           </button>
-          <button type="button" onclick="handleSaveProfileSettings()" class="pixel-btn bg-retro-primary hover:bg-yellow-300 text-black px-4 py-1.5 text-xs font-pixel font-bold">
+          <button type="button" onclick="handleSaveProfileSettings()"
+            class="pixel-btn bg-retro-primary hover:bg-yellow-300 text-black px-4 py-1.5 text-xs font-pixel font-bold">
             💾 설정 저장 &amp; 실시간 반영
           </button>
         </div>
@@ -1415,7 +1646,7 @@
     };
 
     function renderAvatarSvg(themeId = 'warrior', extraClass = 'w-full h-full') {
-      switch(themeId) {
+      switch (themeId) {
         case 'wizard':
           return `<svg class="${extraClass}" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
             <ellipse cx="32" cy="60" rx="18" ry="4" fill="#000" opacity="0.4"/>
@@ -1606,7 +1837,7 @@
           if (prevSaved) {
             try {
               AppState = JSON.parse(prevSaved);
-            } catch(e) {
+            } catch (e) {
               AppState = JSON.parse(JSON.stringify(DEFAULT_DATA));
             }
           } else {
@@ -1916,14 +2147,13 @@
       filtered.forEach(quest => {
         const isBoss = quest.type === 'boss';
         const card = document.createElement('div');
-        
-        card.className = `p-4 pixel-box-sm transition-all cursor-pointer ${
-          quest.completed 
-            ? 'bg-retro-surface/90 border-gray-700 hover:border-retro-cyan' 
-            : isBoss 
-              ? 'bg-[#2E102E] border-retro-pink' 
-              : 'bg-retro-surface border-black hover:border-retro-cyan'
-        }`;
+
+        card.className = `p-4 pixel-box-sm transition-all cursor-pointer ${quest.completed
+          ? 'bg-retro-surface/90 border-gray-700 hover:border-retro-cyan'
+          : isBoss
+            ? 'bg-[#2E102E] border-retro-pink'
+            : 'bg-retro-surface border-black hover:border-retro-cyan'
+          }`;
 
         card.onclick = (e) => {
           if (e.target.closest('button')) return;
@@ -1943,10 +2173,10 @@
           <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
             <div class="flex-1">
               <div class="flex flex-wrap items-center gap-1.5 mb-1.5">
-                ${isBoss 
-                  ? `<span class="bg-retro-pink text-white font-pixel text-[9px] px-1.5 py-0.5 border border-black">👑 BOSS</span>` 
-                  : `<span class="bg-retro-purple text-yellow-300 font-pixel text-[9px] px-1.5 py-0.5 border border-black">DAILY</span>`
-                }
+                ${isBoss
+            ? `<span class="bg-retro-pink text-white font-pixel text-[9px] px-1.5 py-0.5 border border-black">👑 BOSS</span>`
+            : `<span class="bg-retro-purple text-yellow-300 font-pixel text-[9px] px-1.5 py-0.5 border border-black">DAILY</span>`
+          }
                 <span class="text-[9px] font-pixel text-retro-cyan bg-black px-1.5 py-0.5 border border-black">+${quest.statBonus} ${quest.statKey}</span>
                 <span class="text-[9px] font-pixel text-emerald-400">+${quest.expBonus} XP</span>
                 <span class="text-[9px] font-pixel text-retro-gold">🪙 +${quest.goldBonus}G</span>
@@ -2032,7 +2262,7 @@
       renderQuests();
     }
 
-    
+
     /* ==========================================================================
        6-2. PROFILE & CHARACTER EDIT MODAL CONTROLLERS
        ========================================================================== */
@@ -2083,11 +2313,10 @@
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.onclick = () => selectAvatarThemeInModal(th.id);
-        btn.className = `p-2.5 border-2 text-left pixel-btn transition-all flex flex-col items-center justify-between gap-1.5 ${
-          isSelected 
-            ? 'bg-retro-card border-retro-primary shadow-[2px_2px_0px_#FCE22A]' 
-            : 'bg-black/60 border-black hover:border-gray-500'
-        }`;
+        btn.className = `p-2.5 border-2 text-left pixel-btn transition-all flex flex-col items-center justify-between gap-1.5 ${isSelected
+          ? 'bg-retro-card border-retro-primary shadow-[2px_2px_0px_#FCE22A]'
+          : 'bg-black/60 border-black hover:border-gray-500'
+          }`;
 
         btn.innerHTML = `
           <div class="w-12 h-12 flex items-center justify-center pointer-events-none">
@@ -2175,11 +2404,10 @@
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.onclick = () => selectSkillTreeStat(key);
-        btn.className = `p-2.5 border-2 text-left transition-all pixel-btn flex flex-col justify-between ${
-          isActive 
-            ? 'bg-retro-card border-retro-primary shadow-[2px_2px_0px_#FCE22A]' 
-            : 'bg-black/50 border-black hover:border-gray-500'
-        }`;
+        btn.className = `p-2.5 border-2 text-left transition-all pixel-btn flex flex-col justify-between ${isActive
+          ? 'bg-retro-card border-retro-primary shadow-[2px_2px_0px_#FCE22A]'
+          : 'bg-black/50 border-black hover:border-gray-500'
+          }`;
 
         btn.innerHTML = `
           <div class="flex items-center justify-between w-full mb-1">
@@ -2229,7 +2457,7 @@
       currentSkills.forEach(skill => {
         const card = document.createElement('div');
         card.className = 'bg-retro-surface pixel-box-sm p-4 border-2 border-black flex flex-col justify-between hover:border-retro-cyan transition-all';
-        
+
         const expInLevel = (skill.exp || 0) % 100;
         const lvl = skill.level || 1;
         const questCnt = skill.count || 0;
@@ -2565,7 +2793,7 @@
       let expBonus = modalSelectedDiff === 'novice' ? 50 : modalSelectedDiff === 'boss' ? 300 : 100;
       let goldBonus = modalSelectedDiff === 'novice' ? 150 : modalSelectedDiff === 'boss' ? 650 : 350;
 
-      document.getElementById('modal-reward-text').textContent = 
+      document.getElementById('modal-reward-text').textContent =
         `+${expBonus} EXP / ${modalSelectedStat} +${statBonus} / 🪙 +${goldBonus}G`;
     }
 
@@ -2740,7 +2968,7 @@ npm run build && git commit -m "feat: complete milestone"</pre>
         AppState.quests[existingIdx] = questObj;
       } else {
         AppState.quests.unshift(questObj);
-        
+
         // 1. Apply core stat rewards
         AppState.stats[modalSelectedStat] = Math.min(100, (AppState.stats[modalSelectedStat] || 10) + statBonus);
         AppState.player.gold += goldBonus;
@@ -2961,7 +3189,7 @@ npm run build && git commit -m "feat: complete milestone"</pre>
       if (techContainer) {
         techContainer.innerHTML = '';
         const skills = AppState.skills || [];
-        
+
         // Practical category classification
         const categories = [
           {
@@ -2971,12 +3199,12 @@ npm run build && git commit -m "feat: complete milestone"</pre>
             match: (s) => {
               const n = (s.name || '').toLowerCase();
               return n.includes('파이썬') || n.includes('python') || n.includes('유니티') ||
-                     n.includes('unity') || n.includes('웹') || n.includes('퍼블리싱') ||
-                     n.includes('html') || n.includes('css') || n.includes('js') ||
-                     n.includes('javascript') || n.includes('react') || n.includes('리액트') ||
-                     n.includes('c#') || n.includes('java') || n.includes('django') ||
-                     n.includes('fastapi') || (s.stat === 'INT' && !n.includes('데이터') && !n.includes('알고리즘')) ||
-                     (s.stat === 'DEX' && !n.includes('포토샵'));
+                n.includes('unity') || n.includes('웹') || n.includes('퍼블리싱') ||
+                n.includes('html') || n.includes('css') || n.includes('js') ||
+                n.includes('javascript') || n.includes('react') || n.includes('리액트') ||
+                n.includes('c#') || n.includes('java') || n.includes('django') ||
+                n.includes('fastapi') || (s.stat === 'INT' && !n.includes('데이터') && !n.includes('알고리즘')) ||
+                (s.stat === 'DEX' && !n.includes('포토샵'));
             }
           },
           {
@@ -2986,10 +3214,10 @@ npm run build && git commit -m "feat: complete milestone"</pre>
             match: (s) => {
               const n = (s.name || '').toLowerCase();
               return n.includes('포토샵') || n.includes('photoshop') || n.includes('git') ||
-                     n.includes('깃') || n.includes('docker') || n.includes('도커') ||
-                     n.includes('figma') || n.includes('피그마') || n.includes('linux') ||
-                     n.includes('리눅스') || n.includes('툴') || n.includes('도구') ||
-                     s.stat === 'CON';
+                n.includes('깃') || n.includes('docker') || n.includes('도커') ||
+                n.includes('figma') || n.includes('피그마') || n.includes('linux') ||
+                n.includes('리눅스') || n.includes('툴') || n.includes('도구') ||
+                s.stat === 'CON';
             }
           },
           {
@@ -2999,8 +3227,8 @@ npm run build && git commit -m "feat: complete milestone"</pre>
             match: (s) => {
               const n = (s.name || '').toLowerCase();
               return n.includes('데이터') || n.includes('data') || n.includes('분석') ||
-                     n.includes('sql') || n.includes('pandas') || n.includes('알고리즘') ||
-                     n.includes('db') || n.includes('ai') || n.includes('머신러닝');
+                n.includes('sql') || n.includes('pandas') || n.includes('알고리즘') ||
+                n.includes('db') || n.includes('ai') || n.includes('머신러닝');
             }
           },
           {
@@ -3010,8 +3238,8 @@ npm run build && git commit -m "feat: complete milestone"</pre>
             match: (s) => {
               const n = (s.name || '').toLowerCase();
               return n.includes('자격증') || n.includes('cs') || n.includes('이론') ||
-                     n.includes('블로그') || n.includes('발표') || n.includes('팀') ||
-                     n.includes('프로젝트') || n.includes('해커톤') || s.stat === 'WIS' || s.stat === 'CHA' || s.stat === 'LUK';
+                n.includes('블로그') || n.includes('발표') || n.includes('팀') ||
+                n.includes('프로젝트') || n.includes('해커톤') || s.stat === 'WIS' || s.stat === 'CHA' || s.stat === 'LUK';
             }
           }
         ];
@@ -3022,13 +3250,13 @@ npm run build && git commit -m "feat: complete milestone"</pre>
         categories.forEach(cat => {
           const matchedSkills = skills.filter(s => !usedSkillIds.has(s.id) && cat.match(s));
           if (matchedSkills.length === 0) return;
-          
+
           matchedSkills.forEach(s => usedSkillIds.add(s.id));
           totalCategorizedSkills += matchedSkills.length;
 
           const groupDiv = document.createElement('div');
           groupDiv.className = 'border border-gray-200 rounded-lg p-4 bg-gray-50/70 print:bg-white print:border-gray-300';
-          
+
           let cardsHtml = '';
           matchedSkills.forEach(s => {
             const linkedQuests = (AppState.quests || []).filter(q => q.completed && q.skillIds && q.skillIds.includes(s.id));
@@ -3061,10 +3289,10 @@ npm run build && git commit -m "feat: complete milestone"</pre>
                         <p class="text-xs text-gray-500 mt-0.5">${s.desc || '실무 활용 및 프로젝트 구현'}</p>
                       </div>
                     </div>
-                    ${count > 0 
-                      ? `<span class="px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded text-[11px] font-semibold shrink-0">✓ 실습 검증됨</span>` 
-                      : `<span class="px-2 py-0.5 bg-gray-100 text-gray-500 rounded text-[11px] font-medium shrink-0">학습 진행중</span>`
-                    }
+                    ${count > 0
+                ? `<span class="px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded text-[11px] font-semibold shrink-0">✓ 실습 검증됨</span>`
+                : `<span class="px-2 py-0.5 bg-gray-100 text-gray-500 rounded text-[11px] font-medium shrink-0">학습 진행중</span>`
+              }
                   </div>
                   
                   <!-- Realistic Quantitative Metric (NO gauge bar!) -->
@@ -3123,7 +3351,7 @@ npm run build && git commit -m "feat: complete milestone"</pre>
           bossQuests.forEach(b => {
             const div = document.createElement('div');
             div.className = 'p-4 bg-white border border-gray-200 rounded-lg shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 hover:border-gray-400 transition-all';
-            
+
             const hasProof = !!(b.proofImg || b.thumbnail);
             const imgSrc = b.proofImg || b.thumbnail;
 
@@ -3185,14 +3413,14 @@ npm run build && git commit -m "feat: complete milestone"</pre>
           resumeQuests.forEach(q => {
             const item = document.createElement('div');
             item.className = 'p-5 bg-white border border-gray-200 rounded-lg shadow-sm hover:border-gray-400 transition-all flex flex-col md:flex-row justify-between gap-5';
-            
+
             const skillNames = (q.skillIds || []).map(sid => {
               const s = (AppState.skills || []).find(sk => sk.id === sid);
               return s ? s.name : null;
             }).filter(Boolean);
 
             const allTags = Array.from(new Set([...(q.tags || []), ...skillNames]));
-            const tagChipsHtml = allTags.map(t => 
+            const tagChipsHtml = allTags.map(t =>
               `<span class="px-2 py-0.5 bg-gray-100 text-gray-800 text-[11px] font-medium rounded border border-gray-200 font-mono">#${t}</span>`
             ).join(' ');
 
@@ -3294,4 +3522,5 @@ npm run build && git commit -m "feat: complete milestone"</pre>
     });
   </script>
 </body>
+
 </html>
