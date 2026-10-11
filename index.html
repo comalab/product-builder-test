@@ -365,6 +365,26 @@
           <span class="text-retro-gold">🪙 <span id="header-gold">0</span>G</span>
         </div>
 
+        <!-- Cloud Sync Status & Action Button (PC-모바일 기기간 실시간 연동) -->
+        <div class="flex items-center gap-1.5 bg-black/60 px-2 py-1 border border-black pixel-box-sm" id="sync-status-container" title="클라우드 동기화 상태: 확인 중">
+          <!-- Status Indicator Dot -->
+          <span id="sync-status-dot" class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10B981] transition-all" title="동기화 완료"></span>
+          <span id="sync-status-text" class="hidden xl:inline text-[10px] font-pixel text-gray-300">동기화됨</span>
+          <!-- Manual Sync Button -->
+          <button id="sync-manual-btn" onclick="manualSync()"
+            class="pixel-btn bg-retro-card hover:bg-purple-900 text-yellow-300 px-2 py-0.5 text-[10px] font-pixel flex items-center gap-1 border border-gray-700 transition-colors"
+            title="클라우드에서 최신 데이터 즉시 불러오기 / 동기화">
+            <span id="sync-spin-icon" class="inline-block transition-transform duration-500 text-xs">🔄</span>
+            <span class="hidden sm:inline">동기화</span>
+          </button>
+          <!-- Sync Settings / Passcode Modal Trigger -->
+          <button onclick="openSyncSettingsModal()"
+            class="pixel-btn bg-black/80 hover:bg-gray-800 text-gray-300 hover:text-white px-1.5 py-0.5 text-[10px] font-pixel border border-gray-700"
+            title="기기 간 연동 패스코드 설정">
+            🔑
+          </button>
+        </div>
+
         <!-- Audio FX Toggle -->
         <button id="sound-btn" onclick="toggleMute()"
           class="pixel-btn bg-retro-card hover:bg-[#2f2350] text-yellow-300 px-2.5 py-1 text-xs font-pixel flex items-center gap-1"
@@ -376,7 +396,7 @@
         <!-- Reset Data -->
         <button onclick="resetDataPrompt()"
           class="pixel-btn bg-red-950 hover:bg-red-900 text-red-200 px-2 py-1 text-xs font-pixel" title="데이터 초기화">
-          🔄
+          🗑️
         </button>
       </div>
 
@@ -1556,6 +1576,111 @@
     </div>
   </div>
 
+  <!-- ======================================================== -->
+  <!-- 9. MODAL: CLOUD SYNC & PASSCODE SETTINGS (기기 간 실시간 연동) -->
+  <!-- ======================================================== -->
+  <div id="sync-settings-modal"
+    class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-3 md:p-6 overflow-y-auto"
+    onclick="if(event.target===this) closeSyncSettingsModal()">
+    <div
+      class="bg-retro-surface pixel-box max-w-lg w-full my-auto border-3 border-black relative flex flex-col shadow-2xl">
+
+      <!-- Modal Header -->
+      <div class="bg-retro-card px-5 py-3.5 border-b-2 border-black flex items-center justify-between shrink-0">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">☁️</span>
+          <h3 class="font-pixel text-xs md:text-sm text-retro-cyan font-bold">
+            기기 간 실시간 동기화 설정 (PC-모바일 연동)
+          </h3>
+        </div>
+        <button onclick="closeSyncSettingsModal()"
+          class="pixel-btn bg-black text-gray-300 hover:text-white px-2 py-0.5 text-xs font-pixel">
+          ✕
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-5 md:p-6 space-y-4 bg-retro-bg font-sans text-xs">
+
+        <!-- Cloud Connection Status Banner -->
+        <div class="bg-retro-surface p-3.5 border border-black pixel-box-sm flex items-center justify-between gap-2">
+          <div class="flex items-center gap-2.5 min-w-0">
+            <span id="modal-sync-status-dot" class="w-3 h-3 rounded-full bg-emerald-500 shadow-[0_0_8px_#10B981] shrink-0"></span>
+            <div class="min-w-0">
+              <div class="font-pixel text-[11px] text-white truncate" id="modal-sync-status-title">연결 상태: 클라우드 동기화 완료</div>
+              <div class="text-[10px] text-gray-400 font-mono mt-0.5 leading-tight truncate" id="modal-sync-status-desc">Cloudflare KV 스토리지와 실시간 연동 중입니다.</div>
+            </div>
+          </div>
+          <button type="button" onclick="manualSync()"
+            class="pixel-btn bg-retro-card text-yellow-300 px-2.5 py-1 text-[10px] font-pixel border border-retro-purple hover:bg-purple-900 shrink-0">
+            🔄 지금 동기화
+          </button>
+        </div>
+
+        <!-- Passcode Setting Box -->
+        <div class="bg-retro-surface p-4 border border-black pixel-box-sm space-y-3">
+          <div class="flex items-center justify-between">
+            <label class="block text-[10px] font-pixel text-yellow-300 uppercase">
+              🔑 개인 연동 패스코드 (선택 사항)
+            </label>
+            <span class="text-[9px] text-gray-400 font-mono">영문 / 숫자 자유</span>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <input id="sync-passcode-input"
+              class="flex-1 bg-black/60 text-white border-2 border-black p-2 font-mono text-xs outline-none focus:border-retro-primary"
+              placeholder="비워둘 시: 기본 단일 사용자 모드" />
+            <button type="button" onclick="generateRandomPasscode()"
+              class="pixel-btn bg-black text-gray-300 hover:text-white px-2.5 py-2 text-[10px] font-pixel border border-gray-700" title="랜덤 패스코드 생성">
+              🎲 랜덤
+            </button>
+          </div>
+
+          <p class="text-[11px] text-gray-300 leading-relaxed font-sans">
+            💡 <strong class="text-white">사용 가이드:</strong><br>
+            &bull; <strong>단일 사용자 기본 모드:</strong> 패스코드를 비워두시면 기본 계정으로 자동 동기화됩니다.<br>
+            &bull; <strong>개인 패스코드 모드:</strong> 나만의 패스코드를 지정하시면, 모바일 브라우저에서도 같은 패스코드를 입력하여 둘만의 프라이빗 데이터로 완벽하게 실시간 공유됩니다.
+          </p>
+
+          <div class="pt-2 border-t border-gray-800 flex items-center justify-between">
+            <button type="button" onclick="copySyncShareUrl()"
+              class="pixel-btn bg-retro-card hover:bg-purple-950 text-retro-cyan px-2.5 py-1 text-[10px] font-pixel border border-gray-700 flex items-center gap-1">
+              <span>📋</span> 모바일 연동 링크 복사
+            </button>
+            <span class="text-[9px] text-retro-accent font-mono" id="sync-copy-toast"></span>
+          </div>
+        </div>
+
+        <!-- Cloudflare KV Guide Hint -->
+        <div class="bg-black/50 p-3 rounded border border-gray-800 text-[10px] text-gray-400 leading-relaxed space-y-1">
+          <div class="text-retro-primary font-pixel text-[9px] flex items-center gap-1">
+            <span>⚙️</span> Cloudflare KV 네임스페이스 바인딩 안내
+          </div>
+          <div>
+            Cloudflare Pages 대시보드에서 <strong>설정 (Settings) &rarr; Functions &rarr; KV namespace bindings</strong> 메뉴로 이동하여 변수 이름에 <code>LIFEGAME_KV</code>를 연결해주시면 영구 무료로 기기 간 데이터가 무제한 동기화됩니다.
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="bg-retro-card px-5 py-3 border-t-2 border-black flex items-center justify-between shrink-0">
+        <span class="text-[10px] text-gray-400 font-mono">마지막 동기화: <span id="modal-last-sync-time">확인 중</span></span>
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="closeSyncSettingsModal()"
+            class="pixel-btn bg-gray-700 text-white px-3 py-1.5 text-xs font-pixel">
+            닫기
+          </button>
+          <button type="button" onclick="saveSyncPasscode()"
+            class="pixel-btn bg-retro-primary hover:bg-yellow-300 text-black px-4 py-1.5 text-xs font-pixel font-bold">
+            💾 저장 &amp; 동기화
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <!-- Global Footer -->
   <footer class="w-full bg-retro-surface py-3 border-t border-black text-center text-xs font-vt text-gray-400">
     <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
@@ -2007,9 +2132,13 @@
       saveState();
     }
 
-    function saveState() {
+    function saveState(skipCloudSync = false) {
       try {
+        if (AppState) AppState.updatedAt = Date.now();
         localStorage.setItem(STORAGE_KEY, JSON.stringify(AppState));
+        if (!skipCloudSync) {
+          triggerCloudSync();
+        }
       } catch (e) {
         console.error('LocalStorage error:', e);
       }
@@ -3859,10 +3988,263 @@ npm run build && git commit -m "feat: complete milestone"</pre>
       }
     }
 
+    /* ==========================================================================
+       10. CLOUDFLARE PAGES FUNCTIONS & KV REALTIME SYNC ENGINE (PC - 모바일 연동)
+       ========================================================================== */
+    const SYNC_PASSCODE_KEY = 'LIFEGAME_SYNC_PASSCODE';
+    let syncStatus = 'synced'; // 'synced' | 'syncing' | 'offline' | 'unconfigured'
+    let lastSyncTimestamp = null;
+    let syncDebounceTimer = null;
+
+    function getSyncPasscode() {
+      try {
+        return (localStorage.getItem(SYNC_PASSCODE_KEY) || '').trim();
+      } catch (e) {
+        return '';
+      }
+    }
+
+    function setSyncPasscode(code) {
+      try {
+        if (code && code.trim()) {
+          localStorage.setItem(SYNC_PASSCODE_KEY, code.trim());
+        } else {
+          localStorage.removeItem(SYNC_PASSCODE_KEY);
+        }
+      } catch (e) {}
+    }
+
+    function checkUrlPasscodeParam() {
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const passFromUrl = urlParams.get('passcode') || urlParams.get('key');
+        if (passFromUrl && passFromUrl.trim()) {
+          setSyncPasscode(passFromUrl.trim());
+          console.log('[Sync] Passcode configured from URL param:', passFromUrl.trim());
+        }
+      } catch (e) {}
+    }
+
+    function updateSyncUI(status, message) {
+      syncStatus = status;
+      const dot = document.getElementById('sync-status-dot');
+      const text = document.getElementById('sync-status-text');
+      const container = document.getElementById('sync-status-container');
+      const modalDot = document.getElementById('modal-sync-status-dot');
+      const modalTitle = document.getElementById('modal-sync-status-title');
+      const modalDesc = document.getElementById('modal-sync-status-desc');
+      const modalTime = document.getElementById('modal-last-sync-time');
+
+      if (lastSyncTimestamp && modalTime) {
+        modalTime.textContent = new Date(lastSyncTimestamp).toLocaleTimeString('ko-KR');
+      }
+
+      const dotClasses = {
+        synced: 'w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10B981] transition-all',
+        syncing: 'w-2.5 h-2.5 rounded-full bg-yellow-400 animate-ping transition-all',
+        offline: 'w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_8px_#EF4444] transition-all',
+        unconfigured: 'w-2.5 h-2.5 rounded-full bg-amber-500 transition-all'
+      };
+
+      if (dot) dot.className = dotClasses[status] || dotClasses.synced;
+      if (modalDot) modalDot.className = dotClasses[status] || dotClasses.synced;
+
+      const labels = {
+        synced: '동기화됨',
+        syncing: '동기화 중...',
+        offline: '오프라인',
+        unconfigured: '로컬 모드'
+      };
+
+      if (text) text.textContent = labels[status] || '동기화됨';
+      if (container) container.title = `클라우드 동기화 상태: ${labels[status]} (${message || ''})`;
+
+      if (modalTitle) {
+        modalTitle.textContent = `연결 상태: ${labels[status]}`;
+      }
+      if (modalDesc && message) {
+        modalDesc.textContent = message;
+      }
+    }
+
+    async function pullFromCloud(silent = false) {
+      updateSyncUI('syncing', '클라우드에서 최신 데이터를 가져오는 중...');
+      const spinIcon = document.getElementById('sync-spin-icon');
+      if (spinIcon) spinIcon.classList.add('animate-spin');
+
+      try {
+        const passcode = getSyncPasscode();
+        const headers = {};
+        if (passcode) headers['x-sync-passcode'] = passcode;
+
+        const res = await fetch('/api/sync', {
+          method: 'GET',
+          headers
+        });
+
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}`);
+        }
+
+        const json = await res.json();
+
+        if (json.notConfigured) {
+          updateSyncUI('unconfigured', 'Cloudflare Pages의 LIFEGAME_KV 바인딩이 아직 연결되지 않았습니다. 로컬 저장소로 안전하게 동작합니다.');
+          return;
+        }
+
+        if (json.success) {
+          lastSyncTimestamp = json.timestamp || Date.now();
+
+          if (json.data && typeof json.data === 'object' && json.data.player) {
+            const cloudUpdatedAt = json.data.updatedAt || 0;
+            const localUpdatedAt = AppState ? (AppState.updatedAt || 0) : 0;
+
+            // Apply cloud data if cloud is newer or local is empty
+            if (cloudUpdatedAt >= localUpdatedAt || !AppState || (AppState.quests || []).length === 0) {
+              AppState = json.data;
+              saveState(true); // save to localStorage only without re-triggering cloud sync
+              renderAll();
+              if (!silent) {
+                SoundSystem.play('complete');
+                showLevelUpToast('CLOUD SYNCED!', '모바일/PC 클라우드 데이터가 성공적으로 동기화되었습니다.');
+              }
+            } else if (localUpdatedAt > cloudUpdatedAt) {
+              // Local is newer: push local data to cloud
+              pushToCloud(AppState, true);
+            }
+          } else {
+            // Cloud is empty: push initial local data to seed cloud KV
+            if (AppState) {
+              pushToCloud(AppState, true);
+            }
+          }
+
+          updateSyncUI('synced', `클라우드 동기화 완료 (${new Date().toLocaleTimeString('ko-KR')})`);
+        } else {
+          updateSyncUI('offline', json.error || '동기화 응답 오류');
+        }
+      } catch (err) {
+        console.warn('Sync GET error:', err.message);
+        updateSyncUI('offline', '네트워크 연결 불가 또는 오프라인 모드 (로컬 저장소 활성)');
+      } finally {
+        if (spinIcon) {
+          setTimeout(() => spinIcon.classList.remove('animate-spin'), 600);
+        }
+      }
+    }
+
+    async function pushToCloud(data, isInitialSeed = false) {
+      if (!data) return;
+      updateSyncUI('syncing', '클라우드 스토리지에 저장 중...');
+
+      try {
+        const passcode = getSyncPasscode();
+        const headers = { 'Content-Type': 'application/json' };
+        if (passcode) headers['x-sync-passcode'] = passcode;
+
+        const res = await fetch('/api/sync', {
+          method: 'POST',
+          headers,
+          body: JSON.stringify(data)
+        });
+
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const json = await res.json();
+
+        if (json.notConfigured) {
+          updateSyncUI('unconfigured', 'Cloudflare Pages의 LIFEGAME_KV 바인딩이 아직 연결되지 않았습니다. (로컬 캐시 보존됨)');
+          return;
+        }
+
+        if (json.success) {
+          lastSyncTimestamp = json.timestamp || Date.now();
+          updateSyncUI('synced', `클라우드 동기화 완료 (${new Date().toLocaleTimeString('ko-KR')})`);
+        } else {
+          updateSyncUI('offline', json.error || '클라우드 저장 실패');
+        }
+      } catch (err) {
+        console.warn('Sync POST error:', err.message);
+        updateSyncUI('offline', '오프라인 모드 (로컬에 안전하게 보관됨)');
+      }
+    }
+
+    function triggerCloudSync() {
+      clearTimeout(syncDebounceTimer);
+      syncDebounceTimer = setTimeout(() => {
+        pushToCloud(AppState);
+      }, 500);
+    }
+
+    function manualSync() {
+      SoundSystem.play('click');
+      pullFromCloud(false);
+    }
+
+    function openSyncSettingsModal() {
+      SoundSystem.play('click');
+      const input = document.getElementById('sync-passcode-input');
+      if (input) input.value = getSyncPasscode();
+      const toast = document.getElementById('sync-copy-toast');
+      if (toast) toast.textContent = '';
+      updateSyncUI(syncStatus);
+
+      const modal = document.getElementById('sync-settings-modal');
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeSyncSettingsModal() {
+      SoundSystem.play('click');
+      const modal = document.getElementById('sync-settings-modal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function saveSyncPasscode() {
+      const input = document.getElementById('sync-passcode-input');
+      const code = input ? input.value.trim() : '';
+      setSyncPasscode(code);
+      SoundSystem.play('complete');
+      closeSyncSettingsModal();
+      showLevelUpToast('SYNC SETTINGS SAVED!', code ? `패스코드 '${code}'가 설정되었습니다. 클라우드 동기화를 시작합니다.` : '기본 단일 사용자 모드로 동기화됩니다.');
+      pullFromCloud(false);
+    }
+
+    function generateRandomPasscode() {
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+      let code = '';
+      for (let i = 0; i < 6; i++) {
+        code += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      const input = document.getElementById('sync-passcode-input');
+      if (input) input.value = code;
+      SoundSystem.play('jump');
+    }
+
+    function copySyncShareUrl() {
+      const code = (document.getElementById('sync-passcode-input')?.value || getSyncPasscode()).trim();
+      const url = new URL(window.location.href);
+      if (code) {
+        url.searchParams.set('passcode', code);
+      } else {
+        url.searchParams.delete('passcode');
+      }
+
+      navigator.clipboard.writeText(url.toString()).then(() => {
+        const toast = document.getElementById('sync-copy-toast');
+        if (toast) toast.textContent = '✓ 링크 복사됨!';
+        SoundSystem.play('levelup');
+      }).catch(() => {
+        prompt('모바일에서 접속할 연동 주소:', url.toString());
+      });
+    }
+
     // Init App on Load
     window.addEventListener('DOMContentLoaded', () => {
+      checkUrlPasscodeParam();
       loadState();
       renderAll();
+      // Concurrently synchronize with Cloudflare KV cloud storage
+      pullFromCloud(true);
     });
   </script>
 </body>
